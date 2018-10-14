@@ -2,12 +2,14 @@
 package io.github.isliqian.sys.bean;
 
 import io.github.isliqian.sys.base.DataEntity;
+import io.github.isliqian.sys.base.TreeEntity;
+
 /**
  * 区域Entity
  * @author ThinkGem
  * @version 2013-05-15
  */
-public class SysArea extends DataEntity<SysArea> {
+public class SysArea extends TreeEntity<SysArea> {
 
 	private static final long serialVersionUID = 1L;
 	private SysArea parent;	// 父级编号
