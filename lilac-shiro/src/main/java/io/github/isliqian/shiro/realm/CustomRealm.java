@@ -1,10 +1,11 @@
 package io.github.isliqian.shiro.realm;
 
 
-import io.github.isliqian.sys.service.ISysUserService;
+import io.github.isliqian.sys.bean.SysUser;
 import io.github.isliqian.shiro.jwt.JWTToken;
 import io.github.isliqian.shiro.jwt.JWTUtil;
 
+import io.github.isliqian.sys.service.SysUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -21,7 +22,7 @@ import java.util.Set;
 public class CustomRealm extends AuthorizingRealm {
 
     @Resource
-    private ISysUserService userService;
+    private SysUserService sysUserService;
 
     /**
      * 必须重写此方法，不然会报错
@@ -48,11 +49,11 @@ public class CustomRealm extends AuthorizingRealm {
             if (username == null || !JWTUtil.verify(token, username)) {
                 throw new AuthenticationException("token认证失败！");
             }
-            String password = userService.getPassword(username);
-            if (password == null) {
+            SysUser user = sysUserService.getByLoginName(username);
+            if (user == null) {
                 throw new AuthenticationException("该用户不存在！");
             }
-            int ban = userService.checkUserBanStatus(username);
+            int ban = sysUserService.checkUserBanStatus(username);
             if (ban == 1) {
                 throw new AuthenticationException("该用户已被封号！");
             }
@@ -68,7 +69,7 @@ public class CustomRealm extends AuthorizingRealm {
         String username = JWTUtil.getUsername(principals.toString());
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获得该用户角色
-        List<String> roles = userService.getRoles(username);
+        List<String> roles = sysUserService.getRoles(username);
         //每个角色拥有默认的权限
         //String rolePermission = userMapper.getRolePermission(username);
         //每个用户可以设置新的权限

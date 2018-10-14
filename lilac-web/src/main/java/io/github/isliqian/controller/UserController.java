@@ -1,11 +1,13 @@
 package io.github.isliqian.controller;
 
 import io.github.isliqian.sys.bean.SysUser;
-import io.github.isliqian.sys.service.ISysUserService;
 import io.github.isliqian.log.ann.MyLog;
 
 
+import io.github.isliqian.sys.service.SysUserService;
+import io.github.isliqian.utils.PasswordUtils;
 import io.github.isliqian.utils.ResultUtil;
+import io.github.isliqian.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.Logical;
@@ -22,7 +24,7 @@ import javax.validation.Valid;
 public class UserController {
 
     @Resource
-    private ISysUserService sysUserService;
+    private SysUserService sysUserService;
 
     @GetMapping("/")
     @MyLog(value = "获取全部用户")
@@ -35,6 +37,10 @@ public class UserController {
     @PostMapping("/")
     @ApiOperation(value = "用户注册",notes = "用户注册接口")
     public ResultUtil save(@Valid SysUser sysUser){
+        // 如果新密码为空，则不更换密码
+        if (StringUtils.isNotBlank(sysUser.getNewPassword())) {
+            sysUser.setPassword(PasswordUtils.entryptPassword(sysUser.getNewPassword()));
+        }
         return ResultUtil.success(sysUser);
     }
 
@@ -52,7 +58,7 @@ public class UserController {
     @PostMapping("/updatePassword")
     @RequiresRoles(logical = Logical.OR, value = {"user", "admin"})
     public ResultUtil updatePassword(String username, String oldPassword, String newPassword) {
-        String dataBasePassword = sysUserService.getPassword(username);
+        SysUser dataBasePassword = sysUserService.getByLoginName(username);
         if (dataBasePassword.equals(oldPassword)) {
             sysUserService.updatePassword(username, newPassword);
         } else {

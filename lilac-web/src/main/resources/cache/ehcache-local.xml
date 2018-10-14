@@ -1,36 +1,22 @@
-<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-		xmlns='http://www.ehcache.org/v3'
-		xmlns:jsr107='http://www.ehcache.org/v3/jsr107'>
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="defaultCache">
+	<diskStore path="temp/ehcache" />
+	<!-- 默认缓存配置. -->
+	<defaultCache maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
+				  overflowToDisk="false" maxEntriesLocalDisk="100000" />
 
-	<service>
-		<jsr107:defaults>
-			<jsr107:cache name="people" template="heap-cache"/>
-		</jsr107:defaults>
-	</service>
+	<!-- 系统缓存 -->
+	<cache name="sysCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="false"/>
 
-	<cache-template name="heap-cache">
-		<listeners>
-			<listener>
-				<class>org.vrzart.com.ehcache.EventLogger</class>
-				<event-firing-mode>ASYNCHRONOUS</event-firing-mode>
-				<event-ordering-mode>UNORDERED</event-ordering-mode>
-				<events-to-fire-on>CREATED</events-to-fire-on>
-				<events-to-fire-on>UPDATED</events-to-fire-on>
-				<events-to-fire-on>EXPIRED</events-to-fire-on>
-				<events-to-fire-on>REMOVED</events-to-fire-on>
-				<events-to-fire-on>EVICTED</events-to-fire-on>
-			</listener>
-		</listeners>
-		<resources>
-			<heap unit="entries">2000</heap>
-			<offheap unit="MB">100</offheap> <!-- unit of measure is case sensitive! -->
-		</resources>
-	</cache-template>
+	<!-- 用户缓存 -->
+	<cache name="userCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="false" timeToLiveSeconds="86400"/>
 
-	<cache alias="peopleCache" uses-template="heap-cache">
-		<expiry>
-			<ttl unit="seconds">600</ttl>
-		</expiry>
-	</cache>
+	<!-- 系统活动会话缓存 -->
+	<cache name="activeSessionsCache" maxEntriesLocalHeap="10000" overflowToDisk="false"
+		   eternal="true" timeToLiveSeconds="0" timeToIdleSeconds="0"
+		   diskPersistent="true" diskExpiryThreadIntervalSeconds="600"/>
 
-</config>
+	<!-- 简单页面缓存
+    <cache name="SimplePageCachingFilter" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true"
+        timeToIdleSeconds="120" timeToLiveSeconds="120" memoryStoreEvictionPolicy="LFU"/> -->
+</ehcache>

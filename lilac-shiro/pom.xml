@@ -6,10 +6,9 @@
         <artifactId>lilac</artifactId>
         <groupId>io.github.isliqian</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.isliqian</groupId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <artifactId>lilac-shiro</artifactId>
 
@@ -27,7 +26,7 @@
         <dependency>
             <groupId>io.github.isliqian</groupId>
             <artifactId>lilac-sys</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

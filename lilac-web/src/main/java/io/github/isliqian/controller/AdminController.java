@@ -3,7 +3,6 @@ package io.github.isliqian.controller;
 
 
 import io.github.isliqian.sys.bean.SysUser;
-import io.github.isliqian.sys.service.ISysUserService;
 import io.github.isliqian.utils.ResultUtil;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,24 +19,24 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/admin")
 public class AdminController {
-
-    @Resource
-    private ISysUserService sysUserService;
-
-    @GetMapping("/getUser")
-    @RequiresRoles("admin")
-    public ResultUtil getUser() {
-        List<SysUser> list = sysUserService.findAll();
-        return ResultUtil.success(list);
-    }
-
-    /**
-     * 封号操作
-     */
-    @PostMapping("/banUser")
-    @RequiresRoles("admin")
-    public ResultUtil updatePassword(String username) {
-        sysUserService.banUser(username);
-        return ResultUtil.success("成功封号！");
-    }
+//
+//    @Resource
+//    private ISysUserService sysUserService;
+//
+//    @GetMapping("/getUser")
+//    @RequiresRoles("admin")
+//    public ResultUtil getUser() {
+//        List<SysUser> list = sysUserService.findAll();
+//        return ResultUtil.success(list);
+//    }
+//
+//    /**
+//     * 封号操作
+//     */
+//    @PostMapping("/banUser")
+//    @RequiresRoles("admin")
+//    public ResultUtil updatePassword(String username) {
+//        sysUserService.banUser(username);
+//        return ResultUtil.success("成功封号！");
+//    }
 }

@@ -24,9 +24,8 @@ spring:
     servlet:
       content-type: text/html
     suffix: .html
-  cache:
-    jcache:
-      config: classpath:/cache/ehcache.xml
+#  cache:
+#    ehcache: classpath:/cache/ehcache-local.xml
 mybatis:
   type-aliases-package: io.github.isliqian.sys.mapper
   mapper-locations: classpath:mapper/*.xml

@@ -4,34 +4,428 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="io.github.isliqian.sys.mapper.SysUserMapper">
-    <resultMap id="sys_user" type="io.github.isliqian.sys.bean.SysUser">
-        <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="username" jdbcType="VARCHAR" property="username"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
-    </resultMap>
-
-    <sql id="column">
-        id AS id,
-        username AS username,
-        password AS password
+    <sql id="userColumns">
+        a.id,
+        a.company_id AS "company.id",
+        a.office_id AS "office.id",
+        a.login_name,
+        a.password,
+        a.no,
+        a.name,
+        a.email,
+        a.phone,
+        a.mobile,
+        a.user_type,
+        a.login_ip,
+        a.login_date,
+        a.remarks,
+        a.login_flag,
+        a.photo,
+        a.create_by AS "createBy.id",
+        a.create_date,
+        a.update_by AS "updateBy.id",
+        a.update_date,
+        a.del_flag,
+        c.name AS "company.name",
+        c.code AS "company.code",
+        c.parent_id AS "company.parent.id",
+        c.parent_ids AS "company.parentIds",
+        ca.id AS "company.area.id",
+        ca.name AS "company.area.name",
+        ca.parent_id AS "company.area.parent.id",
+        ca.parent_ids AS "company.area.parentIds",
+        o.name AS "office.name",
+        o.code AS "office.code",
+        o.type AS "office.type",
+        o.parent_id AS "office.parent.id",
+        o.parent_ids AS "office.parentIds",
+        oa.id AS "office.area.id",
+        oa.name AS "office.area.name",
+        oa.parent_id AS "office.area.parent.id",
+        oa.parent_ids AS "office.area.parentIds",
+        cu.id AS "company.primaryPerson.id",
+        cu.name AS "company.primaryPerson.name",
+        cu2.id AS "company.deputyPerson.id",
+        cu2.name AS "company.deputyPerson.name",
+        ou.id AS "office.primaryPerson.id",
+        ou.name AS "office.primaryPerson.name",
+        ou2.id AS "office.deputyPerson.id",
+        ou2.name AS "office.deputyPerson.name"
+        <!-- ,
+        r.id AS "roleList.id",
+        r.office_id AS "roleList.office.id",
+        r.name AS "roleList.name",
+        r.enname AS "roleList.enname",
+        r.role_type AS "roleList.roleType",
+        r.data_scope AS "roleList.dataScope" -->
     </sql>
-    <select id="findList">
-      select <include refid="column"/> from sys_user
-        <where>
-            <if test="id != null || id != ''">
-              id = #{id}
-            </if>
-            <if test="username != null || username != ''">
-                username = #{username}
-            </if>
-            <if test="password != null || password != ''">
-               password = #{password}
-            </if>
-        </where>
+
+    <sql id="userJoins">
+        LEFT JOIN sys_office c ON c.id = a.company_id
+        LEFT JOIN sys_area ca ON ca.id = c.area_id
+        LEFT JOIN sys_office o ON o.id = a.office_id
+        LEFT JOIN sys_area oa ON oa.id = o.area_id
+        LEFT JOIN sys_user cu ON cu.id = c.primary_person
+        LEFT JOIN sys_user cu2 ON cu2.id = c.deputy_person
+        LEFT JOIN sys_user ou ON ou.id = o.primary_person
+        LEFT JOIN sys_user ou2 ON ou2.id = o.deputy_person<!--
+		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
+        LEFT JOIN sys_role r ON r.id = ur.role_id -->
+    </sql>
+
+    <!-- 根据编号获得用户 -->
+    <select id="get" resultType="io.github.isliqian.sys.bean.SysUser">
+        SELECT
+        <include refid="userColumns"/><!-- ,
+			ro.office_id AS "roleList.officeList.id" -->
+        FROM sys_user a
+        <include refid="userJoins"/><!--
+		LEFT JOIN sys_role_office ro ON ro.role_id = r.id -->
+        WHERE a.id = #{id}
     </select>
 
-    <select id="getPassword" resultType="String">
-        select password from sys_user where username = #{username}
+    <!-- 根据登录名查询用户 -->
+    <select id="getByLoginName" resultType="io.github.isliqian.sys.bean.SysUser" parameterType="io.github.isliqian.sys.bean.SysUser">
+        SELECT
+        <include refid="userColumns"/><!-- ,
+			ro.office_id AS "roleList.officeList.id" -->
+        FROM sys_user a
+        <include refid="userJoins"/><!--
+		LEFT JOIN sys_role_office ro ON ro.role_id = r.id -->
+        WHERE a.login_name = #{loginName} AND a.del_flag = #{DEL_FLAG_NORMAL}
+    </select>
+
+    <!-- 分页查询用户信息 -->
+    <select id="findList" resultType="io.github.isliqian.sys.bean.SysUser">
+        SELECT
+        <include refid="userColumns"/>
+        FROM sys_user a
+        <include refid="userJoins"/>
+        <if test="role != null and role.id != null and role.id != ''">
+            JOIN sys_user_role ur ON ur.user_id = a.id AND ur.role_id = #{role.id}
+        </if>
+        WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+        <if test="company != null and company.id != null and company.id != ''">
+            AND (c.id = #{company.id} OR c.parent_ids LIKE
+            <if test="dbName == 'oracle'">'%,'||#{company.id}||',%')</if>
+            <if test="dbName == 'mssql'">'%,'+#{company.id}+',%')</if>
+            <if test="dbName == 'mysql'">CONCAT('%,', #{company.id}, ',%'))</if>
+        </if>
+        <if test="office != null and office.id != null and office.id != ''">
+            AND (o.id = #{office.id} OR o.parent_ids LIKE
+            <if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
+            <if test="dbName == 'mssql'">'%,'+#{office.id}+',%')</if>
+            <if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
+        </if>
+        <!-- 如果不是超级管理员，则不显示超级管理员用户 -->
+        <!--<if test="!currentUser.admin">
+            AND a.id != '1'
+        </if>-->
+        <if test="loginName != null and loginName != ''">
+            AND a.login_name like
+            <if test="dbName == 'oracle'">'%'||#{loginName}||'%'</if>
+            <if test="dbName == 'mssql'">'%'+#{loginName}+'%'</if>
+            <if test="dbName == 'mysql'">CONCAT('%', #{loginName}, '%')</if>
+        </if>
+        <if test="name != null and name != ''">
+            AND a.name like
+            <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+            <if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+            <if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
+        </if>
+        <!-- 数据范围过滤 -->
+        ${sqlMap.dsf}
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY c.code, o.code, a.name
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 根据OfficeId获取用户（树查询用户时用） -->
+    <select id="findUserByOfficeId" resultType="io.github.isliqian.sys.bean.SysUser" useCache="true">
+		SELECT
+			a.id, a.name, a.login_name
+		FROM sys_user a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.office_id = #{office.id}
+		ORDER BY a.name
+	</select>
+
+    <!-- 查询全部用户 -->
+    <select id="findAllList" resultType="io.github.isliqian.sys.bean.SysUser">
+        SELECT
+        <include refid="userColumns"/>
+        FROM sys_user a
+        <include refid="userJoins"/>
+        WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+        ORDER BY c.code, o.code, a.name
+    </select>
+
+    <!-- 查询全部用户数目 -->
+    <select id="findAllCount" resultType="long">
+		SELECT
+			COUNT(1)
+		FROM sys_user a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+
+    <!-- 插入用户 -->
+    <insert id="insert">
+		INSERT INTO sys_user(
+			id,
+			company_id,
+			office_id,
+			login_name,
+			password,
+			no,
+			name,
+			email,
+			phone,
+			mobile,
+			user_type,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			login_flag,
+			photo,
+			del_flag
+		) VALUES (
+			#{id},
+			#{company.id},
+			#{office.id},
+			#{loginName},
+			#{password},
+			#{no},
+			#{name},
+			#{email},
+			#{phone},
+			#{mobile},
+			#{userType},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{loginFlag},
+			#{photo},
+			#{delFlag}
+		)
+	</insert>
+
+    <!-- 更新用户 -->
+    <update id="update">
+		UPDATE sys_user SET
+			company_id = #{company.id},
+			office_id = #{office.id},
+			login_name = #{loginName},
+			password = #{password},
+			no = #{no},
+			name = #{name},
+			email = #{email},
+			phone = #{phone},
+			mobile = #{mobile},
+			user_type = #{userType},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			login_flag = #{loginFlag},
+			photo = #{photo}
+		WHERE id = #{id}
+	</update>
+
+    <!-- 删除用户和角色关联表数据 -->
+    <delete id="deleteUserRole">
+		DELETE FROM sys_user_role
+		WHERE user_id = #{id}
+	</delete>
+
+    <!-- 插入用户和角色关联表数据 -->
+    <insert id="insertUserRole">
+        INSERT INTO sys_user_role(user_id, role_id)
+        <foreach collection="roleList" item="role" separator=" union all ">
+            SELECT #{id}, #{role.id}
+            <if test="dbName != 'mssql'">
+                FROM dual
+            </if>
+        </foreach>
+    </insert>
+
+    <!-- 更新用户信息  -->
+    <update id="updateUserInfo">
+		UPDATE sys_user SET
+			email = #{email},
+			phone = #{phone},
+			mobile = #{mobile},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			photo = #{photo}
+		WHERE id = #{id}
+	</update>
+
+    <!-- 更新用户密码 -->
+    <update id="updatePasswordById">
+		UPDATE sys_user SET
+			password = #{password}
+		WHERE id = #{id}
+	</update>
+
+    <!-- 更新登录信息，如登录IP、登录时间 -->
+    <update id="updateLoginInfo">
+		UPDATE sys_user SET
+			login_ip = #{loginIp},
+			login_Date = #{loginDate}
+		WHERE id = #{id}
+	</update>
+
+    <!-- 逻辑删除用户 -->
+    <update id="delete">
+        UPDATE sys_user SET
+        del_flag = #{DEL_FLAG_DELETE},
+        update_date =
+        <if test="dbName == 'oracle'">sysdate</if>
+        <if test="dbName == 'mssql'">GETDATE()</if>
+        <if test="dbName == 'mysql'">NOW()</if>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 批量插入 -->
+    <insert id="insertList" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            INSERT INTO sys_user(
+            id,
+            company_id,
+            office_id,
+            login_name,
+            password,
+            no,
+            name,
+            email,
+            phone,
+            mobile,
+            user_type,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            login_flag,
+            photo,
+            del_flag
+            ) VALUES (
+            #{item.id},
+            #{item.company.id},
+            #{item.office.id},
+            #{item.loginName},
+            #{item.password},
+            #{item.no},
+            #{item.name},
+            #{item.email},
+            #{item.phone},
+            #{item.mobile},
+            #{item.userType},
+            #{item.createBy.id},
+            #{item.createDate},
+            #{item.updateBy.id},
+            #{item.updateDate},
+            #{item.remarks},
+            #{item.loginFlag},
+            #{item.photo},
+            #{item.delFlag}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 批量更新 -->
+    <insert id="updateList" parameterType="java.util.List">
+        <foreach collection="list" item="item">
+            UPDATE sys_user SET
+            <choose>
+                <when test="item.company != null">
+                    company_id = #{item.company.id},
+                </when>
+                <otherwise>
+                    company_id = NULL,
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="item.office != null">
+                    office_id = #{item.office.id},
+                </when>
+                <otherwise>
+                    office_id = NULL,
+                </otherwise>
+            </choose>
+            login_name = #{item.loginName},
+            password = #{item.password},
+            no = #{item.no},
+            name = #{item.name},
+            email = #{item.email},
+            phone = #{item.phone},
+            mobile = #{item.mobile},
+            user_type = #{item.userType},
+            update_by = #{item.updateBy.id},
+            update_date = #{item.updateDate},
+            remarks = #{item.remarks},
+            login_flag = #{item.loginFlag},
+            photo = #{item.photo}
+            WHERE id = #{item.id};
+        </foreach>
+    </insert>
+
+    <!--批量逻辑删除用户-->
+    <update id="deleteList" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE sys_user SET
+            del_flag = #{item.DEL_FLAG_DELETE},
+            update_date =
+            <if test="dbName == 'oracle'">sysdate</if>
+            <if test="dbName == 'mssql'">GETDATE()</if>
+            <if test="dbName == 'mysql'">NOW()</if>
+            WHERE id = #{item.id}
+        </foreach>
+    </update>
+
+    <!-- 批量插入用户权限 -->
+    <insert id="insertUserRoles" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            INSERT INTO sys_user_role(user_id, role_id)
+            <foreach collection="item.roleList" item="role" separator=" union all ">
+                SELECT #{item.id}, #{role.id}
+                <if test="dbName != 'mssql'">
+                    FROM dual
+                </if>
+            </foreach>
+        </foreach>
+    </insert>
+
+    <delete id="deleteUserRoles" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            DELETE FROM sys_user_role
+            WHERE user_id = #{item.id}
+        </foreach>
+    </delete>
+
+    <!--根据起始更新时间查询-->
+    <select id="findListByUpdateDate" resultType="io.github.isliqian.sys.bean.SysUser">
+        SELECT
+        <include refid="userColumns"/>
+        FROM sys_user a
+        <include refid="userJoins"/>
+        <where>
+            <if test="startDate != null">
+                a.update_date <![CDATA[>=]]> #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND a.update_date <![CDATA[<=]]> #{endDate}
+            </if>
+        </where>
     </select>
 
 
