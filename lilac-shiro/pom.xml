@@ -8,7 +8,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <groupId>io.github.isliqian</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <artifactId>lilac-shiro</artifactId>
 
     <name>lilac-shiro</name>
