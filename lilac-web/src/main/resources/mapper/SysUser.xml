@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.github.isliqian.sys.mapper.SysUserMapper">
+    <resultMap id="sys_user" type="io.github.isliqian.sys.bean.SysUser">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+    </resultMap>
+
+    <sql id="column">
+        id AS id,
+        username AS username,
+        password AS password
+    </sql>
+    <select id="findList">
+      select <include refid="column"/> from sys_user
+        <where>
+            <if test="id != null || id != ''">
+              id = #{id}
+            </if>
+            <if test="username != null || username != ''">
+                username = #{username}
+            </if>
+            <if test="password != null || password != ''">
+               password = #{password}
+            </if>
+        </where>
+    </select>
+
+    <select id="getPassword" resultType="String">
+        select password from sys_user where username = #{username}
+    </select>
+
+
+
+</mapper>

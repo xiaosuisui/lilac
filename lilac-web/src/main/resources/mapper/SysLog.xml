@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.github.isliqian.log.mapper.SysLogMapper">
+    <resultMap id="sys_log" type="io.github.isliqian.log.bean.SysLog">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="operation" jdbcType="VARCHAR" property="operation"/>
+        <result column="method" jdbcType="VARCHAR" property="method"/>
+        <result column="params" jdbcType="VARCHAR" property="params"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="createDate" jdbcType="DATE" property="createDate"/>
+    </resultMap>
+
+
+    <insert id="save">
+        INSERT INTO sys_log (id,username,operation,method,params,ip,createDate) VALUES(#{id},#{username},#{operation},#{method},#{params},#{ip},#{createDate})
+    </insert>
+
+
+</mapper>
