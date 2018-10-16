@@ -8,6 +8,7 @@ package io.github.isliqian.sys.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.github.isliqian.sys.base.CrudService;
 import io.github.isliqian.sys.bean.SysUser;
 import io.github.isliqian.sys.mapper.SysUserMapper;
 import io.github.isliqian.sys.mapper.SysUserRoleMapper;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class SysUserService {
+public class SysUserService extends CrudService<SysUserMapper, SysUser> {
 
 
     @Autowired

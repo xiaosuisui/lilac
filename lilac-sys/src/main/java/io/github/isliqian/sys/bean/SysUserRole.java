@@ -3,17 +3,19 @@ package io.github.isliqian.sys.bean;
 import io.github.isliqian.sys.base.DataEntity;
 import lombok.Data;
 
-import java.io.Serializable;
+import javax.management.relation.Role;
 
 /**
- * 角色表
+ * 用户角色表
  */
+
 @Data
-public class SysRole   extends DataEntity<SysRole> {
+public class SysUserRole extends DataEntity<SysUserRole> {
 
-    private String id;
+    private String username;
 
-    private String name;
+    private Role role;
+
 
     @Override
     public void doPreInsert() {
