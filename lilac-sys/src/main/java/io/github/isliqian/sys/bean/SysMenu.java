@@ -5,7 +5,7 @@ import io.github.isliqian.sys.base.DataEntity;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+
 
 /**
  * 菜单表

@@ -3,7 +3,7 @@ package io.github.isliqian.sys.bean;
 import io.github.isliqian.sys.base.DataEntity;
 import lombok.Data;
 
-import java.io.Serializable;
+
 
 /**
  * 角色表
