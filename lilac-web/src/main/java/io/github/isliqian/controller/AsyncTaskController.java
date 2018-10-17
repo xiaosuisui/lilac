@@ -33,6 +33,11 @@ public class AsyncTaskController {
         return ResultUtil.success(taskInfo);
     }
 
+    /**
+     * 获取异步线程信息
+     * @param taskId
+     * @return
+     */
     @GetMapping(value = "/status/{taskId}")
     public ResultUtil getTaskStatus(
             @PathVariable("taskId") String taskId) {

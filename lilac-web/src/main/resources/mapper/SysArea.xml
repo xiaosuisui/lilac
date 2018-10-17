@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="io.github.isliqian.log.mapper.SysAreaMapper">
+<mapper namespace="io.github.isliqian.sys.mapper.SysAreaMapper">
 
     <sql id="areaColumns">
 		a.id,
@@ -52,7 +52,7 @@
                 <if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
             </if>
         </where>
-        ${sqlMap.dsf}
+	     ${sqlMap.dsf}
         ORDER BY a.code
     </select>
 

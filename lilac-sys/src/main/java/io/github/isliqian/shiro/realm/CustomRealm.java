@@ -1,9 +1,10 @@
 package io.github.isliqian.shiro.realm;
 
 
-import io.github.isliqian.sys.bean.SysUser;
 import io.github.isliqian.shiro.jwt.JWTToken;
 import io.github.isliqian.shiro.jwt.JWTUtil;
+import io.github.isliqian.sys.bean.SysUser;
+
 
 import io.github.isliqian.sys.service.SysUserService;
 import org.apache.shiro.authc.*;

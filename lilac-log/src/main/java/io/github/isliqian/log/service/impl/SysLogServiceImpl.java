@@ -8,6 +8,7 @@ import io.github.isliqian.log.service.ISysLogService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 
@@ -19,6 +20,7 @@ public class SysLogServiceImpl implements ISysLogService {
     private SysLogMapper sysLogMapper;
 
     @Override
+    @Async
     public void save(SysLog sysLog) {
         sysLogMapper.save(sysLog);
     }

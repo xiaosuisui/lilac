@@ -29,6 +29,13 @@
             <artifactId>lilac-utils</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.isliqian</groupId>
+            <artifactId>lilac-log</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

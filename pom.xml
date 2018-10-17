@@ -10,7 +10,6 @@
     <modules>
         <module>lilac-web</module>
         <module>lilac-sys</module>
-        <module>lilac-shiro</module>
         <module>lilac-utils</module>
         <module>lilac-async</module>
         <module>lilac-log</module>

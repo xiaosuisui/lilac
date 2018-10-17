@@ -6,7 +6,6 @@
 <mapper namespace="io.github.isliqian.sys.mapper.SysUserMapper">
     <sql id="userColumns">
         a.id,
-        a.company_id AS "company.id",
         a.office_id AS "office.id",
         a.login_name,
         a.password,
@@ -26,10 +25,6 @@
         a.update_by AS "updateBy.id",
         a.update_date,
         a.del_flag,
-        c.name AS "company.name",
-        c.code AS "company.code",
-        c.parent_id AS "company.parent.id",
-        c.parent_ids AS "company.parentIds",
         ca.id AS "company.area.id",
         ca.name AS "company.area.name",
         ca.parent_id AS "company.area.parent.id",
@@ -61,7 +56,6 @@
     </sql>
 
     <sql id="userJoins">
-        LEFT JOIN sys_office c ON c.id = a.company_id
         LEFT JOIN sys_area ca ON ca.id = c.area_id
         LEFT JOIN sys_office o ON o.id = a.office_id
         LEFT JOIN sys_area oa ON oa.id = o.area_id
@@ -105,12 +99,7 @@
             JOIN sys_user_role ur ON ur.user_id = a.id AND ur.role_id = #{role.id}
         </if>
         WHERE a.del_flag = #{DEL_FLAG_NORMAL}
-        <if test="company != null and company.id != null and company.id != ''">
-            AND (c.id = #{company.id} OR c.parent_ids LIKE
-            <if test="dbName == 'oracle'">'%,'||#{company.id}||',%')</if>
-            <if test="dbName == 'mssql'">'%,'+#{company.id}+',%')</if>
-            <if test="dbName == 'mysql'">CONCAT('%,', #{company.id}, ',%'))</if>
-        </if>
+
         <if test="office != null and office.id != null and office.id != ''">
             AND (o.id = #{office.id} OR o.parent_ids LIKE
             <if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
@@ -177,7 +166,6 @@
     <insert id="insert">
 		INSERT INTO sys_user(
 			id,
-			company_id,
 			office_id,
 			login_name,
 			password,
@@ -197,7 +185,6 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{company.id},
 			#{office.id},
 			#{loginName},
 			#{password},
@@ -221,7 +208,6 @@
     <!-- 更新用户 -->
     <update id="update">
 		UPDATE sys_user SET
-			company_id = #{company.id},
 			office_id = #{office.id},
 			login_name = #{loginName},
 			password = #{password},
@@ -300,7 +286,6 @@
         <foreach collection="list" item="item" separator=";">
             INSERT INTO sys_user(
             id,
-            company_id,
             office_id,
             login_name,
             password,
@@ -320,7 +305,6 @@
             del_flag
             ) VALUES (
             #{item.id},
-            #{item.company.id},
             #{item.office.id},
             #{item.loginName},
             #{item.password},
@@ -346,14 +330,7 @@
     <insert id="updateList" parameterType="java.util.List">
         <foreach collection="list" item="item">
             UPDATE sys_user SET
-            <choose>
-                <when test="item.company != null">
-                    company_id = #{item.company.id},
-                </when>
-                <otherwise>
-                    company_id = NULL,
-                </otherwise>
-            </choose>
+
             <choose>
                 <when test="item.office != null">
                     office_id = #{item.office.id},

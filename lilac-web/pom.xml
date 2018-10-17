@@ -28,19 +28,10 @@
 
         <dependency>
             <groupId>io.github.isliqian</groupId>
-            <artifactId>lilac-log</artifactId>
+            <artifactId>lilac-sys</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.isliqian</groupId>
-            <artifactId>lilac-shiro</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.isliqian</groupId>
-            <artifactId>lilac-async</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
 
 
 

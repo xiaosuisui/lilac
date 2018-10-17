@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 职位
  */
-public class SysOffice extends TreeEntity {
+public class SysOffice extends TreeEntity<SysOffice> {
 
 
     private static final long serialVersionUID = 1L;
@@ -50,15 +50,7 @@ public class SysOffice extends TreeEntity {
     private Integer isautoFee;	//是否每月自动生成
     private String emailTo;		//社区对账收件邮箱
 
-    @Override
-    public Object getParent() {
-        return null;
-    }
 
-    @Override
-    public void setParent(Object var1) {
-
-    }
 
     @Override
     public void doPreInsert() {
@@ -67,6 +59,16 @@ public class SysOffice extends TreeEntity {
 
     @Override
     public void doPreUpdate() {
+
+    }
+
+    @Override
+    public SysOffice getParent() {
+        return null;
+    }
+
+    @Override
+    public void setParent(SysOffice var1) {
 
     }
 }

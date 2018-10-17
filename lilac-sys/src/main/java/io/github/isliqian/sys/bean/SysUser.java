@@ -13,7 +13,6 @@ import java.util.Date;
 @Data
 public class SysUser extends DataEntity<SysUser> {
     private static final long serialVersionUID = 1L;
-    private SysOffice company;    // 归属公司
     private SysOffice office;    // 归属部门
     private String loginName;// 登录名
     private String password;// 密码

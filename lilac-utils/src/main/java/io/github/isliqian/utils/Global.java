@@ -14,7 +14,7 @@ import org.springframework.core.io.DefaultResourceLoader;
 public class Global {
     private static Global global = new Global();
     private static Map<String, String> map = Maps.newHashMap();
-    private static PropertiesLoader loader = new PropertiesLoader(new String[]{"luma.properties"});
+    private static PropertiesLoader loader = new PropertiesLoader(new String[]{"lilac.properties"});
     public static final String SHOW = "1";
     public static final String HIDE = "0";
     public static final String YES = "1";
@@ -119,7 +119,7 @@ public class Global {
         FileOutputStream fos = null;
 
         try {
-            fos = new FileOutputStream(new File(Global.class.getClassLoader().getResource(File.separator).getPath() + "luma.properties"));
+            fos = new FileOutputStream(new File(Global.class.getClassLoader().getResource(File.separator).getPath() + "lilac.properties"));
             loader.getProperties().store(fos, "更新" + key);
         } catch (FileNotFoundException var4) {
             var4.printStackTrace();
