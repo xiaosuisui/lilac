@@ -18,5 +18,5 @@ import java.util.List;
 public interface SysUserRoleMapper extends CrudDao<SysUserRole> {
 
 
-    List<String> getRoles(String username);
+    List<String> getRoles(String userId);
 }

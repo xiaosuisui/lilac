@@ -19,24 +19,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/admin")
 public class AdminController {
-//
-//    @Resource
-//    private ISysUserService sysUserService;
-//
-//    @GetMapping("/getUser")
-//    @RequiresRoles("admin")
-//    public ResultUtil getUser() {
-//        List<SysUser> list = sysUserService.findAll();
-//        return ResultUtil.success(list);
-//    }
-//
-//    /**
-//     * 封号操作
-//     */
-//    @PostMapping("/banUser")
-//    @RequiresRoles("admin")
-//    public ResultUtil updatePassword(String username) {
-//        sysUserService.banUser(username);
-//        return ResultUtil.success("成功封号！");
-//    }
+
+
+
+    @GetMapping("/")
+    @RequiresRoles("admin")
+    public ResultUtil getUser() {
+
+        return ResultUtil.success("admin角色才能看到");
+    }
+
+
 }

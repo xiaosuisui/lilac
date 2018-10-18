@@ -68,9 +68,10 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         System.out.println("————权限认证————");
         String username = JWTUtil.getUsername(principals.toString());
+        SysUser user = sysUserService.getByLoginName(username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获得该用户角色
-        List<String> roles = sysUserService.getRoles(username);
+        List<String> roles = sysUserService.getRoles(user.getId());
         //每个角色拥有默认的权限
         //String rolePermission = userMapper.getRolePermission(username);
         //每个用户可以设置新的权限

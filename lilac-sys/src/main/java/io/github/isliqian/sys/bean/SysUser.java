@@ -14,6 +14,8 @@ import java.util.Date;
 public class SysUser extends DataEntity<SysUser> {
     private static final long serialVersionUID = 1L;
     private SysOffice office;    // 归属部门
+    private SysRole role;// 用户类型
+    private SysArea area;//用户区域
     private String loginName;// 登录名
     private String password;// 密码
     private String no;        // 工号
@@ -21,7 +23,7 @@ public class SysUser extends DataEntity<SysUser> {
     private String email;    // 邮箱
     private String phone;    // 电话
     private String mobile;    // 手机
-    private String userType;// 用户类型
+
     private String loginIp;    // 最后登陆IP
     private Date loginDate;    // 最后登陆日期
     private String loginFlag;    // 是否允许登陆
@@ -33,9 +35,6 @@ public class SysUser extends DataEntity<SysUser> {
     private String oldLoginIp;    // 上次登陆IP
     private Date oldLoginDate;    // 上次登陆日期
 
-    private SysRole role;    // 根据角色查询用户条件
-    protected SysUser createBy;	// 创建者
-    protected SysUser updateBy;	// 更新者
 
 
     @Override

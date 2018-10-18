@@ -13,5 +13,25 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper
 public interface SysRoleMapper extends CrudDao<SysRole> {
+    SysRole getByName(SysRole role);
 
+    SysRole getByEnname(SysRole role);
+
+    /**
+     * 维护角色与菜单权限关系
+     * @param role
+     * @return
+     */
+    int deleteRoleMenu(SysRole role);
+
+    int insertRoleMenu(SysRole role);
+
+    /**
+     * 维护角色与公司部门关系
+     * @param role
+     * @return
+     */
+    int deleteRoleOffice(SysRole role);
+
+    int insertRoleOffice(SysRole role);
 }

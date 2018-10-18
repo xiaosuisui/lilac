@@ -7,20 +7,21 @@
 
 
     <sql id="sysUserRoleColumns">
-        a.username as "username",
+        a.user.id as "user.id",
         a.role_id as "role.id",
         r.name as "role.name"
     </sql>
     <sql id="sysUserRoleJoins">
 left join sys_role r on a.role_id = r.id
+left join sys_user u on a.user_id = u.id
 </sql>
     <select id="findList" >
       select <include refid="sysUserRoleColumns"/>
         from sys_user_role a
         <include refid="sysUserRoleJoins"/>
         <where>
-            <if test="username != null || username != ''">
-                username = #{username}
+            <if test="user != null || user != ''">
+                user_id = #{user.id}
             </if>
             <if test="role != null || role != ''">
                 role_id = #{roleId}
@@ -29,10 +30,10 @@ left join sys_role r on a.role_id = r.id
     </select>
 
     <select id="getRoles" resultType="java.lang.String">
-        select <include refid="sysUserRoleColumns"/>
+        select r.enname
         from sys_user_role a
         <include refid="sysUserRoleJoins"/>
-        where username = #{username}
+        where user_id = #{user.id}
     </select>
 
 
