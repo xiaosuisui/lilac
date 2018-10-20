@@ -25,7 +25,7 @@ public class Swagger2Configure {
                 .apiInfo(apiInfo())//api信息
                 .select()//构建api选择器
                 //.apis(RequestHandlerSelectors.basePackage("com.example.*"))//api选择器选择api的包
-                .apis(RequestHandlerSelectors.any())
+                //.apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())//api选择器选择包路径下任何api显示在文档中
                 .build()//创建文档
                 .useDefaultResponseMessages(false);

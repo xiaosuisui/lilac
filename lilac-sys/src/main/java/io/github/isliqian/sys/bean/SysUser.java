@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by LiQian_Nice on 2018/6/9
@@ -35,6 +36,8 @@ public class SysUser extends DataEntity<SysUser> {
     private String oldLoginIp;    // 上次登陆IP
     private Date oldLoginDate;    // 上次登陆日期
 
+
+    //private List<SysRole> roleList; //一个用户可能有多个角色
 
 
     @Override

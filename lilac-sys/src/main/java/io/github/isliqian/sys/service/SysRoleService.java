@@ -4,7 +4,6 @@ import io.github.isliqian.shiro.utils.AuthUtils;
 import io.github.isliqian.shiro.utils.UserUtils;
 import io.github.isliqian.sys.base.CrudService;
 import io.github.isliqian.sys.bean.SysRole;
-import io.github.isliqian.sys.bean.SysUser;
 import io.github.isliqian.sys.mapper.SysRoleMapper;
 import io.github.isliqian.utils.StringUtils;
 import org.springframework.stereotype.Service;
