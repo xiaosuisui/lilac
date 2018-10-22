@@ -9,8 +9,8 @@ import lombok.Data;
 @Data
 public class SysRoleMenu extends DataEntity<SysRoleMenu> {
 
-    private String role_id;
-    private String menu_id;
+    private SysRole role;
+    private SysMenu menu;
 
 
     @Override

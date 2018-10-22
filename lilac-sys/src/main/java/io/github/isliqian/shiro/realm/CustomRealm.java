@@ -3,10 +3,16 @@ package io.github.isliqian.shiro.realm;
 
 import io.github.isliqian.shiro.jwt.JWTToken;
 import io.github.isliqian.shiro.jwt.JWTUtil;
+import io.github.isliqian.sys.bean.SysRole;
+import io.github.isliqian.sys.bean.SysRoleMenu;
 import io.github.isliqian.sys.bean.SysUser;
 
 
+import io.github.isliqian.sys.bean.SysUserRole;
+import io.github.isliqian.sys.service.SysRoleMenuService;
+import io.github.isliqian.sys.service.SysUserRoleService;
 import io.github.isliqian.sys.service.SysUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -20,11 +26,17 @@ import java.util.List;
 import java.util.Set;
 
 @Component
+@Slf4j
 public class CustomRealm extends AuthorizingRealm {
 
     @Resource
     private SysUserService sysUserService;
 
+    @Resource
+    private SysRoleMenuService sysRoleMenuService;
+
+    @Resource
+    private SysUserRoleService sysUserRoleService;
     /**
      * 必须重写此方法，不然会报错
      */
@@ -43,7 +55,7 @@ public class CustomRealm extends AuthorizingRealm {
          */
         @Override
         protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-            System.out.println("————身份认证方法————");
+            log.info("————身份认证方法————");
             String token = (String) authenticationToken.getCredentials();
             // 解密获得username，用于和数据库进行对比
             String username = JWTUtil.getUsername(token);
@@ -66,24 +78,30 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        System.out.println("————权限认证————");
+        log.info("————权限认证————");
         String username = JWTUtil.getUsername(principals.toString());
         SysUser user = sysUserService.getByLoginName(username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获得该用户角色
-        List<String> roles = sysUserService.getRoles(user.getId());
-        //每个角色拥有默认的权限
-        //String rolePermission = userMapper.getRolePermission(username);
-        //每个用户可以设置新的权限
-        //String permission = userMapper.getPermission(username);
+        SysUserRole sysUserRole  = new SysUserRole();
+        sysUserRole.setUser(user);
+        List<SysUserRole> sysUserRoles = sysUserRoleService.findList(sysUserRole);
         Set<String> roleSet = new HashSet<>();
         Set<String> permissionSet = new HashSet<>();
+        SysRoleMenu sysRoleMenu =null;
         //需要将 role, permission 封装到 Set 作为 info.setRoles(), info.setStringPermissions() 的参数
-        for (String role: roles) {
-            roleSet.add(role);
+        for (SysUserRole userRole: sysUserRoles) {
+            roleSet.add(userRole.getRole().getEnname());
+            log.info("role:"+userRole.getRole().getEnname());
+            sysRoleMenu = new SysRoleMenu();
+            sysRoleMenu.setRole(userRole.getRole());
+
+                List<SysRoleMenu> sysRoleMenus = sysRoleMenuService.findList(sysRoleMenu);
+            for (SysRoleMenu roleMenu:sysRoleMenus){
+                permissionSet.add(roleMenu.getMenu().getPermission());
+                log.info("permission:"+roleMenu.getMenu().getPermission());
+            }
         }
-        //permissionSet.add(rolePermission);
-        //permissionSet.add(permission);
         //设置该用户拥有的角色和权限
         info.setRoles(roleSet);
         info.setStringPermissions(permissionSet);

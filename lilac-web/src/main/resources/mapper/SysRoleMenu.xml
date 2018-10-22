@@ -7,14 +7,21 @@
     <sql id="sysRoleMenuColumns">
 
         a.role_id as "role.id",
-        a.menu_id as "menu.id"
+        a.menu_id as "menu.id",
+        u.permission as"menu.permission"
     </sql>
-    <sql id="sysUserRoleJoins">
+    <sql id="sysUserMenuJoins">
 left join sys_role r on a.role_id = r.id
 left join sys_menu u on a.menu_id = u.id
 </sql>
-
-
-
-
+    <select id="findList" resultType="io.github.isliqian.sys.bean.SysRoleMenu" useCache="true">
+        select <include refid="sysRoleMenuColumns"/>
+        from sys_role_menu a
+        <include refid="sysUserMenuJoins"/>
+        <where>
+            <if test="role != null || role != ''">
+                role_id = #{role.id}
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -67,9 +67,7 @@ public class SysUserService extends CrudService<SysUserMapper, SysUser> {
     }
 
 
-    public List<String> getRoles(String username) {
-        return sysUserRoleMapper.getRoles(username);
-    }
+
 
 
     public int checkUserBanStatus(String username) {

@@ -12,9 +12,9 @@ import javax.management.relation.Role;
 @Data
 public class SysUserRole extends DataEntity<SysUserRole> {
 
-    private String username;
+    private SysUser user;
 
-    private Role role;
+    private SysRole role;
 
 
     @Override

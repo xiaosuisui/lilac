@@ -13,22 +13,22 @@ import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 
 @RestController
+@CrossOrigin
 public class LoginController {
     @Resource
     private SysUserService sysUserService;
 
     @MyLog(value = "用户登录")
     @PostMapping("/api/v1/login")
-    public ResultUtil login(@RequestParam("username") String username,
-                            @RequestParam("password") String password) {
+    public ResultUtil login(@ModelAttribute("user") SysUser user) {
 
-        SysUser sysUser = sysUserService.getByLoginName(username);
+        SysUser sysUser = sysUserService.getByLoginName(user.getLoginName());
         if (sysUser == null) {
             return ResultUtil.error(401,"用户名错误");
-        } else if (!PasswordUtils.validatePassword(password,sysUser.getPassword())) {
+        } else if (!PasswordUtils.validatePassword(user.getPassword(),sysUser.getPassword())) {
             return ResultUtil.error(401,"密码错误");
         } else {
-            return ResultUtil.success(JWTUtil.createToken(username));
+            return ResultUtil.success(JWTUtil.createToken(user.getLoginName()));
         }
     }
 
