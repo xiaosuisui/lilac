@@ -46,7 +46,7 @@ public class SysAreaController {
     @MyLog("添加一个区域")
     @PostMapping("/")
     @ApiOperation(value="添加一个字典", notes="返回200值正确")
-    public ResultUtil add(@ModelAttribute("sysArea") SysArea sysArea){
+    public ResultUtil add(SysArea sysArea){
         sysAreaService.save(sysArea);
         return ResultUtil.success();
     }
@@ -54,7 +54,7 @@ public class SysAreaController {
     @MyLog("更新一个区域")
     @PutMapping("/")
     @ApiOperation(value="更新一个区域", notes="返回200值正确")
-    public ResultUtil update(@ModelAttribute("sysArea") SysArea sysArea){
+    public ResultUtil update( SysArea sysArea){
         sysAreaService.save(sysArea);
         return ResultUtil.success();
     }

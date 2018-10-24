@@ -2,59 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.github.isliqian.sys.mapper.SysRoleMapper">
 
-    <resultMap id="roleResult" type="io.github.isliqian.sys.bean.SysRole">
-        <id property="id" column="id" />
-        <result property="name" column="name" />
-        <result property="enname" column="enname" />
-        <result property="roleType" column="roleType" />
-        <result property="dataScope" column="dataScope" />
-        <result property="remarks" column="remarks" />
-        <result property="useable" column="useable" />
-        <result property="sysData" column="sysData" /><!--
-		<collection property="userList" ofType="User">
-			<id property="id" column="userList.id" />
-			<id property="loginName" column="userList.loginName" />
-			<id property="name" column="userList.name" />
-			<id property="email" column="userList.email" />
-			<id property="phone" column="userList.phone" />
-			<id property="mobile" column="userList.mobile" />
-			<id property="office.name" column="userList.office.name" />
-			<id property="company.name" column="userList.company.name" />
-		</collection> -->
-        <collection property="menuList" ofType="io.github.isliqian.sys.bean.SysMenu">
-            <id property="id" column="menuList.id" />
-        </collection>
-    </resultMap>
 
     <sql id="roleColumns">
     	a.id,
     	a.office_id AS "office.id",
     	a.name,
     	a.enname,
-    	a.role_type AS roleType,
-		a.data_scope AS dataScope,
 		a.remarks,
-		a.create_by AS "createBy.id",
 		a.create_date,
-		a.update_by AS "updateBy.id",
 		a.update_date,
 		a.del_flag,
     	o.name AS "office.name",
     	o.code,
     	a.useable AS useable
     </sql>
-
-    <select id="get" resultMap="roleResult">
+    <sql id="roleJoins">
+        LEFT JOIN sys_office o ON o.id = a.office_id
+    </sql>
+    <select id="get" resultType="io.github.isliqian.sys.bean.SysRole">
         SELECT
-        <include refid="roleColumns"/>,<!--
-			ur.user_id AS "userList.id",
-			u.login_name AS "userList.loginName",
-			u.name AS "userList.name",
-			u.email AS "userList.email",
-			u.phone AS "userList.phone",
-			u.mobile AS "userList.mobile",
-			uc.name AS "userList.company.name",
-			uo.name AS "userList.office.name", -->
+        <include refid="roleColumns"/>,
         rm.menu_id AS "menuList.id"
         FROM sys_role a<!--
 		LEFT JOIN sys_user_role ur ON ur.role_id = a.id
@@ -80,17 +47,20 @@
         WHERE a.enname = #{enname} AND a.del_flag = #{DEL_FLAG_NORMAL}
     </select>
 
-    <select id="findList" resultMap="roleResult">
+    <select id="findList" resultType="io.github.isliqian.sys.bean.SysRole">
         SELECT <!-- DISTINCT -->
-        <include refid="roleColumns"/>,
-        ro.office_id AS "officeList.id"
+        <include refid="roleColumns"/>
         FROM sys_role a
-        LEFT JOIN sys_user_role ur ON ur.role_id = a.id
-        LEFT JOIN sys_user u ON u.id = ur.user_id
-
+        <include refid="roleJoins"/>
         WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.useable=#{useable}
         <if test="user != null and user.id != null and user.id != ''">
             AND u.id = #{user.id}
+        </if>
+        <if test="office != null and office.id != null and office.id != ''">
+            AND (o.id = #{office.id} OR o.parent_ids LIKE
+            <if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
+            <if test="dbName == 'mssql'">'%,'+#{office.id}+',%')</if>
+            <if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
         </if>
         <if test="user != null and user.loginName != null and user.loginName != ''">
             AND u.login_name = #{user.loginName}
@@ -114,8 +84,6 @@
 			office_id,
 			name,
 			enname,
-			role_type,
-			data_scope,
 			create_by,
 			create_date,
 			update_by,
@@ -129,8 +97,6 @@
 			#{office.id},
 			#{name},
 			#{enname},
-			#{roleType},
-			#{dataScope},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -147,8 +113,6 @@
 			office_id = #{office.id},
 			name = #{name},
 			enname = #{enname},
-			role_type = #{roleType},
-			data_scope = #{dataScope},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},

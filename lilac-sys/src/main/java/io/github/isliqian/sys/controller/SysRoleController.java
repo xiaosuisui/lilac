@@ -9,19 +9,31 @@ import io.github.isliqian.utils.ResultUtil;
 import io.github.isliqian.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@RestController
-@RequestMapping("/api/v1/role")
 @Api(value = "角色配置管理接口")
+@RequestMapping("/sys/role")
+@Controller
 public class SysRoleController  {
 
     @Resource
     private SysRoleService sysRoleService;
+
+    @GetMapping("/")
+    @ApiOperation(value="角色管理")
+    public ModelAndView roleList(SysRole sysRole, HttpServletRequest request, HttpServletResponse response){
+        Page<SysRole> page = sysRoleService.findPage(new Page<SysRole>(request, response), sysRole);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/user/administrators/role.html");
+        mav.addObject("roleList",page);
+        return mav;
+    }
 
     @MyLog("根据id查询角色详情")
     @GetMapping("/{id}")
@@ -34,19 +46,12 @@ public class SysRoleController  {
         }
     }
 
-    @MyLog("获取全部角色")
-    @GetMapping("/")
-    @ApiOperation(value="获取全部角色", notes="返回200值正确")
-    public ResultUtil findAll(SysRole sysRole, HttpServletRequest request, HttpServletResponse response){
-        //TODO 请求参数未生效
-        Page<SysRole> page = sysRoleService.findPage(new Page<SysRole>(request, response), sysRole);
-        return ResultUtil.success(page);
-    }
+
 
     @MyLog("添加一个角色")
     @PostMapping("/")
     @ApiOperation(value="添加一个角色", notes="返回200值正确")
-    public ResultUtil add(@ModelAttribute("sysRole") SysRole sysRole){
+    public ResultUtil add(SysRole sysRole){
         //TODO 需要保存角色关联菜单
         sysRoleService.save(sysRole);
         return ResultUtil.success();
@@ -55,7 +60,7 @@ public class SysRoleController  {
     @MyLog("更新一个区域")
     @PutMapping("/")
     @ApiOperation(value="更新一个角色", notes="返回200值正确")
-    public ResultUtil update(@ModelAttribute("sysRole") SysRole sysRole){
+    public ResultUtil update(SysRole sysRole){
         sysRoleService.save(sysRole);
         return ResultUtil.success();
     }

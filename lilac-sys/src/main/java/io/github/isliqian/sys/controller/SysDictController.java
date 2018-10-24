@@ -46,7 +46,7 @@ public class SysDictController  {
     @MyLog("添加一个字典")
     @PostMapping("/")
     @ApiOperation(value="添加一个字典", notes="返回200值正确")
-    public ResultUtil add(@ModelAttribute("sysDict") SysDict sysDict){
+    public ResultUtil add(SysDict sysDict){
         sysDictService.save(sysDict);
         return ResultUtil.success();
     }
@@ -54,7 +54,7 @@ public class SysDictController  {
     @MyLog("更新一个字典")
     @PutMapping("/")
     @ApiOperation(value="更新一个字典", notes="返回200值正确")
-    public ResultUtil update(@ModelAttribute("sysDict") SysDict sysDict){
+    public ResultUtil update(SysDict sysDict){
         sysDictService.save(sysDict);
         return ResultUtil.success();
     }

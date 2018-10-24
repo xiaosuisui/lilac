@@ -16,8 +16,7 @@ public class SysRole   extends DataEntity<SysRole> {
     private SysOffice office;	// 归属机构
     private String name; 	// 角色名称
     private String enname;	// 英文名称
-    private String roleType;// 权限类型
-    private String dataScope;// 数据范围
+
 
     private String oldName; 	// 原角色名称
     private String oldEnname;	// 原英文名称

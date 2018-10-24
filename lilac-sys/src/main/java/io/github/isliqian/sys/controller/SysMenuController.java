@@ -46,7 +46,7 @@ public class SysMenuController {
     @MyLog("添加一个菜单")
     @PostMapping("/")
     @ApiOperation(value="添加一个菜单", notes="返回200值正确")
-    public ResultUtil add(@ModelAttribute("sysMenu") SysMenu sysMenu){
+    public ResultUtil add( SysMenu sysMenu){
         sysMenuService.save(sysMenu);
         return ResultUtil.success();
     }
@@ -54,7 +54,7 @@ public class SysMenuController {
     @MyLog("更新一个菜单")
     @PutMapping("/")
     @ApiOperation(value="更新一个菜单", notes="返回200值正确")
-    public ResultUtil update(@ModelAttribute("sysMenu") SysMenu sysMenu){
+    public ResultUtil update( SysMenu sysMenu){
         sysMenuService.save(sysMenu);
         return ResultUtil.success();
     }
