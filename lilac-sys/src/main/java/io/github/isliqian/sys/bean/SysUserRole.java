@@ -17,13 +17,4 @@ public class SysUserRole extends DataEntity<SysUserRole> {
     private SysRole role;
 
 
-    @Override
-    public void doPreInsert() {
-
-    }
-
-    @Override
-    public void doPreUpdate() {
-
-    }
 }

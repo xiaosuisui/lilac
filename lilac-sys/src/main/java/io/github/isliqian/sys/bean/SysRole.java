@@ -29,13 +29,5 @@ public class SysRole   extends DataEntity<SysRole> {
     private List<SysMenu> menuList = Lists.newArrayList(); // 拥有菜单列表
 
 
-    @Override
-    public void doPreInsert() {
 
-    }
-
-    @Override
-    public void doPreUpdate() {
-
-    }
 }

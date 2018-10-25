@@ -4,84 +4,63 @@ import io.github.isliqian.log.ann.MyLog;
 import io.github.isliqian.sys.base.Page;
 import io.github.isliqian.sys.bean.SysDict;
 import io.github.isliqian.sys.service.SysDictService;
-import io.github.isliqian.utils.ResultUtil;
 import io.github.isliqian.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.Date;
 
-@RestController
-@RequestMapping("/api/v1/dict")
-@Api(value = "字典配置管理接口")
+@Controller
+@RequestMapping("/sys/dict")
+@Api(value = "字典管理")
 public class SysDictController  {
 
     @Resource
     private SysDictService sysDictService;
+    @GetMapping("/")
+    @ApiOperation(value="字典列表")
+    public ModelAndView list(SysDict sysDict, HttpServletRequest request, HttpServletResponse response, ModelAndView mav ){
+        Page<SysDict> page = sysDictService.findPage(new Page<SysDict>(request, response), sysDict);
+        mav.setViewName("/sys/dict.html");
+        mav.addObject("page",page);
+        return mav;
+    }
 
     @MyLog("根据id查询字典详情")
-    @GetMapping("/{id}")
-    @ApiOperation(value="根据id查询字典详情", notes="返回200值正确")
-    public ResultUtil get(@PathVariable("id") String id){
-        if (StringUtils.isNotBlank(id)){
-            return  ResultUtil.success(sysDictService.get(id));
-        }else{
-            return ResultUtil.success(new SysDict());
+    @GetMapping("/info")
+    @ApiOperation(value="根据id查询字典详情")
+    public ModelAndView form(SysDict sysDict, ModelAndView modelAndView){
+        if (StringUtils.isNotBlank(sysDict.getId())) {
+            modelAndView.addObject("dict",sysDictService.get(sysDict.getId()));
+        }else {
+            modelAndView.addObject("dict",new SysDict());
+
         }
+        modelAndView.setViewName("/sys/dictform.html");
+        return modelAndView;
     }
 
-    @MyLog("获取全部字典")
-    @GetMapping("/")
-    @ApiOperation(value="获取全部字典", notes="返回200值正确")
-    public ResultUtil findAll(SysDict sysDict,HttpServletRequest request, HttpServletResponse response){
-        //TODO 请求参数未生效
-        Page<SysDict> page = sysDictService.findPage(new Page<SysDict>(request, response), sysDict);
-        return ResultUtil.success(page);
-    }
 
-    @MyLog("添加一个字典")
-    @PostMapping("/")
-    @ApiOperation(value="添加一个字典", notes="返回200值正确")
-    public ResultUtil add(SysDict sysDict){
-        sysDictService.save(sysDict);
-        return ResultUtil.success();
-    }
 
-    @MyLog("更新一个字典")
-    @PutMapping("/")
-    @ApiOperation(value="更新一个字典", notes="返回200值正确")
-    public ResultUtil update(SysDict sysDict){
-        sysDictService.save(sysDict);
-        return ResultUtil.success();
-    }
-
-    @MyLog("获取全部字典类型")
-    @GetMapping("/type")
-    @ApiOperation(value="获取全部字典类型", notes="返回200值正确")
-    public ResultUtil findTypeList(){
-        List<String> typeList = sysDictService.findTypeList();
-        return ResultUtil.success(typeList);
-
-    }
 
     @MyLog("根据id删除字典")
-    @DeleteMapping("/{id}")
-    @ApiOperation(value="根据id删除字典", notes="返回200值正确")
-    public ResultUtil delete(@PathVariable("id") String id){
-        if (StringUtils.isNotBlank(id)) {
-            SysDict sysDict = new SysDict();
-            sysDict.setId(id);
+    @GetMapping("/del")
+    @ApiOperation(value="根据id删除字典")
+    public ModelAndView delete(SysDict sysDict, ModelAndView modelAndView){
+        if (StringUtils.isNotBlank(sysDict.getId())) {
+            sysDict.setDelFlag("1");
+            sysDict.setUpdateDate(new Date());
             sysDictService.delete(sysDict);
-            return ResultUtil.success();
-        }else {
-            return ResultUtil.error(-1,"id不能为空");
-        }
-
+        } modelAndView.setViewName("redirect:/sys/dict/?repage");
+        return modelAndView;
     }
+
 
 
 

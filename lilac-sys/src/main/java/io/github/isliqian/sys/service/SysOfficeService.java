@@ -72,10 +72,8 @@ public class SysOfficeService extends TreeService<SysOfficeMapper, SysOffice> {
         List<SysOffice> updates = new ArrayList<>();
         for (SysOffice office : offices){
             if (StringUtils.isBlank(office.getId())){
-                office.preInsert();
                 inserts.add(office);
             } else {
-                office.preUpdate();
                 updates.add(office);
             }
         }

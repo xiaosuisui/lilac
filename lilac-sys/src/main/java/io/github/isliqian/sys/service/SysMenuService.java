@@ -36,10 +36,8 @@ public class SysMenuService extends CrudService<SysMenuMapper, SysMenu> {
 
         // 保存或更新实体
         if (StringUtils.isBlank(menu.getId())) {
-            menu.preInsert();
             super.dao.insert(menu);
         } else {
-            menu.preUpdate();
             super.dao.update(menu);
         }
 

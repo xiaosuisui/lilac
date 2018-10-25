@@ -68,7 +68,7 @@
           </li>
           <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;">
-              <cite>贤心</cite>
+              <cite>lilac</cite>
             </a>
             <dl class="layui-nav-child">
               <dd><a lay-href="set/user/info.html">基本资料</a></dd>
@@ -374,6 +374,12 @@
                 </dd>
               </dl>
             </li>
+            <li data-name="office" class="layui-nav-item">
+              <a href="javascript:;" lay-href="/sys/office"  lay-tips="机构管理" lay-direction="2">
+                <i class="layui-icon layui-icon-template-1"></i>
+                <cite>机构管理</cite>
+              </a>
+            </li>
             <li data-name="user" class="layui-nav-item">
               <a href="javascript:;" lay-tips="用户" lay-direction="2">
                 <i class="layui-icon layui-icon-user"></i>
@@ -384,10 +390,30 @@
                   <a lay-href="user/user/list.html">网站用户</a>
                 </dd>
                 <dd>
-                  <a lay-href="user/administrators/list.html">后台管理员</a>
+                  <a lay-href="sys/user/">后台管理员</a>
                 </dd>
                 <dd>
                   <a lay-href="sys/role/">角色管理</a>
+                </dd>
+              </dl>
+            </li>
+            <li data-name="basic" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="系统" lay-direction="2">
+                <i class="layui-icon  layui-icon-tree"></i>
+                <cite>系统</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd>
+                  <a lay-href="sys/menu/">菜单管理</a>
+                </dd>
+                <dd>
+                  <a lay-href="sys/area/">区域管理</a>
+                </dd>
+                <dd>
+                  <a lay-href="sys/dict/">字典管理</a>
+                </dd>
+                <dd>
+                  <a lay-href="sys/log/">系统日志</a>
                 </dd>
               </dl>
             </li>
@@ -413,17 +439,17 @@
                 </dd>
               </dl>
             </li>
-            <li data-name="get" class="layui-nav-item">
-              <a href="javascript:;" lay-href="//www.layui.com/admin/#get" lay-tips="授权" lay-direction="2">
-                <i class="layui-icon layui-icon-auz"></i>
-                <cite>授权</cite>
-              </a>
-            </li>
-            <li data-name="api" class="layui-nav-item">
-              <a href="javascript:;" lay-href="/swagger-ui.html" lay-tips="接口文档" lay-direction="2">
+
+            <li data-name="other" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="其他" lay-direction="2">
                 <i class="layui-icon layui-icon-flag"></i>
-                <cite>接口文档</cite>
+                <cite>其他</cite>
               </a>
+              <dl class="layui-nav-child">
+                <dd><a lay-href="/swagger-ui.html" >接口文档</a></dd>
+              <dd><a lay-href="/druid2/login.html" >数据库监控</a></dd>
+              <dd><a lay-href="/#asd" >第三方服务</a></dd>
+              </dl>
             </li>
           </ul>
         </div>

@@ -9,15 +9,20 @@
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="operation" jdbcType="VARCHAR" property="operation"/>
         <result column="method" jdbcType="VARCHAR" property="method"/>
-        <result column="params" jdbcType="VARCHAR" property="params"/>
         <result column="ip" jdbcType="VARCHAR" property="ip"/>
         <result column="createDate" jdbcType="DATE" property="createDate"/>
     </resultMap>
 
 
     <insert id="save">
-        INSERT INTO sys_log (id,username,operation,method,params,ip,createDate) VALUES(#{id},#{username},#{operation},#{method},#{params},#{ip},#{createDate})
+        INSERT INTO sys_log (id,username,operation,method,ip,createDate) VALUES(#{id},#{username},#{operation},#{method},#{ip},#{createDate})
     </insert>
 
+    <select id="findList" resultType="io.github.isliqian.log.bean.SysLog">
+        SELECT
+        id,username,operation,method,ip,createDate
+        FROM sys_log
 
+        ORDER BY createDate DESC
+    </select>
 </mapper>

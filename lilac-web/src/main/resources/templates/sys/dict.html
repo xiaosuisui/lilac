@@ -1,0 +1,111 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>字典管理</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          字典筛选
+        </div>
+        <div class="layui-inline">
+          <div class="layui-form-item">
+            <div class="layui-input-inline">
+              <input type="text" name="name" required lay-verify="required" placeholder="请输入字典类型" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+        <div class="layui-inline">
+          <button class="layui-btn layui-btn-primary" >搜索</button>
+        </div>
+        <div class="layui-inline">
+          <div>
+            <a href="#">批量删除</a>
+            <a lay-href="/sys/dict/info?id=" lay-direction="2">添加字典</a> </td>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layui-card-body">
+
+
+      <table class="layui-table">
+        <colgroup>
+          <col width="50">
+          <col width="150">
+          <col width="150">
+          <col width="150">
+          <col width="150">
+          <col width="150">
+          <col width="150">
+        </colgroup>
+        <thead>
+        <tr>
+          <th></th>
+          <th>类型</th>
+          <th>标签名</th>
+          <th>数据值</th>
+          <th>描述</th>
+          <th>更新时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dict : ${page.list}">
+          <td><input type="checkbox" name="" lay-skin="primary"> </td>
+          <td th:text="${dict.type}"></td>
+          <td th:text="${dict.label}"></td>
+          <td th:text="${dict.type}"></td>
+          <td th:text="${dict.description}"></td>
+          <td th:text="${dict.updateDate}"></td>
+          <td><a th:href="@{'/sys/dict/del?id='+${dict.id}}" onclick="return confirmdel(this.href) "  data-method="offset" data-type="auto">删除</a>
+            &nbsp;&nbsp;
+            <a  th:lay-href="'/sys/dict/info?id='+${dict.id}" lay-direction="2">修改字典</a> </td>
+        </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+ <script src="../../../layuiadmin/layui/layui.js"></script>
+  <script>
+      layui.config({
+          base: '../../../layuiadmin/' //静态资源所在路径
+      }).extend({
+          index: 'lib/index' //主入口模块
+      }).use(['index', 'useradmin', 'table'], function() {
+          var $ = layui.$
+              , form = layui.form
+              , table = layui.table;
+      });
+      function confirmdel(obj) {
+          var herf = obj;
+          //询问框
+          layer.confirm('确定删除这条内容么?', {
+              btn: ['确定', '取消'] //按钮
+          }, function (f) {
+              window.location.href=herf;
+              layer.msg('删除成功', {icon: 1});
+
+
+          });
+          return false;
+      }
+  </script>
+</body>
+</html>
+

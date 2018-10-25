@@ -26,13 +26,7 @@
 		<if test="type != null and type != ''">
 			AND type = #{type}
 		</if>
-		<if test="description != null and description != ''">
-			AND description LIKE 
-					<if test="dbName == 'oracle'">'%'||#{description}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{description}+'%'</if>
-					<if test="dbName == 'mysql'">CONCAT('%', #{description}, '%')</if>
-		</if>
-		ORDER BY type, sort, update_date DESC
+		ORDER BY type, update_date DESC
 	</select>
 	
 	<select id="findAllList" resultType="io.github.isliqian.sys.bean.SysDict">
@@ -40,7 +34,7 @@
 			* 
 		FROM sys_dict 
 		WHERE del_flag = #{DEL_FLAG_NORMAL} 
-		ORDER BY type, sort, update_date DESC
+		ORDER BY type, update_date DESC
 	</select>
 	
 	<select id="findTypeList" resultType="string">
@@ -59,10 +53,7 @@
 			label, 
 			type, 
 			description, 
-			sort, 
-			create_by, 
-			create_date, 
-			update_by, 
+			create_date,
 			update_date, 
 			remarks, 
 			del_flag
@@ -71,11 +62,8 @@
 			#{value}, 
 			#{label}, 
 			#{type}, 
-			#{description}, 
-			#{sort}, 
-			#{createBy.id}, 
-			#{createDate}, 
-			#{updateBy.id}, 
+			#{description},
+			#{createDate},
 			#{updateDate}, 
 			#{remarks}, 
 			#{delFlag}
@@ -87,9 +75,7 @@
 			value = #{value}, 
 			label = #{label}, 
 			type = #{type}, 
-			description = #{description}, 
-			sort = #{sort}, 
-			update_by = #{updateBy.id}, 
+			description = #{description},
 			update_date = #{updateDate}, 
 			remarks = #{remarks}
 		WHERE id = #{id}
@@ -98,10 +84,7 @@
 	<update id="delete">
 		UPDATE sys_dict SET 
 			del_flag = #{DEL_FLAG_DELETE},
-			update_date =
-			<if test="dbName == 'oracle'">sysdate</if>
-			<if test="dbName == 'mssql'">GETDATE()</if>
-			<if test="dbName == 'mysql'">NOW()</if>
+			update_date = #{updateDate}
 		WHERE id = #{id}
 	</update>
 	

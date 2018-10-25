@@ -26,6 +26,7 @@ public class IndexController {
         mav.setViewName("/home/console.html");
         return mav;
     }
+    //user/administrators/admin.html
 
 
 }

@@ -23,21 +23,7 @@ private Integer sort; 	// 排序
 private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
 private String permission; // 权限标识
 
-public SysUser getCreateBy() {
-        return createBy;
-        }
 
-public void setCreateBy(SysUser createBy) {
-        this.createBy = createBy;
-        }
-
-public SysUser getUpdateBy() {
-        return updateBy;
-        }
-
-public void setUpdateBy(SysUser updateBy) {
-        this.updateBy = updateBy;
-        }
 
 protected SysUser createBy;	// 创建者
 protected SysUser updateBy;	// 更新者
@@ -139,13 +125,5 @@ public String getParentId() {
         return parent != null && parent.getId() != null ? parent.getId() : "0";
         }
 
-@Override
-public void doPreInsert() {
 
-        }
-
-@Override
-public void doPreUpdate() {
-
-        }
 }

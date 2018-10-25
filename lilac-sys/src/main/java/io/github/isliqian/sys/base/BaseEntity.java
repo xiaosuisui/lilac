@@ -66,9 +66,6 @@ public abstract class BaseEntity<T> implements Serializable {
         this.sqlMap = sqlMap;
     }
 
-    public abstract void preInsert();
-
-    public abstract void preUpdate();
 
     public boolean getIsNewRecord() {
         return this.isNewRecord || StringUtils.isBlank(this.getId());

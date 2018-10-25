@@ -22,15 +22,7 @@ public class SysArea extends TreeEntity<SysArea> {
 	private SysUser updateBy;
 	private SysUser createBy;
 
-	@Override
-	public void doPreInsert() {
 
-	}
-
-	@Override
-	public void doPreUpdate() {
-
-	}
 
 	public SysArea getParent() {
 		return parent;

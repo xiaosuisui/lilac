@@ -1,27 +1,29 @@
-package io.github.isliqian.log.service.impl;
+package io.github.isliqian.log.service;
 
 
 
 import io.github.isliqian.log.bean.SysLog;
 import io.github.isliqian.log.mapper.SysLogMapper;
-import io.github.isliqian.log.service.ISysLogService;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 @Component
-@Slf4j
-public class SysLogServiceImpl implements ISysLogService {
+public class SysLogService  {
 
     @Autowired
     private SysLogMapper sysLogMapper;
 
-    @Override
     @Async
     public void save(SysLog sysLog) {
         sysLogMapper.save(sysLog);
+    }
+
+    public List<SysLog> findList(SysLog sysLog) {
+        return sysLogMapper.findList(sysLog);
     }
 }

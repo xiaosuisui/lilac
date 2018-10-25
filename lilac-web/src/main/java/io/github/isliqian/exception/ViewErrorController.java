@@ -9,19 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 视图控制错误码
  */
-//@Controller
-public class ViewErrorController  {
-//implements ErrorController
-//    @GetMapping("/error")
-//    public String handleError(HttpServletRequest request) {
-//        //获取statusCode:401,404,500
-//        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-//        if (statusCode == 401) {
-//            return "/error/401";
-//        }
-//        if (statusCode == 404) {
-//            return "/error/404";
-//        }
+@Controller
+public class ViewErrorController implements ErrorController {
+    @GetMapping("/error")
+    public String handleError(HttpServletRequest request) {
+        //获取statusCode:401,404,500
+        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+
+        if (statusCode == 404) {
+            return "/error/404";
+        }
 //        if (statusCode == 403) {
 //            return "/error/403";
 //        }
@@ -31,11 +28,11 @@ public class ViewErrorController  {
 //        if (statusCode == 500) {
 //            return "/error/500";
 //        }
-//        return null;
-//    }
-//
-//    @Override
-//    public String getErrorPath() {
-//        return "/error";
-//    }
+        return null;
+    }
+
+    @Override
+    public String getErrorPath() {
+        return "/error";
+    }
 }

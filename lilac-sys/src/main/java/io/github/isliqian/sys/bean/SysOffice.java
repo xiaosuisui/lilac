@@ -37,16 +37,6 @@ public class SysOffice extends TreeEntity<SysOffice> {
 
 
     @Override
-    public void doPreInsert() {
-
-    }
-
-    @Override
-    public void doPreUpdate() {
-
-    }
-
-    @Override
     public SysOffice getParent() {
         return null;
     }

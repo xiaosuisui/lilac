@@ -42,10 +42,8 @@ public class SysRoleService extends CrudService<SysRoleMapper, SysRole> {
     @Transactional(readOnly = false)
     public void saveRole(SysRole role) {
         if (StringUtils.isBlank(role.getId())) {
-            role.preInsert();
             super.dao.insert(role);
         } else {
-            role.preUpdate();
             super.dao.update(role);
         }
         // 更新角色与菜单关联

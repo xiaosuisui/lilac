@@ -38,10 +38,8 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>>
     )
     public void save(T entity) {
         if (entity.getIsNewRecord()) {
-            entity.preInsert();
             this.dao.insert(entity);
         } else {
-            entity.preUpdate();
             this.dao.update(entity);
         }
 

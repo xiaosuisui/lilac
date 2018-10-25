@@ -9,11 +9,10 @@
     	a.name,
     	a.enname,
 		a.remarks,
-		a.create_date,
-		a.update_date,
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
 		a.del_flag,
     	o.name AS "office.name",
-    	o.code,
     	a.useable AS useable
     </sql>
     <sql id="roleJoins">
@@ -21,15 +20,9 @@
     </sql>
     <select id="get" resultType="io.github.isliqian.sys.bean.SysRole">
         SELECT
-        <include refid="roleColumns"/>,
-        rm.menu_id AS "menuList.id"
-        FROM sys_role a<!--
-		LEFT JOIN sys_user_role ur ON ur.role_id = a.id
-		LEFT JOIN sys_user u ON u.id = ur.user_id
-		LEFT JOIN sys_office uc ON uc.id = u.company_id
-		LEFT JOIN sys_office uo ON uo.id = u.office_id -->
-        LEFT JOIN sys_role_menu rm ON rm.role_id = a.id
-
+        <include refid="roleColumns"/>
+        FROM sys_role a
+        <include refid="roleJoins"/>
         WHERE a.id = #{id}
     </select>
 
@@ -154,10 +147,7 @@
     <update id="delete">
         UPDATE sys_role SET
         del_flag = #{DEL_FLAG_DELETE},
-        update_date =
-        <if test="dbName == 'oracle'">sysdate</if>
-        <if test="dbName == 'mssql'">GETDATE()</if>
-        <if test="dbName == 'mysql'">NOW()</if>
+        update_date = #{updateDate}
         WHERE id = #{id}
     </update>
 

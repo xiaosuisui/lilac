@@ -13,11 +13,5 @@ public class SysRoleMenu extends DataEntity<SysRoleMenu> {
     private SysMenu menu;
 
 
-    @Override
-    public void doPreInsert() {
-    }
 
-    @Override
-    public void doPreUpdate() {
-    }
 }

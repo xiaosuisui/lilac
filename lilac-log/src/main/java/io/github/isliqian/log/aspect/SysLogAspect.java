@@ -1,12 +1,9 @@
 package io.github.isliqian.log.aspect;
 
-import com.alibaba.fastjson.JSON;
-import io.github.isliqian.async.bean.TaskInfo;
-import io.github.isliqian.async.manager.AsyncTaskManager;
 import io.github.isliqian.log.ann.MyLog;
 import io.github.isliqian.log.bean.SysLog;
-import io.github.isliqian.log.service.ISysLogService;
 
+import io.github.isliqian.log.service.SysLogService;
 import io.github.isliqian.utils.IDUtils;
 import io.github.isliqian.utils.IPUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +13,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -32,7 +27,7 @@ import java.util.Date;
 public class SysLogAspect {
 
     @Autowired
-    private ISysLogService sysLogService;
+    private SysLogService sysLogService;
 
 
 
@@ -65,12 +60,6 @@ public class SysLogAspect {
             String methodName = method.getName();
             sysLog.setMethod(className + "." + methodName);
 
-            //请求的参数
-            //TODO 出现异常
-//            Object[] args = joinPoint.getArgs();
-//            //将参数所在的数组转换成json
-//            String params = JSON.toJSONString(args);
-//            sysLog.setParams(params);
 
             sysLog.setCreateDate(new Date());
             //获取用户名

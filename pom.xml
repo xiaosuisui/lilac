@@ -141,7 +141,11 @@
             <version>2.11.1</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.18</version>
+        </dependency>
 
         <!--添加swagger-->
         <dependency>

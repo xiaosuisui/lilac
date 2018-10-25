@@ -1,5 +1,6 @@
 package io.github.isliqian.log.bean;
 
+
 import lombok.Data;
 
 import java.io.Serializable;
@@ -8,7 +9,7 @@ import java.util.*;
  * 系统日志记录类
  */
 @Data
-public class SysLog implements Serializable {
+public class SysLog  implements Serializable {
 
     private String id;
 
@@ -18,7 +19,6 @@ public class SysLog implements Serializable {
 
     private String method; //方法名
 
-    private String params; //参数
 
     private String ip; //ip地址
 

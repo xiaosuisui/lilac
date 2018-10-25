@@ -25,28 +25,13 @@ public class SysUser extends DataEntity<SysUser> {
     private String phone;    // 电话
     private String mobile;    // 手机
 
-    private String loginIp;    // 最后登陆IP
-    private Date loginDate;    // 最后登陆日期
     private String loginFlag;    // 是否允许登陆
     private String photo;    // 头像
 
-    private String oldLoginName;// 原登录名
-    private String newPassword;    // 新密码
-
-    private String oldLoginIp;    // 上次登陆IP
-    private Date oldLoginDate;    // 上次登陆日期
 
 
     //private List<SysRole> roleList; //一个用户可能有多个角色
 
 
-    @Override
-    public void doPreInsert() {
 
-    }
-
-    @Override
-    public void doPreUpdate() {
-
-    }
 }

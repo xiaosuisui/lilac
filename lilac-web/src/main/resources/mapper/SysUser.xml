@@ -8,37 +8,30 @@
         a.id,
         a.office_id AS "office.id",
         a.role_id AS "role.id",
-        a.login_name,
+        a.login_name AS "loginName",
         a.password,
         a.no,
         a.name,
         a.email,
         a.phone,
         a.mobile,
-        a.login_ip,
-        a.login_date,
         a.remarks,
         a.login_flag,
         a.photo,
-        a.create_date,
-        a.update_date,
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate",
         a.del_flag,
         o.name AS "office.name",
         o.code AS "office.code",
         o.type AS "office.type",
         o.parent_id AS "office.parent.id",
-        o.parent_ids AS "office.parentIds"
-        <!-- ,
-        r.id AS "roleList.id",
-        r.office_id AS "roleList.office.id",
-        r.name AS "roleList.name",
-        r.enname AS "roleList.enname",
-        r.role_type AS "roleList.roleType",
-        r.data_scope AS "roleList.dataScope" -->
+        o.parent_ids AS "office.parentIds",
+        r.name AS "role.name"
     </sql>
 
     <sql id="userJoins">
         LEFT JOIN sys_office o ON o.id = a.office_id
+        LEFT JOIN sys_role r ON r.id = a.role_id
      <!--
 		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
         LEFT JOIN sys_role r ON r.id = ur.role_id -->
@@ -69,14 +62,12 @@
         FROM sys_user a
         <include refid="userJoins"/>
         WHERE a.del_flag = #{DEL_FLAG_NORMAL}
-
         <if test="office != null and office.id != null and office.id != ''">
-            AND (o.id = #{office.id} OR o.parent_ids LIKE
-            <if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
-            <if test="dbName == 'mssql'">'%,'+#{office.id}+',%')</if>
-            <if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
+            AND a.office_id = #{office.id}
         </if>
-
+        <if test="role != null and role.id != null and role.id != ''">
+            AND a.role_id = #{role.id}
+        </if>
         <if test="loginName != null and loginName != ''">
             AND a.login_name like
             <if test="dbName == 'oracle'">'%'||#{loginName}||'%'</if>
@@ -143,9 +134,7 @@
 			email,
 			phone,
 			mobile,
-			create_by,
 			create_date,
-			update_by,
 			update_date,
 			remarks,
 			login_flag,
@@ -163,9 +152,7 @@
 			#{email},
 			#{phone},
 			#{mobile},
-			#{createBy.id},
 			#{createDate},
-			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
 			#{loginFlag},
@@ -187,7 +174,6 @@
 			email = #{email},
 			phone = #{phone},
 			mobile = #{mobile},
-			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
 			login_flag = #{loginFlag},
@@ -218,7 +204,6 @@
 			email = #{email},
 			phone = #{phone},
 			mobile = #{mobile},
-			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
 			photo = #{photo}
@@ -232,22 +217,13 @@
 		WHERE id = #{id}
 	</update>
 
-    <!-- 更新登录信息，如登录IP、登录时间 -->
-    <update id="updateLoginInfo">
-		UPDATE sys_user SET
-			login_ip = #{loginIp},
-			login_Date = #{loginDate}
-		WHERE id = #{id}
-	</update>
+
 
     <!-- 逻辑删除用户 -->
     <update id="delete">
         UPDATE sys_user SET
         del_flag = #{DEL_FLAG_DELETE},
-        update_date =
-        <if test="dbName == 'oracle'">sysdate</if>
-        <if test="dbName == 'mssql'">GETDATE()</if>
-        <if test="dbName == 'mysql'">NOW()</if>
+        update_date = #{updateDate}
         WHERE id = #{id}
     </update>
 
@@ -258,7 +234,6 @@
             id,
             office_id,
             role_id,
-            area_id,
             login_name,
             password,
             no,
@@ -266,9 +241,7 @@
             email,
             phone,
             mobile,
-            create_by,
             create_date,
-            update_by,
             update_date,
             remarks,
             login_flag,
@@ -278,7 +251,6 @@
             #{item.id},
             #{item.office.id},
             #{item.role.id},
-            #{item.area.id},
             #{item.loginName},
             #{item.password},
             #{item.no},
@@ -286,9 +258,7 @@
             #{item.email},
             #{item.phone},
             #{item.mobile},
-            #{item.createBy.id},
             #{item.createDate},
-            #{item.updateBy.id},
             #{item.updateDate},
             #{item.remarks},
             #{item.loginFlag},
@@ -312,18 +282,13 @@
                 </otherwise>
             </choose>
             role_id = #{item.role.id},
-            area_id = #{item.role.id},
             login_name = #{item.loginName},
-
-            area_id,
             password = #{item.password},
             no = #{item.no},
             name = #{item.name},
             email = #{item.email},
             phone = #{item.phone},
             mobile = #{item.mobile},
-            user_type = #{item.userType},
-            update_by = #{item.updateBy.id},
             update_date = #{item.updateDate},
             remarks = #{item.remarks},
             login_flag = #{item.loginFlag},

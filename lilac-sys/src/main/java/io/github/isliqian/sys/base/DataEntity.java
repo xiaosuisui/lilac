@@ -23,21 +23,6 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
         super(id);
     }
 
-    public void preInsert() {
-        if (!this.isNewRecord) {
-            this.setId(IDUtils.getId());
-        }
-
-        this.doPreInsert();
-        this.updateDate = new Date();
-        this.createDate = this.updateDate;
-    }
-
-    public void preUpdate() {
-        this.doPreUpdate();
-        this.updateDate = new Date();
-    }
-
     @Length(
             min = 0,
             max = 255
@@ -85,7 +70,5 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
         this.delFlag = delFlag;
     }
 
-    public abstract void doPreInsert();
 
-    public abstract void doPreUpdate();
 }
