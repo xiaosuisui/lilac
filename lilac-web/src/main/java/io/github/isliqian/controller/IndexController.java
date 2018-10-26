@@ -18,7 +18,20 @@ public class IndexController {
       mav.setViewName("index");
       return mav;
     }
-
+    @GetMapping("/signin")
+    @ApiOperation(value="登陆")
+    public ModelAndView signin(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/user/login.html");
+        return mav;
+    }
+    @GetMapping("/password")
+    @ApiOperation(value="找回密码")
+    public ModelAndView password(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/user/forget.html");
+        return mav;
+    }
     @GetMapping("/home/console.html")
     @ApiOperation(value="控制面板")
     public ModelAndView home(){

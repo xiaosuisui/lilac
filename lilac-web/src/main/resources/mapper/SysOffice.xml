@@ -12,27 +12,23 @@
 		a.sort,
 		a.type,
 		a.grade,
+		a.master,
+		a.phone,
 		a.address,
 		a.remarks,
-		a.create_by AS "createBy.id",
-		a.create_date,
-		a.update_by AS "updateBy.id",
-		a.update_date,
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
 		a.del_flag,
 		a.useable AS useable,
 		p.name AS "parent.name",
 		p.code AS "parent.code",
 		ar.name AS "area.name",
-		ar.parent_ids AS "area.parentIds",
-		pp.name AS "primaryPerson.name",
-		dp.name AS "deputyPerson.name"
+		ar.parent_ids AS "area.parentIds"
 	</sql>
 
     <sql id="officeJoins">
 		LEFT JOIN sys_office p ON p.id = a.parent_id
 		LEFT JOIN sys_area ar ON ar.id = a.area_id
-		LEFT JOIN SYS_USER pp ON pp.id = a.primary_person
-		LEFT JOIN SYS_USER dp ON dp.id = a.deputy_person
     </sql>
 
     <select id="get" resultType="io.github.isliqian.sys.bean.SysOffice">
@@ -122,9 +118,7 @@
 			type,
 			grade,
 			address,
-			create_by,
 			create_date,
-			update_by,
 			update_date,
 			remarks,
 			del_flag,
@@ -140,9 +134,7 @@
 			#{type},
 			#{grade},
 			#{address},
-			#{createBy.id},
 			#{createDate},
-			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
 			#{delFlag},
@@ -160,7 +152,6 @@
 			type = #{type},
 			grade = #{grade},
 			address = #{address},
-			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
 			useable=#{useable}
@@ -177,10 +168,7 @@
     <update id="delete">
         UPDATE sys_office SET
         del_flag = #{DEL_FLAG_DELETE},
-        update_date =
-        <if test="dbName == 'oracle'">sysdate</if>
-        <if test="dbName == 'mssql'">GETDATE()</if>
-        <if test="dbName == 'mysql'">NOW()</if>
+        update_date = #{updateDate}
         WHERE id = #{id} OR parent_ids LIKE
         <if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
         <if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>
@@ -200,10 +188,10 @@
             sort,
             type,
             grade,
+            master,
+            phone,
             address,
-            create_by,
             create_date,
-            update_by,
             update_date,
             remarks,
             del_flag,
@@ -218,10 +206,10 @@
             #{item.sort},
             #{item.type},
             #{item.grade},
+            #{item.master},
+            #{item.phone},
             #{item.address},
-            #{item.createBy.id},
             #{item.createDate},
-            #{item.updateBy.id},
             #{item.updateDate},
             #{item.remarks},
             #{item.delFlag},
@@ -256,7 +244,6 @@
             type = #{item.type, jdbcType=CHAR},
             grade = #{item.grade, jdbcType=CHAR},
             address = #{item.address, jdbcType=VARCHAR},
-            update_by = #{item.updateBy.id, jdbcType=VARCHAR},
             update_date = #{item.updateDate, jdbcType=TIMESTAMP},
             remarks = #{item.remarks, jdbcType=VARCHAR},
             useable = #{item.useable, jdbcType=VARCHAR},
@@ -285,10 +272,7 @@
         <foreach collection="list" item="item" separator=";">
             UPDATE sys_office SET
             del_flag = #{item.DEL_FLAG_DELETE},
-            update_date =
-            <if test="dbName == 'oracle'">sysdate</if>
-            <if test="dbName == 'mssql'">GETDATE()</if>
-            <if test="dbName == 'mysql'">NOW()</if>
+            update_date = #{updateDate}
             WHERE id = #{item.id}
         </foreach>
     </update>

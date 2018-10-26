@@ -1,5 +1,5 @@
 package io.github.isliqian.shiro.filter;
-import io.github.isliqian.shiro.jwt.JWTToken;
+import io.github.isliqian.shiro.token.JWTToken;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ import java.net.URLEncoder;
  * @Date 2018-04-08
  * @Time 12:36
  */
-public class JWTFilter extends BasicHttpAuthenticationFilter {
+public class JwtFilter extends BasicHttpAuthenticationFilter {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**

@@ -1,4 +1,4 @@
-package io.github.isliqian.shiro.jwt;
+package io.github.isliqian.shiro.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -79,5 +79,12 @@ public class JWTUtil {
         } catch (JWTDecodeException e) {
             return null;
         }
+    }
+    //
+
+    public static void main(String[] args){
+
+        System.out.println(createToken("system"));
+        System.out.println(verify(createToken("liqian"),"liqian"));
     }
 }

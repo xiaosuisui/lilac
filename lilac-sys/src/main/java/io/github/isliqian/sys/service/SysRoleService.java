@@ -52,9 +52,9 @@ public class SysRoleService extends CrudService<SysRoleMapper, SysRole> {
             super.dao.insertRoleMenu(role);
         }
 //        // 更新角色与部门关联
-//        super.dao.deleteRoleOffice(role);
+//        super.mapper.deleteRoleOffice(role);
 //        if (role.getOfficeList().size() > 0) {
-//            super.dao.insertRoleOffice(role);
+//            super.mapper.insertRoleOffice(role);
 //        }
         // 清除用户角色缓存
         //AuthUtils.removeCache(UserUtils.CACHE_ROLE_LIST);

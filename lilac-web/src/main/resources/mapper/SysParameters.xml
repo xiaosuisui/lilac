@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.isliqian.parameter.mapper.ParametersMapper">
+	<sql id="parameterColumns">
+		a.id AS "id",
+		a.label AS "label",
+		a.type AS "type",
+		a.bond AS "bond",
+		a.value AS "value",
+		a.value_type AS "valueType",
+		a.display_type AS "displayType",
+		a.value_range AS "valueRange",
+		a.can_del AS "canDel",
+		a.del_flag AS "delFlag",
+		a.description AS "description",
+		a.now_apply AS "nowApply",
+		a.sort AS "sort",
+		a.create_date AS "createDate",
+		a.create_by AS "createBy",
+		a.update_date AS "updateDate",
+		a.update_by AS "updateBy"
+	</sql>
+
+	<sql id="parameterJoins">
+	</sql>
+	<select id="getPataByBond" resultType="io.github.isliqian.parameter.entity.ParametersBean">
+		SELECT
+		<include refid="parameterColumns"/>
+		FROM sys_parameters a
+		WHERE a.bond = #{bond}
+	</select>
+	<select id="getTypes" resultType="java.lang.String">
+		select DISTINCT type from sys_parameters
+	</select>
+	<update id="updatePataByBond">
+		UPDATE sys_parameters
+		<set>
+			<if test="label != null">
+				label = #{label},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="bond != null">
+				bond = #{bond},
+			</if>
+			<if test="value != null">
+				value = #{value},
+			</if>
+			<if test="valueType != null">
+				value_type = #{valueType},
+			</if>
+			<if test="displayType != null">
+				display_type = #{displayType},
+			</if>
+			<if test="valueRange != null">
+				value_range = #{valueRange},
+			</if>
+			<if test="canDel != null">
+				can_del = #{canDel},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="nowApply != null">
+				now_apply = #{nowApply},
+			</if>
+			<if test="sort != null">
+				sort = #{sort},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy},
+			</if>
+		</set>
+		<where>
+				bond = #{bond}
+		</where>
+	</update>
+	<update id="updatePataById">
+		UPDATE sys_parameters
+		<set>
+			<if test="label != null">
+				label = #{label},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="bond != null">
+				bond = #{bond},
+			</if>
+			<if test="value != null">
+				value = #{value},
+			</if>
+			<if test="valueType != null">
+				value_type = #{valueType},
+			</if>
+			<if test="displayType != null">
+				display_type = #{displayType},
+			</if>
+			<if test="valueRange != null">
+				value_range = #{valueRange},
+			</if>
+			<if test="canDel != null">
+				can_del = #{canDel},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="nowApply != null">
+				now_apply = #{nowApply},
+			</if>
+			<if test="sort != null">
+				sort = #{sort},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy},
+			</if>
+		</set>
+		<where>
+				id = #{id}
+		</where>
+	</update>
+	<select id="getpataByType" resultType="io.github.isliqian.parameter.entity.ParametersBean">
+		SELECT
+		<include refid="parameterColumns"/>
+		FROM sys_parameters a
+		WHERE a.type = #{type} and a.del_flag = 0
+		order by sort asc
+	</select>
+	<select id="get" resultType="io.github.isliqian.parameter.entity.ParametersBean">
+		SELECT
+		<include refid="parameterColumns"/>
+		FROM sys_parameters a
+		<include refid="parameterJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="findList" resultType="io.github.isliqian.parameter.entity.ParametersBean">
+		SELECT
+		<include refid="parameterColumns"/>
+		FROM sys_parameters a
+		<include refid="parameterJoins"/>
+		<where>
+			<if test="delFlag !=null">
+				and a.del_flag = #{delFlag}
+			</if>
+			<if test="label != null">
+				and a.label LIKE
+				<if test="dbName == 'oracle'">'%'||#{label}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{label}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{label},'%')</if>
+			</if>
+			<if test="bond !=null">
+				and a.bond = #{bond}
+			</if>
+			<if test="type !=null">
+				and a.type = #{type}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.sort ASC
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllList" resultType="io.github.isliqian.parameter.entity.ParametersBean">
+		SELECT
+		<include refid="parameterColumns"/>
+		FROM sys_parameters a
+		<include refid="parameterJoins"/>
+		<where>
+			a.del_flag = 0
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO sys_parameters(
+		id,
+		label,
+		type,
+		bond,
+		value,
+		value_type,
+		display_type,
+		value_range,
+		can_del,
+		del_flag,
+		description,
+		now_apply,
+		sort,
+		create_date,
+		create_by,
+		update_date,
+		update_by
+		) VALUES (
+		#{id},
+		#{label},
+		#{type},
+		#{bond},
+		#{value},
+		#{valueType},
+		#{displayType},
+		#{valueRange},
+		#{canDel},
+		#{delFlag},
+		#{description},
+		#{nowApply},
+		#{sort},
+		#{createDate},
+		#{createBy},
+		#{updateDate},
+		#{updateBy}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE sys_parameters SET
+		label = #{label},
+		type = #{type},
+		bond = #{bond},
+		value = #{value},
+		value_type = #{valueType},
+		display_type = #{displayType},
+		<if test="valueRange != null">
+			value_range = #{valueRange},
+		</if>
+		can_del = #{canDel},
+		description = #{description},
+		now_apply = #{nowApply},
+		sort = #{sort},
+		update_date = #{updateDate},
+		update_by = #{updateBy}
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+		UPDATE sys_parameters SET
+		del_flag = #{delFlag}
+		WHERE id = #{id}
+	</update>
+
+	<!-- 修改排序 -->
+	<update id="updateSort">
+		UPDATE sys_parameters SET
+		sort = #{sort}
+		WHERE id = #{id}
+	</update>
+</mapper>

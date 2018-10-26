@@ -31,16 +31,14 @@ spring:
     servlet:
       content-type: text/html
     suffix: .html
+  mail:
+    host: smtp.qq.com
+    username: 51103942@qq.com
+    password: izmvmoywhgbfbgif
+    default-encoding: UTF-8
+    port: 587
 #  cache:
 #    ehcache: classpath:/cache/ehcache-local.xml
 mybatis:
   type-aliases-package: io.github.isliqian.sys.mapper
   mapper-locations: classpath:mapper/*.xml
-
-#flyway:
-#  baseline-version: 1
-#  enabled: true
-#
-#  locations: db/db/{vendor}
-#  sql-db-prefix: V
-#  sql-db-suffix: .sql

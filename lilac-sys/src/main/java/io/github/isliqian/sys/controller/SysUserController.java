@@ -42,6 +42,7 @@ public class SysUserController {
     @GetMapping("/info")
     @ApiOperation(value="根据id查询用户详情", notes="返回200值正确")
     public ModelAndView form(SysUser sysUser, ModelAndView modelAndView){
+
         if (StringUtils.isNotBlank(sysUser.getId())) {
             modelAndView.addObject("user",sysUserService.get(sysUser.getId()));
         }else {

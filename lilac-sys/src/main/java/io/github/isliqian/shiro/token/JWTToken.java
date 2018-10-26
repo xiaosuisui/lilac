@@ -1,11 +1,11 @@
-package io.github.isliqian.shiro.jwt;
+package io.github.isliqian.shiro.token;
+
 
 import org.apache.shiro.authc.AuthenticationToken;
 
-/**
- * JWT TOKEN 验证
- */
 public class JWTToken implements AuthenticationToken {
+
+    // 密钥
     private String token;
 
     public JWTToken(String token) {

@@ -18,7 +18,7 @@ import java.util.List;
  * admin角色权限controller
  */
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/api/v1")
 public class AdminController {
 
 
@@ -26,14 +26,16 @@ public class AdminController {
     @GetMapping("/role")
     @RequiresRoles("admin")
     public ResultUtil roleTest() {
-
         return ResultUtil.success("admin角色才能看到");
     }
+
     @GetMapping("/pe")
     @RequiresPermissions("sys:dict:view")
     public ResultUtil getUser() {
 
         return ResultUtil.success("sys:dict:view");
     }
+
+
 
 }

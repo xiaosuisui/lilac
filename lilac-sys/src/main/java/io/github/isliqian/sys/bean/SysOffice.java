@@ -30,10 +30,6 @@ public class SysOffice extends TreeEntity<SysOffice> {
 	private String email; 	// 邮箱
     private String useable;//是否可用
 
-    protected SysUser createBy;	// 创建者
-    protected SysUser updateBy;	// 更新者
-
-
 
 
     @Override

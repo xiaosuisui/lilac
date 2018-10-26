@@ -25,7 +25,7 @@
         <dependency>
             <groupId>io.github.isliqian</groupId>
             <artifactId>lilac-sys</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
