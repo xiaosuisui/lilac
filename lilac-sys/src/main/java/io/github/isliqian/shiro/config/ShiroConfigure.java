@@ -57,6 +57,7 @@ public class ShiroConfigure {
         filterRuleMap.put("/swagger-ui.html","anon");
         // 访问 /unauthorized/** 不通过JWTFilter
         filterRuleMap.put("/unauthorized/**", "anon");
+        filterRuleMap.put("/logout","logout");
         filterRuleMap.put("/**","authc");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
 
