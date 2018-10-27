@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <title>登入</title>
@@ -20,21 +20,22 @@
     <p>加载中...</p>
   </div>
 </div>
-  <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+  <form class="layadmin-user-login layadmin-user-display-show" action="/lilac" th:object="${user}" method="POST" style="display: none;">
 
     <div class="layadmin-user-login-main">
       <div class="layadmin-user-login-box layadmin-user-login-header">
         <h2>lilac</h2>
         <p>hava a nice day</p>
       </div>
+
       <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-username" ></label>
-          <input type="text" id="username"  lay-verify="required" placeholder="用户名" class="layui-input">
+          <input type="text" th:field="*{loginName}"  lay-verify="required" placeholder="用户名" class="layui-input">
         </div>
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-password"></label>
-          <input type="password" id="password"  lay-verify="required" placeholder="密码" class="layui-input">
+          <input type="password" th:field="*{password}" lay-verify="required" placeholder="密码" class="layui-input">
         </div>
         <div class="layui-form-item">
           <div class="layui-row">
@@ -54,7 +55,7 @@
           <a href="password" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
         </div>
         <div class="layui-form-item">
-          <button class="layui-btn layui-btn-fluid" onclick="login()" type="button">登 入</button>
+          <button class="layui-btn layui-btn-fluid" type="submit">登 入</button>
         </div>
         <div class="layui-trans layui-form-item layadmin-user-login-other">
           <label>社交账号登入</label>
@@ -65,7 +66,7 @@
         </div>
       </div>
     </div>
-    
+  </form>
     <div class="layui-trans layadmin-user-login-footer">
       
       <p>© 2018 <a href="http://www.layui.com/" target="_blank">lilac.com</a></p>
@@ -92,6 +93,7 @@
   </div>
 
   <script src="../../../layuiadmin/layui/layui.js"></script>
+<script src="../../../layuiadmin/push/push.js"></script>
   <script>
   layui.config({
     base: '../../../layuiadmin/' //静态资源所在路径
@@ -109,34 +111,39 @@
 
   function login() {
       var loading = window.document.getElementById("loading");
-      loading.style.display="block";
+      // fadeIn(loading);
       var username = window.document.getElementById("username");
       var pwd = window.document.getElementById("password");
       var content = {loginName:username.value,password:pwd.value};
       console.log(content);
-      window.fetch('/login', {
-          method: 'post',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(content)
-      }).then(function (response) {
-          if(response.status!==200){
-              loading.style.display="block";
-              alert("存在一个问题，状态码为："+response.status);
-              return;
-          }
-          //检查响应文本
-          response.json().then(function(data){
-              if (data.code == 200){
-                  loading.style.display="block";
-                  window.location.href="/";
-              }
-          });
-      }).catch(function(err){
-          loading.style.display="block";
-          alert("Fetch错误:"+err);
-      });
+
+
+
+
+
+
+
+      // window.fetch('/login', {
+      //     method: 'post',
+      //     headers: {
+      //         'Cache-Control': 'no-cache',
+      //         'Content-Type': ''
+      //     },
+      //     body: JSON.stringify(content)
+      // }).then(function (response){
+      //         return response.json();
+      //     }).then(function(data){
+      //         var msg = data.msg;
+      //         if (data.code == 200){
+      //             // fadeOut(loading);
+      //             Push.create("登录成功");
+      //             window.location.href="http://127.0.0.1";
+      //         }else {
+      //             Push.create(msg);
+      //         }
+      //     }).catch(function(err){
+      //       Push.create("Fetch错误:"+err);
+      //     })
   }
 
 

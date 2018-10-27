@@ -1,8 +1,10 @@
 package io.github.isliqian.controller;
 
+import io.github.isliqian.sys.bean.SysUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,15 +17,14 @@ public class IndexController {
     @ApiOperation(value="首页")
     public ModelAndView index(){
       ModelAndView mav = new ModelAndView();
-      mav.setViewName("index");
+      mav.setViewName("index.html");
       return mav;
     }
     @GetMapping("/signin")
     @ApiOperation(value="登陆")
-    public ModelAndView signin(){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("/user/login.html");
-        return mav;
+    public String signin(Model model){
+        model.addAttribute("user",new SysUser());
+        return "/user/login.html";
     }
     @GetMapping("/password")
     @ApiOperation(value="找回密码")
@@ -39,7 +40,13 @@ public class IndexController {
         mav.setViewName("/home/console.html");
         return mav;
     }
-    //user/administrators/admin.html
 
 
+    @GetMapping("/mybatis/generator")
+    @ApiOperation(value="代码生成")
+    public ModelAndView generator(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/plug/generator.html");
+        return mav;
+    }
 }

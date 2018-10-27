@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 
-@SpringBootApplication(scanBasePackages = {"io.github.isliqian.*", "io.github.isliqian.log.*", "io.github.isliqian.shiro.*","io.github.isliqian.sys.*","io.github.isliqian.mail.*"})
+@SpringBootApplication(scanBasePackages = {"io.github.isliqian.*", "io.github.isliqian.log.*", "io.github.isliqian.shiro.*","io.github.isliqian.sys.*","io.github.isliqian.mail.*","io.github.isliqian.mybatisgenerator.*"})
 @EnableScheduling
 @EnableCaching
 @EnableAsync

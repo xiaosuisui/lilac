@@ -31,6 +31,16 @@ spring:
     servlet:
       content-type: text/html
     suffix: .html
+  freemarker:
+    template-loader-path: classpath:/templates/
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .ftl
   mail:
     host: smtp.qq.com
     username: 51103942@qq.com

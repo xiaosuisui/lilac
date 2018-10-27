@@ -10,36 +10,43 @@ import io.github.isliqian.utils.ResultUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 
-@RestController
-@CrossOrigin
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+@Controller
 public class LoginController {
     @Resource
     private SysUserService sysUserService;
 
     @MyLog(value = "用户登录")
-    @PostMapping("/login")
-    public ResultUtil login(@RequestBody  SysUser user) {
-
+    @RequestMapping(value = "/lilac",method = POST)
+    public String login(@ModelAttribute(value="user")  SysUser user, Model model) {
             SysUser sysUser = sysUserService.getByLoginName(user.getLoginName());
+        model.addAttribute("message","This is your message");
             if (sysUser == null) {
-                return ResultUtil.error(401, "用户名错误");
+                return "redirect:/signin";
             } else if (!PasswordUtils.validatePassword(user.getPassword(),sysUser.getPassword())) {
-                return ResultUtil.error(401,"密码错误");
+                return "redirect:/signin";
             }  else{
                 Subject currentUser  = SecurityUtils.getSubject();
                 UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginName(), sysUser.getPassword());
                 currentUser.login(token);
-                return ResultUtil.success();
+                return "index";
             }
+
+
 
     }
 
     @RequestMapping(path = "/unauthorized/{message}")
+    @ResponseBody
     public ResultUtil unauthorized(@PathVariable String message) throws UnsupportedEncodingException {
         return ResultUtil.error(401,message);
     }

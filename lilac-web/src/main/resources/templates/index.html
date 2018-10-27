@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <title>lilac后台管理系统</title>
@@ -261,7 +261,7 @@
               <dl class="layui-nav-child">
                 <dd><a lay-href="/swagger-ui.html" >接口文档</a></dd>
               <dd><a lay-href="/druid2/login.html" >数据库监控</a></dd>
-              <dd><a lay-href="/#asd" >第三方服务</a></dd>
+                <dd><a lay-href="/mybatis/generator" >代码生成</a></dd>
               </dl>
             </li>
           </ul>
@@ -305,6 +305,10 @@
   </div>
 
   <script src="../layuiadmin/layui/layui.js"></script>
+  <script th:inline="javascript">
+      var message = [[${message}]];
+      console.log(message);
+  </script>
   <script>
   layui.config({
     base: '../layuiadmin/' //静态资源所在路径

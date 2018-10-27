@@ -1,0 +1,126 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>MybatisPlug</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">Mybatis Generator</div>
+                <div class="layui-card-body">
+
+                    <!-- form start -->
+                    <form role="form" id="mbg">
+
+                        <div class="form-group">
+                            <div class="col-md-12" >
+                                <label>主机名或IP地址 url</label>
+                                <input type="text" class="form-control" id="ip" name="ip" placeholder="Enter IP">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="column">
+                                <div class="col-md-6" >
+                                    <label>数据库</label>
+                                    <input type="text" class="form-control" id="db" name="db" placeholder="Enter DB">
+                                </div>
+                                <div class="col-md-6" >
+                                    <label>端口</label>
+                                    <input type="text" class="form-control" id="port" name="port" placeholder="Enter Port">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="column">
+                                <div class="col-md-6" >
+                                    <label>用户名</label>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter UserName">
+                                </div>
+                                <div class="col-md-6" >
+                                    <label>密码</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="column">
+                                <div class="col-md-12" >
+                                    <label>生成模型的包名</label>
+                                    <input type="text" class="form-control" id="modelpackagename" name="modelpackagename" placeholder="Enter Model PackageName">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="column">
+                                <div class="col-md-12" >
+                                    <label>生成DAO的包名</label>
+                                    <input type="text" class="form-control" id="daopackagename" name="daopackagename" placeholder="Enter Dao PackageName">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="column">
+                                <div class="col-md-12" >
+                                    <label>生成映射文件的位置</label>
+                                    <input type="text" class="form-control" id="mapperpath" name="mapperpath" placeholder="Enter Mapper Path">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="tables">
+                            <div class="column">
+                                <div class="col-md-4" >
+                                    <label>表名称</label>
+                                    <input type="text" class="form-control"  name="tablenames" placeholder="Enter test_table">
+                                </div>
+                                <div class="col-md-4" >
+                                    <label>模型名称</label>
+                                    <input type="text" class="form-control"  name="tablemodels" placeholder="Enter TestTable">
+                                </div>
+                                <div class="col-md-4" >
+                                    <button type="button" class="btn btn-primary" onclick="addTable()" style="margin-top: 25px">添加表</button>
+                                    <button type="button" class="btn btn-danger" onclick="rmTable(this)" style="margin-top: 25px">删除</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <button type="button" class="btn btn-primary" onclick="gen()">生成</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">保存配置</button>
+                            <button type="button" class="btn btn-danger" onclick="clearconf()">清除配置</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="./../../layuiadmin/biz/jquery-2.2.3.min.js"></script>
+<script src="./../../layuiadmin/biz/biz.js"></script>
+<script src="../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index']);
+</script>
+</body>
+</html>
