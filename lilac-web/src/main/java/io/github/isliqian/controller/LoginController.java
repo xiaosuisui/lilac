@@ -26,7 +26,7 @@ public class LoginController {
     private SysUserService sysUserService;
 
     @MyLog(value = "用户登录")
-    @RequestMapping(value = "/lilac",method = POST)
+    @RequestMapping(value = "/login",method = POST)
     public String login(@ModelAttribute(value="user")  SysUser user, Model model) {
             SysUser sysUser = sysUserService.getByLoginName(user.getLoginName());
         model.addAttribute("message","This is your message");
@@ -38,7 +38,7 @@ public class LoginController {
                 Subject currentUser  = SecurityUtils.getSubject();
                 UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginName(), sysUser.getPassword());
                 currentUser.login(token);
-                return "index";
+                return "redirect:/";
             }
 
 

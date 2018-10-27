@@ -4,7 +4,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title>角色管理</title>
+  <title>机构管理</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -24,12 +24,12 @@
       <div class="layui-form layui-card-header layuiadmin-card-header-auto">
         <div class="layui-form-item">
           <div class="layui-inline">
-            角色筛选
+            机构筛选
           </div>
           <div class="layui-inline">
             <div class="layui-form-item">
               <div class="layui-input-inline">
-                <input type="text" name="name" required lay-verify="required" placeholder="请输入角色名称" autocomplete="off" class="layui-input">
+                <input type="text" name="name" required lay-verify="required" placeholder="请输入机构名称" autocomplete="off" class="layui-input">
               </div>
             </div>
           </div>
@@ -45,8 +45,8 @@
           </div>
           <div class="layui-inline">
           <div>
-            <button class="layui-btn layuiadmin-btn-role" data-type="batchdel">批量删除</button>
-            <a lay-href="/sys/role/info?id=" lay-direction="2">添加角色</a> </td>
+            <a href="#">批量删除</a>
+            <a lay-href="/sys/role/info?id=" lay-direction="2">添加机构</a> </td>
           </div>
           </div>
         </div>
@@ -63,29 +63,35 @@
             <col width="150">
             <col width="150">
             <col width="150">
+            <col width="150">
+            <col width="150">
           </colgroup>
           <thead>
           <tr>
             <th></th>
             <th>名称</th>
-            <th>英文</th>
-            <th>机构</th>
+            <th>区域</th>
+            <th>类型</th>
+            <th>负责人</th>
+            <th>电话</th>
             <th>创建时间</th>
             <th>更新时间</th>
             <th>操作</th>
           </tr>
           </thead>
           <tbody>
-          <tr th:each="role : ${page.list}">
+          <tr th:each="office : ${page.list}">
             <td><input type="checkbox" name="" lay-skin="primary"> </td>
-            <td th:text="${role.name}"></td>
-            <td th:text="${role.enname}"></td>
-            <td th:text="${role.office.name}"></td>
-            <td th:text="${role.createDate}"></td>
-            <td th:text="${role.updateDate}"></td>
-            <td><a th:href="@{'/sys/role/del?id='+${role.id}}" onclick="return confirmdel(this.href) "  data-method="offset" data-type="auto">删除</a>
+            <td th:text="${office.name}"></td>
+            <td th:text="${office.area.name}"></td>
+            <td th:text="${office.type}"></td>
+            <td th:text="${office.master}"></td>
+            <td th:text="${office.phone}"></td>
+            <td th:text="${office.createDate}"></td>
+            <td th:text="${office.updateDate}"></td>
+            <td><a th:href="@{'/sys/office/del?id='+${office.id}}" onclick="return confirmdel(this.href) "  data-method="offset" data-type="auto">删除</a>
               &nbsp;&nbsp;
-              <a  th:lay-href="'/sys/role/info?id='+${role.id}" lay-direction="2">修改角色</a> </td>
+              <a  th:lay-href="'/sys/office/info?id='+${office.id}" lay-direction="2">修改机构</a> </td>
           </tr>
 
           </tbody>

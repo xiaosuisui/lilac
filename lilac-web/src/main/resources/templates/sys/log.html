@@ -10,9 +10,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/loading.css" media="all">
 </head>
 <body>
-
+<div id="loading" class="in-progress customloading" style="display: block">
+    <div class="text-wrap">
+        <i class="iconfont">&#xe627;</i>
+        <p>加载中...</p>
+    </div>
+</div>
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
@@ -76,7 +82,9 @@
             , form = layui.form
             , table = layui.table;
     });
-
+    window.onload=function(){
+        setTimeout("fadeOut(window.document.getElementById('loading'));",500);
+    }
 </script>
 </body>
 </html>

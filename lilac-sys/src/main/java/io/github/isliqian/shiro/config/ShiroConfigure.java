@@ -52,7 +52,7 @@ public class ShiroConfigure {
         filterRuleMap.put("/static/**", "anon"); // 静态资源匿名访问
         filterRuleMap.put("/layuiadmin/**", "anon"); // 静态资源匿名访问
         //开放登陆方法接口
-        filterRuleMap.put("/lilac", "anon");
+        filterRuleMap.put("/login", "anon");
         //生成代码开放路径
         filterRuleMap.put("/result/mbg.zip", "anon");
         //开放接口文档url
