@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
   <style>
-
+    mylogo{position:absolute;left:0;top:0;width:200px;height:100%;line-height:60px;text-align:center;color:#009688;font-size:16px}
   </style>
   <script>
   /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
@@ -92,18 +92,11 @@
       <!-- 侧边菜单 -->
       <div class="layui-side layui-side-menu">
         <div class="layui-side-scroll">
-          <div class="layui-logo">
-            <span></span>
-          </div>
+          <mylogo>
+            <span>lilac</span>
+          </mylogo>
           
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
-            <li data-name="get" class="layui-nav-item layui-this">
-              <a href="javascript:;" lay-href="/home/console.html"  lay-tips="控制面板" lay-direction="2">
-                <i class="layui-icon layui-icon-home"></i>
-                <cite>控制面板</cite>
-              </a>
-            </li>
-
 
             <li data-name="template" class="layui-nav-item">
               <a href="javascript:;" lay-tips="页面" lay-direction="2">
@@ -165,6 +158,9 @@
               <dl class="layui-nav-child">
                 <dd>
                   <a lay-href="sys/mail/">邮件服务</a>
+                </dd>
+                <dd>
+                  <a lay-href="sys/message/">短信服务</a>
                 </dd>
                 <dd data-name="echarts">
                   <a href="javascript:;">短信服务</a>
@@ -239,8 +235,9 @@
                 <dd class="layui-nav-itemed">
                   <a href="javascript:;">系统设置</a>
                   <dl class="layui-nav-child">
-                    <dd><a lay-href="set/system/website.html">网站设置</a></dd>
-                    <dd><a lay-href="set/system/email.html">邮件服务</a></dd>
+                    <dd><a lay-href="/set/system/website">网站设置</a></dd>
+                    <dd>
+                    <dd><a lay-href="/set/system/email">邮件设置</a></dd>
                   </dl>
                 </dd>
                 <dd class="layui-nav-itemed">

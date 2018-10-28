@@ -22,19 +22,12 @@
         a.update_date AS "updateDate",
         a.del_flag,
         o.name AS "office.name",
-        o.code AS "office.code",
-        o.type AS "office.type",
-        o.parent_id AS "office.parent.id",
-        o.parent_ids AS "office.parentIds",
         r.name AS "role.name"
     </sql>
 
     <sql id="userJoins">
         LEFT JOIN sys_office o ON o.id = a.office_id
         LEFT JOIN sys_role r ON r.id = a.role_id
-     <!--
-		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
-        LEFT JOIN sys_role r ON r.id = ur.role_id -->
     </sql>
 
     <!-- 根据编号获得用户 -->

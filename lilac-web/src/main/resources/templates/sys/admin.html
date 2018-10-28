@@ -64,8 +64,6 @@
           <col width="150">
           <col width="150">
           <col width="150">
-          <col width="150">
-          <col width="150">
         </colgroup>
         <thead>
         <tr>
@@ -75,8 +73,6 @@
           <th>角色</th>
           <th>邮箱</th>
           <th>电话</th>
-          <th>创建时间</th>
-          <th>更新时间</th>
           <th>操作</th>
         </tr>
         </thead>
@@ -88,8 +84,6 @@
           <td th:text="${user.role.name}"></td>
           <td th:text="${user.email}"></td>
           <td th:text="${user.phone}"></td>
-          <td th:text="${user.createDate}"></td>
-          <td th:text="${user.updateDate}"></td>
           <td><a th:href="@{'/sys/user/del?id='+${user.id}}" onclick="return confirmdel(this.href) "  data-method="offset" data-type="auto">删除</a>
             &nbsp;&nbsp;
             <a  th:lay-href="'/sys/user/info?id='+${user.id}" lay-direction="2">修改用户</a> </td>
@@ -97,7 +91,7 @@
 
         </tbody>
       </table>
-
+        <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-8"><a href="javascript:;" class="layui-laypage-prev" data-page="3">上一页</a><a href="javascript:;" data-page="1">1</a><a href="javascript:;" data-page="2">2</a><a href="javascript:;" data-page="3">3</a><span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>4</em></span><a href="javascript:;" data-page="5">5</a><span class="layui-laypage-spr">…</span><a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="50">50</a><a href="javascript:;" class="layui-laypage-next" data-page="5">下一页</a></div>
     </div>
   </div>
 </div>

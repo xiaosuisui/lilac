@@ -50,10 +50,7 @@
             AND u.id = #{user.id}
         </if>
         <if test="office != null and office.id != null and office.id != ''">
-            AND (o.id = #{office.id} OR o.parent_ids LIKE
-            <if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
-            <if test="dbName == 'mssql'">'%,'+#{office.id}+',%')</if>
-            <if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
+            AND o.id = #{office.id}
         </if>
         <if test="user != null and user.loginName != null and user.loginName != ''">
             AND u.login_name = #{user.loginName}

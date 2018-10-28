@@ -3,10 +3,6 @@ package io.github.isliqian.sys.bean;
 import io.github.isliqian.sys.base.DataEntity;
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by LiQian_Nice on 2018/6/9

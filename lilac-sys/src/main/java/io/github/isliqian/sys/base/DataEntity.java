@@ -1,17 +1,19 @@
 package io.github.isliqian.sys.base;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 
-import io.github.isliqian.utils.IDUtils;
 import org.hibernate.validator.constraints.Length;
 
 public abstract class DataEntity<T> extends BaseEntity<T> {
     private static final long serialVersionUID = 1L;
     protected String remarks;
+    @JSONField(format ="yyyy-MM-dd HH:mm:ss")
     protected Date createDate;
+    @JSONField(format ="yyyy-MM-dd HH:mm:ss")
     protected Date updateDate;
     protected String delFlag;
 

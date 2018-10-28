@@ -40,7 +40,21 @@ public class IndexController {
         mav.setViewName("/home/console.html");
         return mav;
     }
+    @GetMapping("/set/system/website")
+    @ApiOperation(value="网站设置")
+    public ModelAndView website(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/set/system/website.html");
+        return mav;
+    }
 
+    @GetMapping("/set/system/email")
+    @ApiOperation(value="邮件服务")
+    public ModelAndView email(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/set/system/email.html");
+        return mav;
+    }
 
     @GetMapping("/mybatis/generator")
     @ApiOperation(value="代码生成")
