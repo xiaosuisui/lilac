@@ -54,6 +54,17 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <!--性能监控-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!--spring boot web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
