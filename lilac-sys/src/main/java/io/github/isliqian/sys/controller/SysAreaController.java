@@ -3,20 +3,21 @@ package io.github.isliqian.sys.controller;
 import io.github.isliqian.log.ann.MyLog;
 import io.github.isliqian.sys.base.Page;
 import io.github.isliqian.sys.bean.SysArea;
-import io.github.isliqian.sys.bean.SysDict;
 import io.github.isliqian.sys.service.SysAreaService;
-import io.github.isliqian.utils.ResultUtil;
 import io.github.isliqian.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
-@RestController
-@RequestMapping("/api/v1/area")
+@Controller
+@RequestMapping("/sys/area")
 @Api(value = "区域配置管理接口")
 public class SysAreaController {
     @Resource
@@ -24,54 +25,41 @@ public class SysAreaController {
 
 
     @MyLog("根据id查询区域详情")
-    @GetMapping("/{id}")
-    @ApiOperation(value="根据id查询区域详情", notes="返回200值正确")
-    public ResultUtil get(@PathVariable("id") String id){
-        if (StringUtils.isNotBlank(id)){
-            return  ResultUtil.success(sysAreaService.get(id));
-        }else{
-            return ResultUtil.success(new SysArea());
+    @GetMapping("/info")
+    @ApiOperation(value="根据id查询区域详情")
+    public String form(SysArea sysArea,Model model){
+        if (StringUtils.isNotBlank(sysArea.getId())) {
+            model.addAttribute("area",sysAreaService.get(sysArea.getId()));
+        }else {
+            model.addAttribute("area",new SysArea());
+
         }
+       return "/sys/areaform.html";
     }
 
     @MyLog("获取全部区域")
     @GetMapping("/")
-    @ApiOperation(value="获取全部区域", notes="返回200值正确")
-    public ResultUtil findAll(SysArea sysArea, HttpServletRequest request, HttpServletResponse response){
-        //TODO 请求参数未生效
+    @ApiOperation(value="获取全部区域")
+    public String list(SysArea sysArea, HttpServletRequest request, HttpServletResponse response, Model model){
         Page<SysArea> page = sysAreaService.findPage(new Page<SysArea>(request, response), sysArea);
-        return ResultUtil.success(page);
+        model.addAttribute("page",page);
+        return "/sys/area.html";
     }
 
-    @MyLog("添加一个区域")
-    @PostMapping("/")
-    @ApiOperation(value="添加一个字典", notes="返回200值正确")
-    public ResultUtil add(SysArea sysArea){
-        sysAreaService.save(sysArea);
-        return ResultUtil.success();
-    }
 
-    @MyLog("更新一个区域")
-    @PutMapping("/")
-    @ApiOperation(value="更新一个区域", notes="返回200值正确")
-    public ResultUtil update( SysArea sysArea){
-        sysAreaService.save(sysArea);
-        return ResultUtil.success();
-    }
+
+
 
 
     @MyLog("根据id删除区域")
-    @DeleteMapping("/{id}")
-    @ApiOperation(value="根据id删除区域", notes="返回200值正确")
-    public ResultUtil delete(@PathVariable("id") String id){
-        if (StringUtils.isNotBlank(id)) {
-            SysArea sysArea = new SysArea();
-            sysArea.setId(id);
+    @GetMapping("/del")
+    @ApiOperation(value="根据id删除区域")
+    public String delete(SysArea sysArea,Model model){
+        if (StringUtils.isNotBlank(sysArea.getId())) {
+            sysArea.setUpdateDate(new Date());
             sysAreaService.delete(sysArea);
-            return ResultUtil.success();
-        }else {
-            return ResultUtil.error(-1,"id不能为空");
         }
+        return "redirect:/sys/area/?repage";
 
     }
 

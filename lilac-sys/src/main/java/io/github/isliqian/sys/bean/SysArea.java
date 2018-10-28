@@ -19,8 +19,6 @@ public class SysArea extends TreeEntity<SysArea> {
 	private Integer sort;		// 排序
 	private String type; 	// 区域类型（1：国家；2：省份、直辖市；3：地市；4：区县）
 
-	private SysUser updateBy;
-	private SysUser createBy;
 
 
 
@@ -72,19 +70,4 @@ public class SysArea extends TreeEntity<SysArea> {
 		this.type = type;
 	}
 
-	public SysUser getUpdateBy() {
-		return updateBy;
-	}
-
-	public void setUpdateBy(SysUser updateBy) {
-		this.updateBy = updateBy;
-	}
-
-	public SysUser getCreateBy() {
-		return createBy;
-	}
-
-	public void setCreateBy(SysUser createBy) {
-		this.createBy = createBy;
-	}
 }

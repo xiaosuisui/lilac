@@ -1,0 +1,85 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>菜单管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/loading.css" media="all">
+</head>
+<body>
+<div id="loading" class="in-progress customloading" style="display: block">
+    <div class="text-wrap">
+        <i class="iconfont">&#xe627;</i>
+        <p>加载中...</p>
+    </div>
+</div>
+<div class="layui-fluid">
+    <br>
+    <div class="layui-card">
+        <div class="layui-card-body">
+
+            <form class="layui-form" th:object="${menu}" th:action="@{/sys/menu/save}" method="post">
+                <input type="text" th:field="*{id}" hidden>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:field="*{name}" lay-verify="required" placeholder="请输入菜单名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">链接</label>
+                    <div class="layui-input-inline">
+                        <input type="text"lay-verify="required" placeholder="请输入链接"  th:field="*{href}" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">权限</label>
+                    <div class="layui-input-inline">
+                        <input type="text" lay-verify="required" placeholder="请输入权限" th:field="*{permission}"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">序号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" lay-verify="required" placeholder="请输入序号" th:field="*{sort}"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-inline">
+                        <textarea th:field="*{remarks}"  placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">确定</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form'], function(){
+        var $ = layui.$
+            ,form = layui.form ;
+    })
+    window.onload=function(){
+        setTimeout("fadeOut(window.document.getElementById('loading'));",500);
+    }
+</script>
+</body>
+</html>

@@ -14,16 +14,14 @@
 		a.sort,
 		a.type,
 		a.remarks,
-		a.create_by AS "createBy.id",
 		a.create_date,
-		a.update_by AS "updateBy.id",
 		a.update_date,
 		a.del_flag,
 		p.name AS "parent.name"
 	</sql>
 
     <sql id="areaJoins">
-		LEFT JOIN sys_office p ON p.id = a.parent_id
+		LEFT JOIN sys_area p ON p.id = a.parent_id
     </sql>
 
     <select id="get" resultType="io.github.isliqian.sys.bean.SysArea">
@@ -84,9 +82,7 @@
 			name,
 			sort,
 			type,
-			create_by,
 			create_date,
-			update_by,
 			update_date,
 			remarks,
 			del_flag
@@ -98,9 +94,7 @@
 			#{name},
 			#{sort},
 			#{type},
-			#{createBy.id},
 			#{createDate},
-			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
 			#{delFlag}
@@ -115,7 +109,6 @@
 			name = #{name},
 			sort = #{sort},
 			type = #{type},
-			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}
 		WHERE id = #{id}
@@ -131,10 +124,7 @@
     <update id="delete">
         UPDATE sys_area SET
         del_flag = #{DEL_FLAG_DELETE},
-        update_date =
-        <if test="dbName == 'oracle'">sysdate</if>
-        <if test="dbName == 'mssql'">GETDATE()</if>
-        <if test="dbName == 'mysql'">NOW()</if>
+        update_date = #{updateDate}
         WHERE id = #{id} OR parent_ids LIKE
         <if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
         <if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>

@@ -154,6 +154,73 @@ public class Page<T> {
 
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if (this.pageNo == this.first) {
+            sb.append("<li class=\"disabled\"><a href=\"javascript:\">&#171; 上一页</a></li>\n");
+        } else {
+            sb.append("<li><a href=\"javascript:\" onclick=\"" + this.funcName + "(" + this.prev + "," + this.pageSize + ",'" + this.funcParam + "');\">&#171; 上一页</a></li>\n");
+        }
+
+        int begin = this.pageNo - this.length / 2;
+        if (begin < this.first) {
+            begin = this.first;
+        }
+
+        int end = begin + this.length - 1;
+        if (end >= this.last) {
+            end = this.last;
+            begin = end - this.length + 1;
+            if (begin < this.first) {
+                begin = this.first;
+            }
+        }
+
+        int i;
+        if (begin > this.first) {
+            i = 0;
+
+            for(i = this.first; i < this.first + this.slider && i < begin; ++i) {
+                sb.append("<li><a href=\"javascript:\" onclick=\"" + this.funcName + "(" + i + "," + this.pageSize + ",'" + this.funcParam + "');\">" + (i + 1 - this.first) + "</a></li>\n");
+            }
+
+            if (i < begin) {
+                sb.append("<li class=\"disabled\"><a href=\"javascript:\">...</a></li>\n");
+            }
+        }
+
+        for(i = begin; i <= end; ++i) {
+            if (i == this.pageNo) {
+                sb.append("<li class=\"active\"><a href=\"javascript:\">" + (i + 1 - this.first) + "</a></li>\n");
+            } else {
+                sb.append("<li><a href=\"javascript:\" onclick=\"" + this.funcName + "(" + i + "," + this.pageSize + ",'" + this.funcParam + "');\">" + (i + 1 - this.first) + "</a></li>\n");
+            }
+        }
+
+        if (this.last - end > this.slider) {
+            sb.append("<li class=\"disabled\"><a href=\"javascript:\">...</a></li>\n");
+            end = this.last - this.slider;
+        }
+
+        for(i = end + 1; i <= this.last; ++i) {
+            sb.append("<li><a href=\"javascript:\" onclick=\"" + this.funcName + "(" + i + "," + this.pageSize + ",'" + this.funcParam + "');\">" + (i + 1 - this.first) + "</a></li>\n");
+        }
+
+        if (this.pageNo == this.last) {
+            sb.append("<li class=\"disabled\"><a href=\"javascript:\">下一页 &#187;</a></li>\n");
+        } else {
+            sb.append("<li><a href=\"javascript:\" onclick=\"" + this.funcName + "(" + this.next + "," + this.pageSize + ",'" + this.funcParam + "');\">" + "下一页 &#187;</a></li>\n");
+        }
+
+        sb.append("<li class=\"disabled controls\"><a href=\"javascript:\">当前 ");
+        sb.append("<input type=\"text\" value=\"" + this.pageNo + "\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
+        sb.append(this.funcName + "(this.value," + this.pageSize + ",'" + this.funcParam + "');\" onclick=\"this.select();\"/> / ");
+        sb.append("<input type=\"text\" value=\"" + this.pageSize + "\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
+        sb.append(this.funcName + "(" + this.pageNo + ",this.value,'" + this.funcParam + "');\" onclick=\"this.select();\"/> 条，");
+        sb.append("共 " + this.count + " 条" + (this.message != null ? this.message : "") + "</a></li>\n");
+        sb.insert(0, "<ul class=\"pagination\">\n").append("</ul>\n");
+        return sb.toString();
+    }
 
     public String getHtml() {
         return this.toString();

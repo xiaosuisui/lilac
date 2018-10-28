@@ -98,80 +98,8 @@
           
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
 
-            <li data-name="template" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="页面" lay-direction="2">
-                <i class="layui-icon layui-icon-template"></i>
-                <cite>页面</cite>
-              </a>
-              <dl class="layui-nav-child">
-                <dd><a lay-href="template/personalpage.html">个人主页</a></dd>
-                <dd><a lay-href="template/addresslist.html">通讯录</a></dd>
-                <dd><a lay-href="template/caller.html">客户列表</a></dd>
-                <dd><a lay-href="template/goodslist.html">商品列表</a></dd>
-                <dd><a lay-href="template/msgboard.html">留言板</a></dd>
-                <dd><a lay-href="template/search.html">搜索结果</a></dd>
-                <dd><a href="user/reg.html" target="_blank">注册</a></dd>
-                <dd><a href="user/login.html" target="_blank">登入</a></dd>
-                <dd><a href="user/forget.html" target="_blank">忘记密码</a></dd>
-                <dd><a lay-href="template/tips/404.html">404页面不存在</a></dd>
-                <dd><a lay-href="template/tips/error.html">错误提示</a></dd>
-                <dd><a lay-href="//www.baidu.com/">百度一下</a></dd>
-                <dd><a lay-href="//www.layui.com/">layui官网</a></dd>
-                <dd><a lay-href="//www.layui.com/admin/">layuiAdmin官网</a></dd>
-              </dl>
-            </li>
-            <li data-name="app" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="应用" lay-direction="2">
-                <i class="layui-icon layui-icon-app"></i>
-                <cite>应用</cite>
-              </a>
-              <dl class="layui-nav-child">
-                
-                <dd data-name="content">
-                  <a href="javascript:;">内容系统</a>
-                  <dl class="layui-nav-child">
-                    <dd data-name="list"><a lay-href="app/content/list.html">文章列表</a></dd>
-                    <dd data-name="tags"><a lay-href="app/content/tags.html">分类管理</a></dd>
-                    <dd data-name="comment"><a lay-href="app/content/comment.html">评论管理</a></dd>
-                  </dl>
-                </dd>
-                <dd data-name="forum">
-                  <a href="javascript:;">社区系统</a>
-                  <dl class="layui-nav-child">
-                    <dd data-name="list"><a lay-href="app/forum/list.html">帖子列表</a></dd>
-                    <dd data-name="replys"><a lay-href="app/forum/replys.html">回帖列表</a></dd>
-                  </dl>
-                </dd>
-                <dd>
-                  <a lay-href="app/message/index.html">消息中心</a>
-                </dd>
-                <dd data-name="workorder">
-                  <a lay-href="app/workorder/list.html">工单系统</a>
-                </dd>
-              </dl>
-            </li>
-            <li data-name="senior" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="消息" lay-direction="2">
-                <i class="layui-icon layui-icon-senior"></i>
-                <cite>消息</cite>
-              </a>
-              <dl class="layui-nav-child">
-                <dd>
-                  <a lay-href="sys/mail/">邮件服务</a>
-                </dd>
-                <dd>
-                  <a lay-href="sys/message/">短信服务</a>
-                </dd>
-                <dd data-name="echarts">
-                  <a href="javascript:;">短信服务</a>
-                  <dl class="layui-nav-child">
-                    <dd><a lay-href="senior/echarts/line.html">折线图</a></dd>
-                    <dd><a lay-href="senior/echarts/bar.html">柱状图</a></dd>
-                    <dd><a lay-href="senior/echarts/map.html">地图</a></dd>
-                  </dl>
-                </dd>
-              </dl>
-            </li>
+
+
             <li data-name="office" class="layui-nav-item">
               <a  lay-tips="机构" lay-direction="2">
                 <i class="layui-icon layui-icon-template-1"></i>
@@ -206,6 +134,9 @@
                 <cite>系统</cite>
               </a>
               <dl class="layui-nav-child">
+              <dd class="layui-nav-itemed">
+                <a href="javascript:;">基础配置</a>
+                <dl class="layui-nav-child">
                 <dd>
                   <a lay-href="sys/menu/">菜单管理</a>
                 </dd>
@@ -215,45 +146,36 @@
                 <dd>
                   <a lay-href="sys/dict/">字典管理</a>
                 </dd>
-                <dd>
-                  <a lay-href="sys/log/">系统日志</a>
-                </dd>
-              </dl>
-            </li>
-            <li data-name="paramter" class="layui-nav-item">
-              <a lay-href="/sys/paramter" lay-tips="参数配置" lay-direction="2">
-                <i class="layui-icon layui-icon-tabs"></i>
-                <cite>参数配置</cite>
-              </a>
-            </li>
-            <li data-name="set" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="设置" lay-direction="2">
-                <i class="layui-icon layui-icon-set"></i>
-                <cite>设置</cite>
-              </a>
-              <dl class="layui-nav-child">
+
+                <dd> <a lay-href="/sys/paramter"  lay-direction="2">参数配置</a></dd>
+
+                </dl>
+              </dd>
                 <dd class="layui-nav-itemed">
-                  <a href="javascript:;">系统设置</a>
+                  <a href="javascript:;">高级功能</a>
                   <dl class="layui-nav-child">
                     <dd><a lay-href="/set/system/website">网站设置</a></dd>
                     <dd>
                     <dd><a lay-href="/set/system/email">邮件设置</a></dd>
-                  </dl>
-                </dd>
-                <dd class="layui-nav-itemed">
-                  <a href="javascript:;">我的设置</a>
-                  <dl class="layui-nav-child">
-                    <dd><a lay-href="/sys/user/info">基本资料</a></dd>
-                    <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                    <dd>
+                    <dd>
+                      <a lay-href="sys/log/">系统日志</a>
+                    </dd>
                   </dl>
                 </dd>
               </dl>
             </li>
+            <li data-name="user" class="layui-nav-item">
+              <a lay-href="/sys/user" lay-tips="修改密码" lay-direction="2">
+                <i class="layui-icon layui-icon-tabs"></i>
+                <cite>修改密码</cite>
+              </a>
+            </li>
 
             <li data-name="other" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="其他" lay-direction="2">
+              <a href="javascript:;" lay-tips="第三方服务" lay-direction="2">
                 <i class="layui-icon layui-icon-flag"></i>
-                <cite>其他</cite>
+                <cite>第三方服务</cite>
               </a>
               <dl class="layui-nav-child">
                 <dd><a lay-href="/swagger-ui.html" >接口文档</a></dd>

@@ -34,7 +34,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findAllList" resultType="io.github.isliqian.sys.bean.SysMenu">
+	<select id="findList" resultType="io.github.isliqian.sys.bean.SysMenu">
 		SELECT
 			<include refid="menuColumns"/>
 		FROM sys_menu a

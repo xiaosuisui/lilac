@@ -19,6 +19,9 @@ public class ViewErrorController implements ErrorController {
         if (statusCode == 404) {
             return "/error/404";
         }
+        if (statusCode == 500){
+            return "/error/500";
+        }
 //        if (statusCode == 403) {
 //            return "/error/403";
 //        }
