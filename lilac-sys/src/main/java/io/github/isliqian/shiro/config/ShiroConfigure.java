@@ -60,8 +60,7 @@ public class ShiroConfigure {
         // 访问 /unauthorized/** 不通过JWTFilter
         filterRuleMap.put("/unauthorized/**", "anon");
         filterRuleMap.put("/logout","logout");
-        //开放所有权限
-        //filterRuleMap.put("/**","anon");
+        filterRuleMap.put("/**","authc");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
 
         return factoryBean;
