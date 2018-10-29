@@ -37,7 +37,7 @@ public class SysDictService extends CrudService<SysDictMapper, SysDict> {
 	@Transactional(readOnly = false)
 	public void delete(SysDict dict) {
 		super.delete(dict);
-		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
+//		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 	}
 
     public SysDict findByType(SysDict dict) {

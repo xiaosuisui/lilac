@@ -21,30 +21,36 @@
 </div>
 <div class="layui-fluid">
   <div class="layui-card">
-    <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-      <div class="layui-form-item">
+    <form class="layui-form" th:object="${dict}" th:action="@{/sys/dict/}" method="get">
+      <div class="layui-form layui-card-header layuiadmin-card-header-auto">
         <div class="layui-inline">
           <div class="layui-form-item">
             <div class="layui-input-inline">
-              <input type="text" name="name" required lay-verify="required" placeholder="请输入字典类型" autocomplete="off" class="layui-input">
+              <input type="text" name="name"  th:field="*{type}" placeholder="请输入字典类型" class="layui-input">
             </div>
           </div>
         </div>
         <div class="layui-inline">
-          <button class="layui-btn layui-btn-primary" >搜索</button>
+          <button class="layui-btn layui-btn-primary" lay-submit >搜索</button>
         </div>
         <div class="layui-inline">
           <div>
             <a href="#">批量删除</a>
-            <a lay-href="/sys/dict/info?id=" lay-direction="2">添加字典</a> </td>
+            <a lay-href="/sys/dict/form?id=" lay-direction="2">添加字典</a> </td>
           </div>
         </div>
       </div>
-    </div>
+    </form>
     <div class="layui-card-body">
 
 
-      <table class="layui-table">
+      <div class="layui-form layui-border-box layui-table-view">
+        <div class="layui-table-box">
+          <div class="layui-table-header">
+            <table cellpadding="0" cellspacing="0" border="0"
+
+          </div>
+        </div>
         <colgroup>
           <col width="50">
           <col width="150">
@@ -72,45 +78,52 @@
           <td th:text="${dict.description}"></td>
           <td><a th:href="@{'/sys/dict/del?id='+${dict.id}}" onclick="return confirmdel(this.href) "  data-method="offset" data-type="auto">删除</a>
             &nbsp;&nbsp;
-            <a  th:lay-href="'/sys/dict/info?id='+${dict.id}" lay-direction="2">修改字典</a> </td>
+            <a  th:lay-href="'/sys/dict/form?id='+${dict.id}" lay-direction="2">修改字典</a> </td>
         </tr>
 
         </tbody>
-      </table>
+      </div>
       <div id="page">
         <p th:utext="${page}" th:remove="tag"></p>
       </div>
     </div>
   </div>
 </div>
- <script src="../../../layuiadmin/layui/layui.js"></script>
-  <script>
-      layui.config({
-          base: '../../../layuiadmin/' //静态资源所在路径
-      }).extend({
-          index: 'lib/index' //主入口模块
-      }).use(['index', 'useradmin', 'table'], function() {
-          var $ = layui.$
-              , form = layui.form
-              , table = layui.table;
-      });
-      function confirmdel(obj) {
-          var herf = obj;
-          //询问框
-          layer.confirm('确定删除这条内容么?', {
-              btn: ['确定', '取消'] //按钮
-          }, function (f) {
-              window.location.href=herf;
-              layer.msg('删除成功', {icon: 1});
+<script src="../../../layuiadmin/base/base.js"></script>
+<script src="../../../layuiadmin/layui/layui.js"></script>
+<script th:inline="javascript">
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'useradmin', 'table'], function() {
+        var $ = layui.$
+            , form = layui.form
+            , table = layui.table;
+    });
+    var message = [[${message}]];
 
-
-          });
-          return false;
-      }
-      window.onload=function(){
-          setTimeout("fadeOut(window.document.getElementById('loading'));",500);
-      }
-  </script>
+    function confirmdel(obj) {
+        var herf = obj;
+        //询问框
+        layer.confirm('确定删除这条内容么?', {
+            btn: ['确定', '取消'] //按钮
+        }, function (f) {
+            window.location.href=herf;
+        });
+        return false;
+    }
+    window.onload=function(){
+        setTimeout(function(){
+            fadeOut(window.document.getElementById('loading'));
+            if (message ===null||message ==='' ){
+                //不执行任何操作
+            }else{
+                layer.msg(message);
+            }
+        },500);
+    }
+</script>
 </body>
 </html>
 

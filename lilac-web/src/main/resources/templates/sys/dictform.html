@@ -34,13 +34,13 @@
         <div class="layui-form-item">
           <label class="layui-form-label">标签名</label>
           <div class="layui-input-inline">
-            <input type="text" th:field="*{value}" lay-verify="required" placeholder="请输入标签名" autocomplete="off" class="layui-input">
+            <input type="text" th:field="*{label}" lay-verify="required" placeholder="请输入标签名" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item">
           <label class="layui-form-label">数据值</label>
           <div class="layui-input-inline">
-            <input type="text" th:field="*{value}" lay-verify="phone" placeholder="请输入数据值" autocomplete="off" class="layui-input">
+            <input type="text" th:field="*{value}" lay-verify="required" placeholder="请输入数据值" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item">
@@ -58,7 +58,7 @@
         </div>
         <div class="layui-form-item">
           <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">确定</button>
+            <button class="layui-btn" lay-submit >确定</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>
@@ -69,7 +69,7 @@
 
 
   <script src="../../../layuiadmin/layui/layui.js"></script>  
-  <script>
+  <script th:inline="javascript">
   layui.config({
     base: '../../../layuiadmin/' //静态资源所在路径
   }).extend({
@@ -78,8 +78,16 @@
     var $ = layui.$
     ,form = layui.form ;
   })
+  var message = [[${message}]];
   window.onload=function(){
-      setTimeout("fadeOut(window.document.getElementById('loading'));",500);
+      setTimeout(function(){
+          fadeOut(window.document.getElementById('loading'));
+          if (message ===null||message ==='' ){
+              //不执行任何操作
+          }else{
+              layer.msg(message);
+          }
+      },500);
   }
   </script>
 </body>

@@ -1,7 +1,9 @@
 package io.github.isliqian.sys.base;
 
+import java.util.Date;
 import java.util.List;
 
+import io.github.isliqian.utils.IDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,8 +40,12 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>>
     )
     public void save(T entity) {
         if (entity.getIsNewRecord()) {
+            entity.setId(IDUtils.getId());
+            entity.setCreateDate(new Date());
+            entity.setUpdateDate(new Date());
             this.dao.insert(entity);
         } else {
+            entity.setUpdateDate(new Date());
             this.dao.update(entity);
         }
 
@@ -49,6 +55,8 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>>
             readOnly = false
     )
     public void delete(T entity) {
+        entity.setDelFlag("1");
+        entity.setUpdateDate(new Date());
         this.dao.delete(entity);
     }
 }
