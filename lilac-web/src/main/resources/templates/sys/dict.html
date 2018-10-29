@@ -10,7 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
-  <link rel="stylesheet" href="../../layuiadmin/style/loading.css" media="all">
+  <link rel="stylesheet" href="../../../layuiadmin/style/loading.css" media="all">
+  <link rel="stylesheet" href="../../../layuiadmin/mytable/mytable.css">
 </head>
 <body>
 <div id="loading" class="in-progress customloading" style="display: block">
@@ -44,21 +45,7 @@
     <div class="layui-card-body">
 
 
-      <div class="layui-form layui-border-box layui-table-view">
-        <div class="layui-table-box">
-          <div class="layui-table-header">
-            <table cellpadding="0" cellspacing="0" border="0"
-
-          </div>
-        </div>
-        <colgroup>
-          <col width="50">
-          <col width="150">
-          <col width="150">
-          <col width="150">
-          <col width="150">
-          <col width="150">
-        </colgroup>
+      <table class="table table-action" >
         <thead>
         <tr>
           <th></th>
@@ -82,7 +69,7 @@
         </tr>
 
         </tbody>
-      </div>
+      </table>
       <div id="page">
         <p th:utext="${page}" th:remove="tag"></p>
       </div>
