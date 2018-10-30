@@ -1,7 +1,8 @@
-### LiLac 丁香花 打造企业级通用框架
+### LiLac 丁香花 打造企业级通用框架，简单易用。
 > 邮箱:qianboy233@gmail.com
 #### 实现功能
 > 基于springboot 2.0
+* 页面支持响应式
 * jwt校验，提供前后端分离服务
 * 定时任务
 * 菜单，字典，区域配置
@@ -17,6 +18,8 @@
 * ehcatch缓存
 
 #### 页面展示
+![主页](img/home.png)
+![手机端](img/phone.png)
 ![登入](img/example3.png)
 ![列表](img/example1.png)
 ![404](img/example2.png)
