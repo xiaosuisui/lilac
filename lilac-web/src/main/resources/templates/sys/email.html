@@ -10,7 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
-  <link rel="stylesheet" href="../../layuiadmin/style/loading.css" media="all">
+  <link rel="stylesheet" href="../../../layuiadmin/style/loading.css" media="all">
+  <!--<link rel="stylesheet" href="../../../layuiadmin/quill/quill.snow.css" media="all"/>-->
 </head>
 <body>
 <div id="loading" class="in-progress customloading" style="display: block">
@@ -25,46 +26,39 @@
         <div class="layui-card">
           <div class="layui-card-header">邮件服务</div>
           <div class="layui-card-body">
-            
-            <div class="layui-form" wid100 lay-filter="">
+            <form class="layui-form" action="">
               <div class="layui-form-item">
-                <label class="layui-form-label">SMTP服务器</label>
-                <div class="layui-input-inline">
-                  <input type="text" name="smtp_server" value="smtp.aliyun.com" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">如：smtp.163.com</div>
-              </div>
-              <div class="layui-form-item">
-                <label class="layui-form-label">SMTP端口号</label>
-                <div class="layui-input-inline" style="width: 80px;">
-                  <input type="text" name="cache" lay-verify="number" value="25" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">一般为 25 或 465</div>
-              </div>
-              <div class="layui-form-item">
-                <label class="layui-form-label">发件人邮箱</label>
-                <div class="layui-input-inline">
-                  <input type="text" name="send_email" value="xianxin@layui-inc.com" lay-verify="email" autocomplete="off" class="layui-input">
+                <label class="layui-form-label">主题</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入主题" autocomplete="off" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
-                <label class="layui-form-label">发件人昵称</label>
+                <label class="layui-form-label">收件人</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="send_nickname" value="贤心" autocomplete="off" class="layui-input">
+                  <input type="email"  required lay-verify="required" placeholder="请输入收件人邮箱" autocomplete="off" class="layui-input">
                 </div>
+                <div class="layui-form-mid layui-word-aux">暂时只支持QQ邮箱</div>
               </div>
-              <div class="layui-form-item">
-                <label class="layui-form-label">邮箱登入密码</label>
-                <div class="layui-input-inline">
-                  <input type="password" name="send_nickname" value="123456" autocomplete="off" class="layui-input">
+
+
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">内容</label>
+                <div class="layui-input-block">
+                  <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
                 </div>
               </div>
               <div class="layui-form-item">
                 <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="set_system_email">确认保存</button>
+                  <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
               </div>
-            </div>
+            </form>
+
+
+
+
             
           </div>
         </div>
@@ -72,7 +66,10 @@
     </div>
   </div>
 
-  <script src="../../../layuiadmin/layui/layui.js"></script>  
+  <script src="../../../layuiadmin/layui/layui.js"></script>
+<!--&lt;!&ndash; 引入 Quill 库 &ndash;&gt;-->
+<!--<script src="../../../layuiadmin/quill/quill.js"></script>-->
+
   <script>
   layui.config({
     base: '../../../layuiadmin/' //静态资源所在路径
@@ -82,7 +79,6 @@
   window.onload=function(){
       setTimeout("fadeOut(window.document.getElementById('loading'));",500);
   }
-
   </script>
 </body>
 </html>

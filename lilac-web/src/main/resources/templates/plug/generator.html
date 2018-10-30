@@ -19,25 +19,25 @@
         <p>加载中...</p>
     </div>
 </div>
-<div class="layui-fluid">
+<div class="layui-container">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">Mybatis Generator</div>
                 <div class="layui-card-body">
 
                     <!-- form start -->
                     <form role="form" class="layui-form" id="mbg">
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">主机名或IP地址 url</label>
+                            <label class="layui-form-label">主机名</label>
                             <div class="layui-input-inline">
                                 <input type="text" class="layui-input" id="ip" name="ip" placeholder="Enter IP">
                             </div>
+                            <div class="layui-form-mid layui-word-aux">IP地址 或者 url</div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">数据库 </label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="text" class="layui-input" id="db" name="db" placeholder="Enter DB">
                             </div>
                         </div>
@@ -49,45 +49,45 @@
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">用户名 </label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="text" class="layui-input" id="username" name="username" placeholder="Enter UserName">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">密码 </label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="text" class="layui-input" id="password" name="password" placeholder="Enter Password">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label">生成模型的包名 </label>
-                            <div class="layui-input-inline">
+                            <label class="layui-form-label">实体类包名 </label>
+                            <div class="layui-input-block">
                                 <input type="text" class="layui-input" id="modelpackagename" name="modelpackagename" placeholder="Enter Model PackageName">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label">生成DAO的包名 </label>
-                            <div class="layui-input-inline">
+                            <label class="layui-form-label">DAO类包名 </label>
+                            <div class="layui-input-block">
                                 <input type="text" class="layui-input" id="daopackagename" name="daopackagename" placeholder="Enter Dao PackageName">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">生成映射文件的位置 </label>
-                            <div class="layui-input-inline">
+                            <label class="layui-form-label">xml位置</label>
+                            <div class="layui-input-block">
                                 <input type="text" class="layui-input" id="mapperpath" name="mapperpath" placeholder="Enter Mapper Path">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">表名称 </label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="text" class="layui-input"  name="tablenames" placeholder="Enter test_table">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">模型名称 </label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="text" class="layui-input" name="tablemodels" placeholder="Enter TestTable">
                             </div>
                         </div>
