@@ -1,9 +1,13 @@
 package io.github.isliqian.mail.controller;
+import io.github.isliqian.mail.bean.MailTemple;
 import io.github.isliqian.mail.service.MailService;
+import io.github.isliqian.sys.base.BaseController;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.TemplateEngine;
@@ -15,8 +19,8 @@ import org.thymeleaf.context.Context;
  * @desc 发送邮件
  */
 @Controller
-@RequestMapping("/sys/mail")
-public class MailController {
+@RequestMapping("/plug/mail")
+public class MailController extends BaseController {
 
     @Autowired
     private MailService mailService;
@@ -27,10 +31,17 @@ public class MailController {
 
     @GetMapping("/")
     @ApiOperation(value="跳转到发送邮件界面")
-    public ModelAndView findAll(ModelAndView modelAndView){
-        sendTemplateMail();
-        modelAndView.setViewName("/sys/email.html");
-        return modelAndView;
+    public String form(MailTemple mailTemple,Model model){
+        //sendTemplateMail();
+        model.addAttribute("mail",mailTemple);
+        return "/plug/mail.html";
+    }
+    @PostMapping("/")
+    @ApiOperation(value="发送邮件操作")
+    public String sendEmail(MailTemple mailTemple,Model model){
+        addMessage(model, "发送'" + mailTemple.getTo() + "'邮件成功");
+        mailService.sendSimpleEmail(mailTemple.getTo(),mailTemple.getSubject(),mailTemple.getContent());
+        return form(mailTemple,model);
     }
     /**
      * @author wxt.liqian
