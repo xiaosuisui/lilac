@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/log4j")
+@RequestMapping("/plug/log4j")
 @Slf4j
 public class Log4jController  {
 
@@ -46,18 +46,36 @@ public class Log4jController  {
          * @param model
          * @return
          */
-        @RequestMapping("logs")
-        public String logsFiles(HttpServletRequest request, HttpServletResponse response, Model model) {
+        @RequestMapping("/")
+        public String logsFiles( Model model) {
 
             File logdirs = new File(System.getProperty("user.dir")+"\\logs\\");
 
             List<Map<String, String>> dirs = new ArrayList<>();
+            // 文件夹在上面 TODO 排序不好
             for (File file : logdirs.listFiles()) {
                 Map<String, String> dirOrFile = new HashMap<>();
-                dirOrFile.put("name", file.getName());
-                dirOrFile.put("path", URLEncoder.encode(System.getProperty("user.dir")+"\\logs+\\"));// 相对于 logs目录
-                dirOrFile.put("dir", file.isDirectory() + "");
-                dirs.add(dirOrFile);
+                if (file.isDirectory()){
+                    dirOrFile.put("name", file.getName());
+                    dirOrFile.put("path", URLEncoder.encode(System.getProperty("user.dir")+"\\logs\\"));// 相对于 logs目录
+                    dirOrFile.put("type", "文件夹");
+                    dirOrFile.put("method","打开");
+                    dirOrFile.put("dir", file.isDirectory() + "");
+                    dirs.add(dirOrFile);
+                }
+
+            }
+            for (File file : logdirs.listFiles()) {
+                Map<String, String> dirOrFile = new HashMap<>();
+                if (file.isFile()){
+                    dirOrFile.put("name", file.getName());
+                    dirOrFile.put("path", URLEncoder.encode(System.getProperty("user.dir")+"\\logs\\"));// 相对于 logs目录
+                    dirOrFile.put("type", "文件");
+                    dirOrFile.put("method","下载");
+                    dirOrFile.put("dir", file.isDirectory() + "");
+                    dirs.add(dirOrFile);
+                }
+
             }
             model.addAttribute("dirs", dirs);
             return "/plug/logfiles.html";
@@ -67,24 +85,17 @@ public class Log4jController  {
         @RequestMapping("download")
         public String downloadLog(HttpServletRequest request, HttpServletResponse response) {
             // 读取tomcat目录下logs/
-            String path = URLDecoder.decode(request.getParameter("path"));
+            String path = request.getParameter("path");
+            String name = request.getParameter("name");
+            System.out.println(path);
+            System.out.println(name);
             if (StringUtils.isBlank(path)) {
                 path = File.separator;
             }
             // path 中不能有../
-            path = path.replace(".." + File.separator, "");
-            String relativePath = "";
-//                    parametersService.getStringByKey("logs.relative.tomcat.path");
-            //  basePath === tomcat/logs/
-            String basePath = System.getProperty("catalina.home")+relativePath.replace("##",File.separator);
-            if(log.isDebugEnabled()){
-                log.debug("tomcat home:"+basePath);
-                log.debug("file path:"+basePath + path);
-            }
-
-            File file = new File(basePath + path);
+            File file = new File(path+name);
             try {
-                response.setHeader("Content-Disposition", " attachment; filename=" + Encodes.urlEncode(file.getName()));
+                response.setHeader("Content-Disposition", " attachment; filename=" + file.getName());
                 response.setHeader("Content-Type", "text/plain");
                 //response.setHeader("Content-Length",sysFile.getSize()+"");
                 // 保存文件
@@ -104,10 +115,11 @@ public class Log4jController  {
         }
 
         public static void main(String[] args){
-            File logdirs = new File(System.getProperty("user.dir")+"\\logs\\");
-            for (File file : logdirs.listFiles()) {
-                System.out.println(file.getName());
-            }
-
+//            File logdirs = new File(System.getProperty("user.dir")+"\\logs\\");
+//            for (File file : logdirs.listFiles()) {
+//                System.out.println(file.getName());
+//            }
+            String relativePath = "";
+System.out.println(System.getProperty("catalina.home")+relativePath.replace("##",File.separator));
         }
 }

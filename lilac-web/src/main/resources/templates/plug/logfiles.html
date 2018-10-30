@@ -1,22 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>日志文件</title>
+    <meta charset="utf-8">
+    <title>系统日志</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="../../../layuiadmin/style/loading.css" media="all">
 </head>
 <body>
+<div id="loading" class="in-progress customloading" style="display: block">
+    <div class="text-wrap">
+        <i class="iconfont">&#xe627;</i>
+        <p>加载中...</p>
+    </div>
+</div>
 <table >
-    <thead><tr><th>名称</th><th>操作</th></tr></thead>
+    <thead><tr><th>名称</th>
+        <th>类型</th>
+        <th>操作</th></tr></thead>
     <tbody>
 
         <tr th:each="file : ${dirs}">
-                <td th:text="${file.name}"></td>
-                <td><a th:href="@{'?path='+${file.path}}" th:text="${file.name}"></a></td>
+                <td th:text="${file.name}">
+                </td>
+            <td th:text="${file.type}"></td>
             <td>
-                    <a class="download"th:href="@{'download?path='+${file.path}}" >下载</a>
+                <a th:href="@{'download?path='+${file.path}+'&&name='+${file.name}+'&&dir='+${file.dir}}" th:text="${file.method}"></a>
             </td>
         </tr>
     </tbody>
 </table>
+<script src="../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'useradmin', 'table'], function() {
+        var $ = layui.$
+            , form = layui.form
+            , table = layui.table;
+    });
+    window.onload=function(){
+        setTimeout("fadeOut(window.document.getElementById('loading'));",500);
+    }
+</script>
 </body>
 </html>

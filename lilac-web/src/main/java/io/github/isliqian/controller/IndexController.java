@@ -60,13 +60,7 @@ public class IndexController {
         return mav;
     }
 
-    @GetMapping("/mybatis/generator")
-    @ApiOperation(value="代码生成")
-    public ModelAndView generator(){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("/plug/generator.html");
-        return mav;
-    }
+
 
     /*
      * 获取txt文件中的数字，即之前的访问量
