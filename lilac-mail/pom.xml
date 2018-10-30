@@ -23,6 +23,12 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>io.github.isliqian</groupId>
+            <artifactId>lilac-sys</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

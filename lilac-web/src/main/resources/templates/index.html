@@ -100,21 +100,11 @@
 
 
 
-            <li data-name="office" class="layui-nav-item">
-              <a  lay-tips="机构" lay-direction="2">
-                <i class="layui-icon layui-icon-template-1"></i>
-                <cite>机构</cite>
-              </a>
-                <dl class="layui-nav-child">
-                  <dd><a lay-href="sys/office/">列表</a></dd>
-                  <dd><a lay-href="senior/echarts/bar.html">类型</a></dd>
-                </dl>
 
-            </li>
             <li data-name="user" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="用户" lay-direction="2">
+              <a href="javascript:;" lay-tips="用户机构" lay-direction="2">
                 <i class="layui-icon layui-icon-user"></i>
-                <cite>用户</cite>
+                <cite>用户机构</cite>
               </a>
               <dl class="layui-nav-child">
                 <dd>
@@ -126,28 +116,31 @@
                 <dd>
                   <a lay-href="sys/role/">角色管理</a>
                 </dd>
+                <dd>
+                  <a lay-href="sys/office/">机构管理</a>
+                </dd>
               </dl>
             </li>
             <li data-name="basic" class="layui-nav-item">
-              <a href="javascript:;" lay-tips="系统" lay-direction="2">
+              <a href="javascript:;" lay-tips="系统配置" lay-direction="2">
                 <i class="layui-icon  layui-icon-tree"></i>
-                <cite>系统</cite>
+                <cite>系统配置</cite>
               </a>
               <dl class="layui-nav-child">
               <dd class="layui-nav-itemed">
                 <a href="javascript:;">基础配置</a>
                 <dl class="layui-nav-child">
                 <dd>
-                  <a lay-href="sys/menu/">菜单管理</a>
+                  <a lay-href="sys/menu/">菜单</a>
                 </dd>
                 <dd>
-                  <a lay-href="sys/area/">区域管理</a>
+                  <a lay-href="sys/area/">区域</a>
                 </dd>
                 <dd>
-                  <a lay-href="sys/dict/">字典管理</a>
+                  <a lay-href="sys/dict/">字典</a>
                 </dd>
 
-                <dd> <a lay-href="/sys/paramter"  lay-direction="2">参数配置</a></dd>
+                <dd> <a lay-href="/sys/paramter"  lay-direction="2">系统参数</a></dd>
 
                 </dl>
               </dd>
@@ -182,7 +175,7 @@
               <dd><a lay-href="/druid2/login.html" >数据库监控</a></dd>
                 <dd><a lay-href="/mybatis/generator" >代码生成</a></dd>
                 <dd><a lay-href="/plug/mail/" >发送邮件</a></dd>
-                <dd><a lay-href="/sys/health/" >性能监控</a></dd>
+                <dd><a lay-href="#" >性能监控</a></dd>
               </dl>
             </li>
           </ul>
