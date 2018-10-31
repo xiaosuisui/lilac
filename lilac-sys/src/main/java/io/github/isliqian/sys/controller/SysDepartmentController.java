@@ -3,8 +3,10 @@ package io.github.isliqian.sys.controller;
 import io.github.isliqian.log.ann.MyLog;
 import io.github.isliqian.sys.bean.SysDepartment;
 import io.github.isliqian.sys.bean.SysDict;
+import io.github.isliqian.sys.bean.SysOffice;
 import io.github.isliqian.sys.bean.SysRole;
 import io.github.isliqian.sys.service.SysDepartmentService;
+import io.github.isliqian.sys.service.SysOfficeService;
 import io.github.isliqian.sys.service.SysRoleService;
 import io.github.isliqian.utils.StringUtils;
 import io.github.isliqian.utils.base.BaseController;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Api(value = "部门配置管理接口")
 @RequestMapping("/sys/department")
@@ -28,6 +31,8 @@ public class SysDepartmentController extends BaseController {
     @Resource
     private SysDepartmentService sysDepartmentService;
 
+    @Resource
+    private SysOfficeService sysOfficeService;
 
     @ModelAttribute
     public SysDepartment get(@RequestParam(required=false) String id) {
@@ -54,6 +59,8 @@ public class SysDepartmentController extends BaseController {
     @ApiOperation(value="根据id查询部门详情")
     public String form(SysDepartment sysDepartment, Model model){
         model.addAttribute("department",sysDepartment);
+        List<SysOffice> officeList  = sysOfficeService.findList(new SysOffice());
+        model.addAttribute("officeList",officeList);
         return "/sys/departmentform.html";
     }
 
