@@ -2,7 +2,7 @@ package io.github.isliqian.parameter.mapper;
 
 
 import io.github.isliqian.parameter.entity.ParametersBean;
-import io.github.isliqian.sys.base.CrudDao;
+import io.github.isliqian.utils.base.CrudDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

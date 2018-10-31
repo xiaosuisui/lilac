@@ -1,16 +1,12 @@
 package io.github.isliqian.sys.mapper;
 
+import io.github.isliqian.sys.bean.SysDepartment;
 import io.github.isliqian.utils.base.CrudDao;
-import io.github.isliqian.sys.bean.SysRoleMenu;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
-/**
- * 角色菜单表
- */
 @Mapper
 @Component
-public interface SysRoleMenuMapper extends CrudDao<SysRoleMenu> {
-
+public interface SysDepartmentMapper extends CrudDao<SysDepartment> {
 
 }

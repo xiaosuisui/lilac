@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>MybatisPlug</title>
@@ -110,7 +110,7 @@
 <script src="./../../layuiadmin/biz/jquery-2.2.3.min.js"></script>
 <script src="./../../layuiadmin/biz/biz.js"></script>
 <script src="../../../layuiadmin/layui/layui.js"></script>
-<script>
+<script th:inline="javascript">
     layui.config({
         base: '../../layuiadmin/' //静态资源所在路径
     }).extend({
@@ -126,7 +126,6 @@
                 layer.msg(message);
             }
         },500);
-    }
     }
 </script>
 </body>

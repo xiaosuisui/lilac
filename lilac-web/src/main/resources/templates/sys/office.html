@@ -43,7 +43,7 @@
           <div class="layui-inline">
           <div>
             <a href="#">批量删除</a>
-            <a lay-href="/sys/office/info?id=" lay-direction="2">添加机构</a> </td>
+            <a lay-href="/sys/office/form?id=" lay-direction="2">添加机构</a> </td>
           </div>
           </div>
         </div>
@@ -82,7 +82,7 @@
             <td th:text="${office.phone}"></td>
             <td><a th:href="@{'/sys/office/del?id='+${office.id}}" onclick="return confirmdel(this.href) "  data-method="offset" data-type="auto">删除</a>
               &nbsp;&nbsp;
-              <a  th:lay-href="'/sys/office/info?id='+${office.id}" lay-direction="2">修改机构</a> </td>
+              <a  th:lay-href="'/sys/office/form?id='+${office.id}" lay-direction="2">修改机构</a> </td>
           </tr>
 
           </tbody>

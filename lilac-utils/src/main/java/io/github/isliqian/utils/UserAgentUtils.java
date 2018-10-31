@@ -1,4 +1,4 @@
-package io.github.isliqian.shiro.utils;
+package io.github.isliqian.utils;
 
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.DeviceType;

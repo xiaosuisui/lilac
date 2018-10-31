@@ -1,21 +1,18 @@
 package io.github.isliqian.sys.bean;
 
-import io.github.isliqian.sys.base.TreeEntity;
+import io.github.isliqian.utils.base.DataEntity;
+import io.github.isliqian.utils.base.TreeEntity;
 import lombok.Data;
-
-import java.util.List;
 
 
 /**
  * 职位
  */
 @Data
-public class SysOffice extends TreeEntity<SysOffice> {
+public class SysOffice extends DataEntity<SysOffice> {
 
 
     private static final long serialVersionUID = 1L;
-    private SysOffice parent;	// 父级编号
- 	private String parentIds; // 所有父级编号
     private SysArea area;		// 归属区域
     private String code; 	// 机构编码
     private String name; 	// 机构名称
@@ -32,13 +29,4 @@ public class SysOffice extends TreeEntity<SysOffice> {
 
 
 
-    @Override
-    public SysOffice getParent() {
-        return null;
-    }
-
-    @Override
-    public void setParent(SysOffice var1) {
-
-    }
 }

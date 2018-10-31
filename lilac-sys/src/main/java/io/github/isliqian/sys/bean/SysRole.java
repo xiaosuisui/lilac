@@ -1,7 +1,7 @@
 package io.github.isliqian.sys.bean;
 
 import com.google.common.collect.Lists;
-import io.github.isliqian.sys.base.DataEntity;
+import io.github.isliqian.utils.base.DataEntity;
 import lombok.Data;
 
 import java.util.List;

@@ -1,7 +1,8 @@
 package io.github.isliqian.sys.controller;
 
 import io.github.isliqian.log.ann.MyLog;
-import io.github.isliqian.sys.base.Page;
+import io.github.isliqian.utils.base.BaseController;
+import io.github.isliqian.utils.base.Page;
 import io.github.isliqian.sys.bean.SysArea;
 import io.github.isliqian.sys.service.SysAreaService;
 import io.github.isliqian.utils.StringUtils;
@@ -19,10 +20,31 @@ import java.util.Date;
 @Controller
 @RequestMapping("/sys/area")
 @Api(value = "区域配置管理接口")
-public class SysAreaController {
+public class SysAreaController extends BaseController {
     @Resource
     private SysAreaService sysAreaService;
 
+    @ModelAttribute
+    public SysArea get(@RequestParam(required=false) String id) {
+        SysArea entity = null;
+        if (StringUtils.isNotBlank(id)){
+            entity = sysAreaService.get(id);
+        }
+        if (entity == null){
+            entity = new SysArea();
+        }
+        return entity;
+    }
+    @MyLog("获取全部区域")
+    @GetMapping("/")
+    @ApiOperation(value="获取全部区域")
+    public String list(SysArea sysArea, HttpServletRequest request, HttpServletResponse response, Model model){
+        model.addAttribute("area",sysArea);
+        Page<SysArea> page = sysAreaService.findPage(new Page<SysArea>(request, response), sysArea);
+
+        model.addAttribute("page",page);
+        return "/sys/area.html";
+    }
 
     @MyLog("根据id查询区域详情")
     @GetMapping("/info")
@@ -37,14 +59,7 @@ public class SysAreaController {
        return "/sys/areaform.html";
     }
 
-    @MyLog("获取全部区域")
-    @GetMapping("/")
-    @ApiOperation(value="获取全部区域")
-    public String list(SysArea sysArea, HttpServletRequest request, HttpServletResponse response, Model model){
-        Page<SysArea> page = sysAreaService.findPage(new Page<SysArea>(request, response), sysArea);
-        model.addAttribute("page",page);
-        return "/sys/area.html";
-    }
+
 
 
 

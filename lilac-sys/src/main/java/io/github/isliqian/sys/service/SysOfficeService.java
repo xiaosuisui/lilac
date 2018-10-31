@@ -1,9 +1,8 @@
 package io.github.isliqian.sys.service;
 
-import io.github.isliqian.sys.base.CrudService;
-import io.github.isliqian.sys.base.Page;
-import io.github.isliqian.sys.base.ServiceException;
-import io.github.isliqian.sys.base.TreeService;
+import io.github.isliqian.utils.base.CrudService;
+import io.github.isliqian.utils.base.Page;
+import io.github.isliqian.utils.base.ServiceException;
 import io.github.isliqian.sys.bean.SysOffice;
 import io.github.isliqian.sys.mapper.SysOfficeMapper;
 import io.github.isliqian.utils.StringUtils;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class SysOfficeService extends TreeService<SysOfficeMapper, SysOffice> {
+public class SysOfficeService extends CrudService<SysOfficeMapper, SysOffice> {
 
     public List<SysOffice> findAll(){
         return super.dao.findAllList();
@@ -30,11 +29,7 @@ public class SysOfficeService extends TreeService<SysOfficeMapper, SysOffice> {
 
     @Transactional(readOnly = true)
     public List<SysOffice> findList(SysOffice office){
-        if(office != null){
-            office.setParentIds(office.getParentIds()+"%");
-            return dao.findByParentIdsLike(office);
-        }
-        return  new ArrayList<SysOffice>();
+        return dao.findList(new SysOffice());
     }
 
     @Transactional(readOnly = true)
@@ -98,14 +93,7 @@ public class SysOfficeService extends TreeService<SysOfficeMapper, SysOffice> {
         dao.deleteList(offices);
     }
 
-    /**
-     * 根据更新时间查询
-     * @param startDate 前闭后开区间的开始值。查询该时间点后的数据
-     * @return
-     */
-    public List<SysOffice> findListByFromUpdateDate(Date startDate) {
-        return dao.findListByUpdateDate(startDate, null);
-    }
+
 
     /**
      * 通过area_id 和 type=2 进行筛选
@@ -118,11 +106,5 @@ public class SysOfficeService extends TreeService<SysOfficeMapper, SysOffice> {
         return page;
     }
 
-    /**
-     * @param office
-     * @return
-     */
-    public List<SysOffice> getChildren(SysOffice office){
-        return dao.getChildren(office);
-    }
+
 }

@@ -1,10 +1,9 @@
 package io.github.isliqian.sys.controller;
 
 import io.github.isliqian.log.ann.MyLog;
-import io.github.isliqian.sys.base.Page;
+import io.github.isliqian.utils.base.Page;
 import io.github.isliqian.sys.bean.SysUser;
 import io.github.isliqian.sys.service.SysUserService;
-import io.github.isliqian.utils.ResultUtil;
 import io.github.isliqian.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.util.Date;
 @Controller
 @RequestMapping("/sys/user")

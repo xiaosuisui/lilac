@@ -7,8 +7,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import io.github.isliqian.shiro.utils.JsonMapper;
-import io.github.isliqian.shiro.utils.UserAgentUtils;
+import io.github.isliqian.utils.JsonMapper;
+import io.github.isliqian.utils.UserAgentUtils;
 import org.springframework.stereotype.Service;
 
 @Service

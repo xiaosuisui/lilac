@@ -1,4 +1,4 @@
-package io.github.isliqian.shiro.utils;
+package io.github.isliqian.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;

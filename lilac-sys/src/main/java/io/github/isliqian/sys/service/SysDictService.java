@@ -1,11 +1,9 @@
 package io.github.isliqian.sys.service;
 
 
-import io.github.isliqian.sys.base.CrudService;
+import io.github.isliqian.utils.base.CrudService;
 import io.github.isliqian.sys.bean.SysDict;
 import io.github.isliqian.sys.mapper.SysDictMapper;
-import io.github.isliqian.sys.utils.CacheUtils;
-import io.github.isliqian.sys.utils.DictUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

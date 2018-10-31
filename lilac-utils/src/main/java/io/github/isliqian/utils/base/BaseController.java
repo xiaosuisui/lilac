@@ -1,10 +1,7 @@
-package io.github.isliqian.sys.base;
+package io.github.isliqian.utils.base;
 
-import io.github.isliqian.shiro.utils.JsonMapper;
-import io.github.isliqian.shiro.utils.UserAgentUtils;
-import io.github.isliqian.utils.BeanValidators;
-import io.github.isliqian.utils.DateUtils;
-import io.github.isliqian.utils.StringUtils;
+
+import io.github.isliqian.utils.*;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

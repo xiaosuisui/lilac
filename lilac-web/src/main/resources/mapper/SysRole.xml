@@ -50,7 +50,7 @@
             AND u.id = #{user.id}
         </if>
         <if test="office != null and office.id != null and office.id != ''">
-            AND o.id = #{office.id}
+            AND a.office_id = #{office.id}
         </if>
         <if test="user != null and user.loginName != null and user.loginName != ''">
             AND u.login_name = #{user.loginName}

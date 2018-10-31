@@ -2,7 +2,7 @@
 package io.github.isliqian.sys.bean;
 
 
-import io.github.isliqian.sys.base.TreeEntity;
+import io.github.isliqian.utils.base.TreeEntity;
 
 /**
  * 区域Entity

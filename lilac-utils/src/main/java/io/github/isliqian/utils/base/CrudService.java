@@ -1,4 +1,4 @@
-package io.github.isliqian.sys.base;
+package io.github.isliqian.utils.base;
 
 import java.util.Date;
 import java.util.List;

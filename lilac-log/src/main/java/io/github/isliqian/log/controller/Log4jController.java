@@ -2,6 +2,7 @@ package io.github.isliqian.log.controller;
 
 import io.github.isliqian.utils.Encodes;
 import io.github.isliqian.utils.StringUtils;
+import io.github.isliqian.utils.base.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,15 @@ import java.util.Map;
 @Controller
 @RequestMapping("/plug/log4j")
 @Slf4j
-public class Log4jController  {
+public class Log4jController  extends BaseController {
 
 //        @Autowired
 //        private ParametersService parametersService;
 
 
         @RequestMapping("level")
-        public String level(HttpServletRequest request) {
-
+        public String level(Model model) {
+            addMessage(model,"暂只支持日志文件下载");
 
             return "modules/log/log4j";
         }

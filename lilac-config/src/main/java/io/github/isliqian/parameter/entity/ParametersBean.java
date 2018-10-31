@@ -1,6 +1,6 @@
 package io.github.isliqian.parameter.entity;
 
-import io.github.isliqian.sys.base.DataEntity;
+import io.github.isliqian.utils.base.DataEntity;
 import lombok.Getter;
 import lombok.Setter;
 

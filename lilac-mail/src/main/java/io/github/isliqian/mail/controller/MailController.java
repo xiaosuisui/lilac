@@ -1,7 +1,7 @@
 package io.github.isliqian.mail.controller;
 import io.github.isliqian.mail.bean.MailTemple;
 import io.github.isliqian.mail.service.MailService;
-import io.github.isliqian.sys.base.BaseController;
+import io.github.isliqian.utils.base.BaseController;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -34,6 +33,7 @@ public class MailController extends BaseController {
     public String form(MailTemple mailTemple,Model model){
         //sendTemplateMail();
         model.addAttribute("mail",mailTemple);
+        addMessage(model,"暂只支持QQ邮箱");
         return "/plug/mail.html";
     }
     @PostMapping("/")

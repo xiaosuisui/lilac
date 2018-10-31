@@ -1,8 +1,6 @@
 package io.github.isliqian.sys.service;
 
-import io.github.isliqian.shiro.utils.AuthUtils;
-import io.github.isliqian.shiro.utils.UserUtils;
-import io.github.isliqian.sys.base.CrudService;
+import io.github.isliqian.utils.base.CrudService;
 import io.github.isliqian.sys.bean.SysMenu;
 import io.github.isliqian.sys.mapper.SysMenuMapper;
 import io.github.isliqian.utils.StringUtils;

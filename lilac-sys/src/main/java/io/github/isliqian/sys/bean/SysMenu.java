@@ -1,7 +1,7 @@
 package io.github.isliqian.sys.bean;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.github.isliqian.sys.base.DataEntity;
+import io.github.isliqian.utils.base.DataEntity;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;

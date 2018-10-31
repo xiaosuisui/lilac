@@ -35,9 +35,9 @@
   <div class="layui-form-item">
     <label class="layui-form-label">区域</label>
     <div class="layui-input-block">
-      <select name="city" lay-verify="required">
+      <select name="city" lay-verify="required"  th:field="*{area}" th:value="*{area}">
         <option value="">请选择</option>
-        <option value="0">北京</option>
+        <option th:each="area:${areaList}" th:value="${area.id}" th:text="${area.name}"></option>
       </select>
     </div>
   </div>

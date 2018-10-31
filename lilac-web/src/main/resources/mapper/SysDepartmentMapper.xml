@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.isliqian.sys.mapper.SysDepartmentMapper">
+  <sql id="departmentColumns">
+    a.id,
+    a.name,
+    a.office_id AS "office.id",
+    a.remarks,
+    a.create_date AS "createDate",
+    a.update_date AS "updateDate",
+    o.name AS "office.name",
+    a.del_flag
+  </sql>
+  <sql id="departmentJoins">
+LEFT JOIN sys_office o ON o.id = a.office_id
+  </sql>
+  <select id="get" resultType="io.github.isliqian.sys.bean.SysDepartment">
+    SELECT
+    <include refid="departmentColumns"/>
+    FROM sys_department a
+    <include refid="departmentJoins"/>
+    WHERE a.id = #{id}
+  </select>
+
+  <select id="findList" resultType="io.github.isliqian.sys.bean.SysDepartment">
+    SELECT
+    <include refid="departmentColumns"/>
+    FROM sys_department a
+    <include refid="departmentJoins"/>
+    <where>
+      a.del_flag = #{DEL_FLAG_NORMAL}
+    </where>
+    <!-- 数据范围过滤 -->
+    ${sqlMap.dsf}
+    <choose>
+      <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+        ORDER BY ${page.orderBy}
+      </when>
+      <otherwise>
+        ORDER BY a.update_date ASC
+      </otherwise>
+    </choose>
+  </select>
+
+  <select id="findAllList" resultType="io.github.isliqian.sys.bean.SysDepartment">
+    SELECT
+    <include refid="departmentColumns"/>
+    FROM sys_department a
+    <include refid="departmentJoins"/>
+    <where>
+      a.del_flag = #{DEL_FLAG_NORMAL}
+    </where>
+    <choose>
+      <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+        ORDER BY ${page.orderBy}
+      </when>
+      <otherwise>
+        ORDER BY a.update_date DESC
+      </otherwise>
+    </choose>
+  </select>
+
+  <insert id="insert">
+		INSERT INTO sys_department(
+		 id, name, office_id, remarks, create_date, update_date, del_flag
+		) VALUES (
+		#{id},
+		#{name},
+		#{office.id},
+		#{remarks},
+		#{createDate},
+		#{updateDate},
+		#{delFlag},
+		)
+	</insert>
+
+  <update id="update">
+    UPDATE sys_department SET
+    name = #{name},
+    office_id = #{office.id},
+    remarks = #{remarks},
+    update_date = #{updateDate}
+    WHERE id = #{id}
+  </update>
+
+  <update id="delete">
+		UPDATE sys_department SET
+        del_flag = #{DEL_FLAG_DELETE},
+        update_date = #{updateDate}
+        WHERE id = #{id}
+	</update>
+</mapper>
