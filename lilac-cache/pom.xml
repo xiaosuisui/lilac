@@ -22,11 +22,7 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>io.github.isliqian</groupId>
-            <artifactId>lilac-sys</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
 
     <build>

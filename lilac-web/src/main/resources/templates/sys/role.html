@@ -43,7 +43,7 @@
           <div class="layui-inline">
           <div>
             <button class="layui-btn layuiadmin-btn-role" data-type="batchdel">批量删除</button>
-            <a lay-href="/sys/role/info?id=" lay-direction="2">添加角色</a> </td>
+            <a lay-href="/sys/role/form?id=" lay-direction="2">添加角色</a> </td>
           </div>
           </div>
         </div>
@@ -76,7 +76,7 @@
             <td th:text="${role.office.name}"></td>
             <td><a th:href="@{'/sys/role/del?id='+${role.id}}" onclick="return confirmdel(this.href) "  data-method="offset" data-type="auto">删除</a>
               &nbsp;&nbsp;
-              <a  th:lay-href="'/sys/role/info?id='+${role.id}" lay-direction="2">修改角色</a> </td>
+              <a  th:lay-href="'/sys/role/form?id='+${role.id}" lay-direction="2">修改角色</a> </td>
           </tr>
 
           </tbody>

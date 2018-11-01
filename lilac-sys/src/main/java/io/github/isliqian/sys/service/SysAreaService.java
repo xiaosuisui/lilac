@@ -13,7 +13,7 @@ import java.util.List;
  * @author ThinkGem
  * @version 2014-05-16
  */
-@Service
+@Service("sysAreaService")
 @Transactional(readOnly = true)
 public class SysAreaService extends TreeService<SysAreaMapper, SysArea> {
 

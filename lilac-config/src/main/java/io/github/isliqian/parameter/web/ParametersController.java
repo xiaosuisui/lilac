@@ -114,14 +114,14 @@ public class ParametersController  {
     @RequestMapping("/")
     public String list(ModelMap model, String label, String type) {
         ParametersBean parametersBean = new ParametersBean();
-        if (StringUtils.isNotBlank(label)) {
-            parametersBean.setLabel(label);
-            model.addAttribute("bond", label);
-        }
-        if (StringUtils.isNotBlank(type)) {
-            parametersBean.setType(type);
-            model.addAttribute("type", type);
-        }
+//        if (StringUtils.isNotBlank(label)) {
+//            parametersBean.setLabel(label);
+//            model.addAttribute("bond", label);
+//        }
+//        if (StringUtils.isNotBlank(type)) {
+//            parametersBean.setType(type);
+//            model.addAttribute("type", type);
+//        }
         List<ParametersBean> list = parametersService.findList(parametersBean);
         model.addAttribute("data", list);
         return "/modules/params/parameterTable";

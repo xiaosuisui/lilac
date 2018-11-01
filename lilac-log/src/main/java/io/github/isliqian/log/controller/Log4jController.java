@@ -1,11 +1,10 @@
 package io.github.isliqian.log.controller;
 
-import io.github.isliqian.utils.Encodes;
 import io.github.isliqian.utils.StringUtils;
 import io.github.isliqian.utils.base.BaseController;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,18 +23,24 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/plug/log4j")
-@Slf4j
 public class Log4jController  extends BaseController {
 
 //        @Autowired
 //        private ParametersService parametersService;
 
 
-        @RequestMapping("level")
-        public String level(Model model) {
+        @RequestMapping("/level")
+        public String level(HttpServletRequest request,Model model) {
             addMessage(model,"暂只支持日志文件下载");
-
-            return "modules/log/log4j";
+            String logName = request.getParameter("log");
+            if (null != logName) {
+                Logger log = ("".equals(logName) ?
+                        Logger.getRootLogger() : Logger.getLogger(logName));
+                log.setLevel(Level.toLevel(request.getParameter("level"), Level.DEBUG));
+            }
+            Logger rootLogger =  Logger.getRootLogger() ;
+            model.addAttribute("rootLogger",rootLogger);
+            return "/plug/log4j.html";
         }
 
 
@@ -110,7 +114,7 @@ public class Log4jController  extends BaseController {
                 IOUtils.closeQuietly(os);
                 return null;
             } catch (Exception e) {
-                log.error("下载文件失败!", e);
+                logger.error("下载文件失败!", e);
             }
             return null;
         }

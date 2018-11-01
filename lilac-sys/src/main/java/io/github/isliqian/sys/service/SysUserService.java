@@ -8,21 +8,22 @@ package io.github.isliqian.sys.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.github.isliqian.cache.service.RedisService;
 import io.github.isliqian.utils.base.CrudService;
 import io.github.isliqian.sys.bean.SysUser;
 import io.github.isliqian.sys.mapper.SysUserMapper;
 import io.github.isliqian.sys.mapper.SysUserRoleMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * Created by LiQian_Nice on 2018/6/9
  */
-@Component
+@Service("sysUserService")
 @Slf4j
 public class SysUserService extends CrudService<SysUserMapper, SysUser> {
 
@@ -30,6 +31,8 @@ public class SysUserService extends CrudService<SysUserMapper, SysUser> {
     @Autowired
     private SysUserMapper sysUserMapper;
 
+    @Resource
+    private RedisService redisService;
     @Autowired
     private SysUserRoleMapper sysUserRoleMapper;
 
@@ -49,11 +52,13 @@ public class SysUserService extends CrudService<SysUserMapper, SysUser> {
         log.info("UserImpl add");
         sysUserMapper.insert(sysUser);
     }
-    @Cacheable(cacheNames = "userCache")
+
     public SysUser getByLoginName(String username) {
         SysUser sysUser = new SysUser();
         sysUser.setLoginName(username);
-        return sysUserMapper.getByLoginName(sysUser);
+        SysUser user = sysUserMapper.getByLoginName(sysUser);
+        redisService.set("user",user);
+        return user;
     }
 
 
@@ -65,9 +70,6 @@ public class SysUserService extends CrudService<SysUserMapper, SysUser> {
     public void updatePassword(String username, String newPassword) {
 
     }
-
-
-
 
 
     public int checkUserBanStatus(String username) {

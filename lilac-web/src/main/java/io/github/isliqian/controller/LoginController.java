@@ -28,7 +28,7 @@ public class LoginController {
     @MyLog(value = "用户登录")
     @RequestMapping(value = "/login",method = POST)
     public String login(@ModelAttribute(value="user")  SysUser user, Model model) {
-            SysUser sysUser = sysUserService.getByLoginName(user.getLoginName());
+        SysUser sysUser = sysUserService.getByLoginName(user.getLoginName());
         model.addAttribute("message","This is your message");
             if (sysUser == null) {
                 return "redirect:/signin";

@@ -39,22 +39,24 @@
     </div>
     <div class="layui-form-mid layui-word-aux">可以不填写，自动翻译成英文</div>
   </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">机构</label>
-    <div class="layui-input-block">
-      <select name="city" lay-verify="required">
-        <option value="">请选择</option>
-        <option value="0">北京</option>
-      </select>
+    <div class="layui-form-item">
+      <label class="layui-form-label">机构</label>
+      <div class="layui-input-block">
+        <select name="office" lay-verify="required"  th:field="*{office.id}">
+          <option value="">请选择</option>
+          <option th:each="office:${officeList}" th:value="${office.id}" th:text="${office.name}"></option>
+        </select>
+      </div>
     </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">是否可用</label>
-    <div class="layui-input-block">
-      <input type="radio" name="sex" value="可用" title="可用">
-      <input type="radio" name="sex" value="禁用" title="禁用" checked>
-    </div>
-  </div>
+    <!--<div class="layui-form-item">-->
+      <!--<label class="layui-form-label">部门</label>-->
+      <!--<div class="layui-input-block">-->
+        <!--<select name="office" lay-verify="required"  th:field="*{department.id}">-->
+          <!--<option value="">请选择</option>-->
+          <!--<option th:each="office:${departmentList}" th:value="${department.id}" th:text="${department.name}"></option>-->
+        <!--</select>-->
+      <!--</div>-->
+    <!--</div>-->
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">备注</label>
     <div class="layui-input-block">

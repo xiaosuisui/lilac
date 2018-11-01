@@ -55,25 +55,9 @@ public class DictUtils {
     }
 
     public static List<SysDict> getDictList(String type){
-        @SuppressWarnings("unchecked")
-        Map<String, List<SysDict>> dictMap = (Map<String, List<SysDict>>)CacheUtils.get(CACHE_DICT_MAP);
-        if (dictMap==null){
-            dictMap = Maps.newHashMap();
-            for (SysDict dict : dictDao.findAllList(new SysDict())){
-                List<SysDict> dictList = dictMap.get(dict.getType());
-                if (dictList != null){
-                    dictList.add(dict);
-                }else{
-                    dictMap.put(dict.getType(), Lists.newArrayList(dict));
-                }
-            }
-            CacheUtils.put(CACHE_DICT_MAP, dictMap);
-        }
-        List<SysDict> dictList = dictMap.get(type);
-        if (dictList == null){
-            dictList = Lists.newArrayList();
-        }
-        return dictList;
+
+
+        return dictDao.findAllList(new SysDict());
     }
 
     /**

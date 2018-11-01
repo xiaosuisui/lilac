@@ -2,7 +2,6 @@ package io.github.isliqian.sys.utils;
 
 
 import java.util.Map;
-import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -60,7 +59,7 @@ public class MicAppContext implements ApplicationContextAware, DisposableBean {
     }
 
     private static void assertContextInjected() {
-        Validate.validState(applicationContext != null, "applicaitonContext属性未注入, 请在applicationContext.xml中定义SpringContextHolder.", new Object[0]);
+//        Validate.validState(applicationContext != null, "applicaitonContext属性未注入, 请在applicationContext.xml中定义SpringContextHolder.", new Object[0]);
     }
 }
 

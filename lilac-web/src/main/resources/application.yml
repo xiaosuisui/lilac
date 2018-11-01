@@ -46,22 +46,37 @@ spring:
     servlet:
       content-type: text/html
     suffix: .html
-  freemarker:
-    template-loader-path: classpath:/templates/
-    cache: false
-    charset: UTF-8
-    check-template-location: true
-    content-type: text/html
-    expose-request-attributes: true
-    expose-session-attributes: true
-    request-context-attribute: request
-    suffix: .ftl
+#  freemarker:
+#    template-loader-path: classpath:/templates/
+#    cache: false
+#    charset: UTF-8
+#    check-template-location: true
+#    content-type: text/html
+#    expose-request-attributes: true
+#    expose-session-attributes: true
+#    request-context-attribute: request
+#    suffix: .ftl
   mail:
     host: smtp.qq.com
     username: 51103942@qq.com
     password: izmvmoywhgbfbgif
     default-encoding: UTF-8
     port: 587
+  session:
+    store-type: redis
+  #配置redis数据库连接
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    timeout: 3600 # 连接超时时间（毫秒）
+    jedis:
+      pool:
+        max-idle: 20      # 连接池中的最大空闲连接
+        min-idle: 1
+        max-active: 20    # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: 60000   #连接池最大阻塞等待时间
+    database: 0   #默认是索引为的0的数据库
 #  cache:
 #    ehcache: classpath:/cache/ehcache-local.xml
 mybatis:

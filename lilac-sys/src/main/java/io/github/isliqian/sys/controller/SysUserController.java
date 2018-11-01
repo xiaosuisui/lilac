@@ -7,6 +7,7 @@ import io.github.isliqian.sys.service.SysUserService;
 import io.github.isliqian.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,7 +38,7 @@ public class SysUserController {
     }
 
     @MyLog("根据id查询用户详情")
-    @GetMapping("/info")
+    @GetMapping("/form")
     @ApiOperation(value="根据id查询用户详情", notes="返回200值正确")
     public ModelAndView form(SysUser sysUser, ModelAndView modelAndView){
 
@@ -66,5 +67,20 @@ public class SysUserController {
 
         } modelAndView.setViewName("redirect:/sys/user/?repage");
         return modelAndView;
+    }
+
+    @MyLog("我的资料")
+    @GetMapping("/info")
+    @ApiOperation(value="我的资料")
+    public String info(SysUser sysUser, HttpServletRequest request, HttpServletResponse response, ModelAndView mav ){
+        SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        System.out.println(user.toString());
+        return "/sys/admininfo.html";
+    }
+    @MyLog("修改密码")
+    @GetMapping("/password")
+    @ApiOperation(value="修改密码")
+    public String password(SysUser sysUser, HttpServletRequest request, HttpServletResponse response, ModelAndView mav ){
+        return "/sys/adminpassword.html";
     }
 }
