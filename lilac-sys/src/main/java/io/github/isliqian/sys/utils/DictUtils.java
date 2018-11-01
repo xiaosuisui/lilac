@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class DictUtils {
 
-    private static SysDictMapper dictDao = MicAppContext.getBean(SysDictMapper.class);
+    private static SysDictMapper dictDao ;
 
     public static final String CACHE_DICT_MAP = "dictMap";
 

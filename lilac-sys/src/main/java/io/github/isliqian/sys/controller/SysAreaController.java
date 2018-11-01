@@ -1,8 +1,6 @@
 package io.github.isliqian.sys.controller;
 
 import io.github.isliqian.log.ann.MyLog;
-import io.github.isliqian.sys.mapper.SysAreaMapper;
-import io.github.isliqian.sys.utils.MicAppContext;
 import io.github.isliqian.utils.base.BaseController;
 import io.github.isliqian.utils.base.Page;
 import io.github.isliqian.sys.bean.SysArea;
@@ -42,8 +40,7 @@ public class SysAreaController extends BaseController {
     @ApiOperation(value="获取全部区域")
     public String list(SysArea sysArea, HttpServletRequest request, HttpServletResponse response, Model model){
         model.addAttribute("area",sysArea);
-        SysAreaService sysAreaService1 = MicAppContext.getBean("sysAreaService");
-        Page<SysArea> page = sysAreaService1.findPage(new Page<SysArea>(request, response), sysArea);
+        Page<SysArea> page = sysAreaService.findPage(new Page<SysArea>(request, response), sysArea);
 
         model.addAttribute("page",page);
         return "/sys/area.html";
