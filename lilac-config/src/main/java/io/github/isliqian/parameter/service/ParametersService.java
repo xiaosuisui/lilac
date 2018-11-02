@@ -3,7 +3,7 @@ package io.github.isliqian.parameter.service;
 
 import io.github.isliqian.parameter.entity.ParametersBean;
 import io.github.isliqian.parameter.mapper.ParametersMapper;
-import io.github.isliqian.utils.base.CrudService;
+import io.github.isliqian.sys.utils.CrudService;
 import io.github.isliqian.utils.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;

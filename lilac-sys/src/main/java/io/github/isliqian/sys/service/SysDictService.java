@@ -1,12 +1,14 @@
 package io.github.isliqian.sys.service;
 
 
-import io.github.isliqian.utils.base.CrudService;
+import io.github.isliqian.cache.service.RedisService;
+import io.github.isliqian.sys.utils.CrudService;
 import io.github.isliqian.sys.bean.SysDict;
 import io.github.isliqian.sys.mapper.SysDictMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,7 +19,9 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class SysDictService extends CrudService<SysDictMapper, SysDict> {
-	
+
+	@Resource
+	private RedisService redisService;
 	/**
 	 * 查询字段类型列表
 	 * @return

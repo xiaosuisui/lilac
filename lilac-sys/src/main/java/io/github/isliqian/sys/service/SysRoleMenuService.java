@@ -1,6 +1,6 @@
 package io.github.isliqian.sys.service;
 
-import io.github.isliqian.utils.base.CrudService;
+import io.github.isliqian.sys.utils.CrudService;
 import io.github.isliqian.sys.bean.SysRoleMenu;
 import io.github.isliqian.sys.mapper.SysRoleMenuMapper;
 import org.springframework.stereotype.Service;

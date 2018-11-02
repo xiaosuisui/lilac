@@ -1,6 +1,6 @@
 package io.github.isliqian.sys.service;
 
-import io.github.isliqian.utils.base.TreeService;
+import io.github.isliqian.sys.utils.TreeService;
 import io.github.isliqian.sys.bean.SysArea;
 import io.github.isliqian.sys.mapper.SysAreaMapper;
 import org.springframework.stereotype.Service;

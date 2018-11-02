@@ -1,3 +1,5 @@
+![主页](img/icon.png)
+
 ### LiLac 丁香花 -V 1.0.0 
 
 > 打造企业级通用框架，简单易用。 邮箱:qianboy233@gmail.com 

@@ -12,7 +12,6 @@ public class SysUser extends DataEntity<SysUser> {
     private static final long serialVersionUID = 1L;
     private SysOffice office;    // 归属部门
     private SysRole role;// 用户类型
-    private SysArea area;//用户区域
     private String loginName;// 登录名
     private String password;// 密码
     private String no;        // 工号
