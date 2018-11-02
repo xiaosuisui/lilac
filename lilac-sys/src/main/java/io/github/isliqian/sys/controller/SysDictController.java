@@ -62,6 +62,9 @@ public class SysDictController  extends BaseController {
         sysDictService.save(dict);
         //同一页面跳转用model
         addMessage(model, "保存字典'" + dict.getLabel() + "'成功");
+        if (StringUtils.isNotBlank(dict.getId())){
+            return form(dict,model);
+        }
         return form(new SysDict(),model);
     }
 

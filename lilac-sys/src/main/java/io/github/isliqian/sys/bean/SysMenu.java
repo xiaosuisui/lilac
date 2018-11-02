@@ -24,9 +24,6 @@ private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示
 private String permission; // 权限标识
 
 
-
-protected SysUser createBy;	// 创建者
-protected SysUser updateBy;	// 更新者
 private String userId;
 
 public SysMenu(){

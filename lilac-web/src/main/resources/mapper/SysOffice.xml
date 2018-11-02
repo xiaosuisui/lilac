@@ -8,16 +8,13 @@
 		a.code,
 		a.name,
 		a.sort,
-		a.type,
-		a.grade,
 		a.master,
 		a.phone,
 		a.address,
 		a.remarks,
 		a.create_date AS "createDate",
 		a.update_date AS "updateDate",
-		a.del_flag,
-		a.useable AS useable,
+		a.del_flag AS "delFlag",
 		ar.name AS "area.name"
 	</sql>
 
@@ -42,9 +39,6 @@
             a.del_flag = #{DEL_FLAG_NORMAL}
             <if test="code != null and code != ''">
                 and a.code = #{code}
-            </if>
-            <if test="type != null and type != ''">
-                and a.type = #{type}
             </if>
         </where>
         <!-- 数据范围过滤 -->
@@ -93,28 +87,22 @@
 			code,
 			name,
 			sort,
-			type,
-			grade,
 			address,
 			create_date,
 			update_date,
 			remarks,
-			del_flag,
-			useable
+			del_flag
 		) VALUES (
 			#{id},
 			#{area.id},
 			#{code},
 			#{name},
 			#{sort},
-			#{type},
-			#{grade},
 			#{address},
 			#{createDate},
 			#{updateDate},
 			#{remarks},
-			#{delFlag},
-			#{useable}
+			#{delFlag}
 		)
 	</insert>
 
@@ -123,12 +111,9 @@
 			area_id = #{area.id},
 			code = #{code},
 			name = #{name},
-			type = #{type},
-			grade = #{grade},
 			address = #{address},
 			update_date = #{updateDate},
-			remarks = #{remarks},
-			useable=#{useable}
+			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
 
@@ -149,32 +134,26 @@
             code,
             name,
             sort,
-            type,
-            grade,
             master,
             phone,
             address,
             create_date,
             update_date,
             remarks,
-            del_flag,
-            useable
+            del_flag
             ) VALUES (
             #{item.id},
             #{item.area.id},
             #{item.code},
             #{item.name},
             #{item.sort},
-            #{item.type},
-            #{item.grade},
             #{item.master},
             #{item.phone},
             #{item.address},
             #{item.createDate},
             #{item.updateDate},
             #{item.remarks},
-            #{item.delFlag},
-            #{item.useable}
+            #{item.delFlag}
             )
         </foreach>
     </insert>
@@ -202,9 +181,6 @@
             a.del_flag = #{DEL_FLAG_NORMAL}
             <if test="area != null and area != ''">
                 AND a.area_id = #{area.id}
-            </if>
-            <if test="type != null and type != ''">
-                AND a.type = #{type}
             </if>
             <if test="name != null and name != ''">
                 AND a.name LIKE concat('%',#{name},'%')

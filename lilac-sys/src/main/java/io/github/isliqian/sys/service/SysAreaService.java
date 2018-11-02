@@ -1,6 +1,6 @@
 package io.github.isliqian.sys.service;
 
-import io.github.isliqian.sys.utils.TreeService;
+import io.github.isliqian.sys.utils.CrudService;
 import io.github.isliqian.sys.bean.SysArea;
 import io.github.isliqian.sys.mapper.SysAreaMapper;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Service("sysAreaService")
 @Transactional(readOnly = true)
-public class SysAreaService extends TreeService<SysAreaMapper, SysArea> {
+public class SysAreaService extends CrudService<SysAreaMapper, SysArea> {
 
 	public List<SysArea> findAll(){
 		return dao.findAllList();

@@ -73,6 +73,9 @@ public class SysUserController extends BaseController {
         sysUserService.save(user);
         //同一页面跳转用model
         addMessage(model, "保存'" + user.getLoginName() + "'信息成功");
+        if (StringUtils.isNotBlank(user.getId())){
+            return form(user,model);
+        }
         return form(new SysUser(),model);
     }
 

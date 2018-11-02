@@ -31,6 +31,7 @@ public class SysOfficeController extends BaseController {
 
     @Resource
     private SysAreaService sysAreaService;
+
     @ModelAttribute
     public SysOffice get(@RequestParam(required=false) String id) {
         SysOffice entity = null;
@@ -44,11 +45,10 @@ public class SysOfficeController extends BaseController {
     }
     @GetMapping("/")
     @ApiOperation(value="机构列表")
-    public ModelAndView list(SysOffice sysOffice, HttpServletRequest request, HttpServletResponse response, ModelAndView mav ){
+    public String list(SysOffice sysOffice, HttpServletRequest request, HttpServletResponse response,  Model model){
         Page<SysOffice> page = sysOfficeService.findPage(new Page<SysOffice>(request, response), sysOffice);
-        mav.setViewName("/sys/office.html");
-        mav.addObject("page",page);
-        return mav;
+        model.addAttribute("page",page);
+        return "/sys/office.html";
     }
 
     @MyLog("根据id查询机构详情")
@@ -72,6 +72,9 @@ public class SysOfficeController extends BaseController {
         sysOfficeService.save(office);
         //同一页面跳转用model
         addMessage(model, "保存机构'" + office.getName() + "'成功");
+        if (StringUtils.isNotBlank(office.getId())){
+            return form(office,model);
+        }
         return form(new SysOffice(),model);
     }
 

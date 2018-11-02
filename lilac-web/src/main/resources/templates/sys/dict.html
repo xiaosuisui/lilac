@@ -88,7 +88,6 @@
             , form = layui.form
             , table = layui.table;
     });
-    var message = [[${message}]];
 
     function confirmdel(obj) {
         var herf = obj;
@@ -100,6 +99,8 @@
         });
         return false;
     }
+    var message = [[${message}]];
+
     window.onload=function(){
         setTimeout(function(){
             fadeOut(window.document.getElementById('loading'));

@@ -1,6 +1,11 @@
 package io.github.isliqian.controller;
 
+import io.github.isliqian.bean.Console;
+import io.github.isliqian.cache.service.RedisService;
 import io.github.isliqian.sys.bean.SysUser;
+import io.github.isliqian.sys.service.SysUserService;
+import io.github.isliqian.utils.CountUtils;
+import io.github.isliqian.utils.base.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
@@ -8,17 +13,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import java.io.*;
 
 @Controller
 @Api(value = "路由控制管理")
-public class IndexController {
+public class IndexController extends BaseController {
 
+    @Resource
+    private RedisService redisService;
+
+    @Resource
+    private SysUserService sysUserService;
 
     @GetMapping("/")
     @ApiOperation(value="首页")
-    public String index(){
-
+    public String index(Model model){
+      SysUser user = (SysUser) redisService.get("user");
+      if (user==null){
+          return "redirect:/signin";
+      }else {
+          addMessage(model,"欢迎使用lilac后台管理系统 V1.0.0");
+          model.addAttribute("user",user);
+      }
       return "index.html";
     }
     @GetMapping("/signin")
@@ -37,11 +54,18 @@ public class IndexController {
     @GetMapping("/home/console.html")
     @ApiOperation(value="控制面板")
     public String home(Model model){
-        // 获取访问量信息
-        String basePath = System.getProperty("user.dir");
-        String txtFilePath = basePath+"\\count.txt";
-        Long count = Get_Visit_Count(txtFilePath);
-        model.addAttribute("count", count); // 后台参数传递给前端
+
+        Console console = (Console) redisService.get("console");
+        if (console == null){
+            console = new Console();
+            console.setVisitCount(Long.valueOf(1));
+            console.setUserCount(Long.valueOf(sysUserService.findAll().size()));
+            redisService.set("console",console);
+        }else {
+            console.setVisitCount(1+console.getVisitCount());
+            redisService.set("console",console);
+        }
+        model.addAttribute("console", console);         // 后台参数传递给前端
         return "/home/console.html";
     }
     @GetMapping("/set/system/website")
@@ -62,44 +86,5 @@ public class IndexController {
 
 
 
-    /*
-     * 获取txt文件中的数字，即之前的访问量
-     * 传入参数为： 字符串: txtFilePath,文件的绝对路径
-     */
-    public static Long Get_Visit_Count(String txtFilePath) {
 
-        try {
-            //读取文件(字符流)
-            BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(txtFilePath),"UTF-8"));
-            //循环读取数据
-            String str = null;
-            StringBuffer content = new StringBuffer();
-            while ((str = in.readLine()) != null) {
-                content.append(str);
-            }
-            //关闭流
-            in.close();
-
-            //System.out.println(content);
-            // 解析获取的数据
-            Long count = Long.valueOf(content.toString());
-            count ++; // 访问量加1
-            //写入相应的文件
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(txtFilePath),"UTF-8"));
-            out.write(String.valueOf(count));
-
-            //清楚缓存
-            out.flush();
-            //关闭流
-            out.close();
-
-            return count;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return 0L;
-        }
-
-
-    }
 }

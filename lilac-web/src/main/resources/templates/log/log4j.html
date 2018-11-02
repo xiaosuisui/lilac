@@ -1,0 +1,73 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: linxa
+  Date: 2018-04-11
+  Time: 10:53
+  To change this template use File | Settings | File Templates.
+--%>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>日志开关</title>
+    <meta name="decorator" content="default" />
+</head>
+<body>
+<h1>Log4J级别控制</h1>
+<script th:inline="javascript">
+
+</script>
+<form>
+    <table border="1">
+        <tr>
+            <th>Level</th>
+            <th>Logger</th>
+            <th>Set New Level</th>
+        </tr>
+        <tr>
+            <td>${rootLogger.level}</td>
+            <td>${rootLogger.name}</td>
+            <td>
+                <!--<c:forTokens var="level" delims="," items="DEBUG,INFO,WARN,ERROR,OFF">-->
+                    <a href="?log=&level=DEBUG">${level}</a>
+                    <a href="?log=&level=INFO">${level}</a>
+                    <a href="?log=&level=WARN">${level}</a>
+                    <a href="?log=&level=ERROR">${level}</a>
+                    <a href="?log=&level=OFF">${level}</a>
+                <!--</c:forTokens>-->
+            </td>
+        </tr>
+        <tr th:each="logger : ${rootLogger.loggerRepository.currentLoggers}">
+
+                <tr th:if="${!empty logger.level.syslogEquivalent || param.showAll}">
+                    <td>${logger.level}</td>
+                    <td>${logger.name}</td>
+                    <td>
+                        <!--<c:forTokens var="level" delims="," items="DEBUG,INFO,WARN,ERROR,OFF">-->
+                            <a href="?log=&level=DEBUG">${level}</a>
+                            <a href="?log=&level=INFO">${level}</a>
+                            <a href="?log=&level=WARN">${level}</a>
+                            <a href="?log=&level=ERROR">${level}</a>
+                            <a href="?log=&level=OFF">${level}</a>
+                        <!--</c:forTokens>-->
+                    </td>
+                </tr>
+
+        </c:forEach>
+        <tr>
+            <td></td>
+            <td><input type="text" name="log"/></td>
+            <td>
+                <select name="level">
+                    <!--<c:forTokens var="level" delims="," items="DEBUG,INFO,WARN,ERROR,OFF">-->
+                        <option>DEBUG</option>
+                        <option>INFO</option>
+                        <option>WARN</option>
+                        <option>ERROR</option>
+                        <option>OFF</option>
+                    <!--</c:forTokens>-->
+                </select> <input type="submit" value="Add New Logger"/></td>
+        </tr>
+    </table>
+</form>
+Show <a href="?showAll=true">所有已知 loggers</a>
+</body>
+</html>

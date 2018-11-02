@@ -28,22 +28,27 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" th:field="*{name}" lay-verify="required" placeholder="请输入菜单名" autocomplete="off" class="layui-input">
+                        <input type="text" th:field="*{name}" lay-verify="required"  autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">编码</label>
                     <div class="layui-input-inline">
-                        <input type="text"lay-verify="required" placeholder="请输入编码" autocomplete="off" class="layui-input">
+                        <input type="text" th:field="*{code}"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">序号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="role" lay-verify="required" placeholder="请输入序号" autocomplete="off" class="layui-input">
+                        <input type="text" th:field="*{sort}" class="layui-input">
                     </div>
                 </div>
-
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类型</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:field="*{type}" class="layui-input">
+                    </div>
+                </div>
 
                 <div class="layui-form-item">
                     <div class="layui-input-block">
@@ -58,7 +63,7 @@
 
 
 <script src="../../../layuiadmin/layui/layui.js"></script>
-<script>
+<script th:inline="javascript">
     layui.config({
         base: '../../../layuiadmin/' //静态资源所在路径
     }).extend({
@@ -67,8 +72,17 @@
         var $ = layui.$
             ,form = layui.form ;
     })
+    var message = [[${message}]];
+
     window.onload=function(){
-        setTimeout("fadeOut(window.document.getElementById('loading'));",500);
+        setTimeout(function(){
+            fadeOut(window.document.getElementById('loading'));
+            if (message ===null||message ==='' ){
+                //不执行任何操作
+            }else{
+                layer.msg(message);
+            }
+        },500);
     }
 </script>
 </body>

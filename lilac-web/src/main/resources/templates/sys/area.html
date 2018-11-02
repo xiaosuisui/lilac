@@ -36,7 +36,7 @@
         <div class="layui-inline">
           <div>
             <a href="#">批量删除</a>
-            <a lay-href="/sys/area/info?id=" lay-direction="2">添加区域</a> </td>
+            <a lay-href="/sys/area/form?id=" lay-direction="2">添加区域</a> </td>
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@
           <td th:text="${area.sort}"></td>
           <td><a th:href="@{'/sys/area/del?id='+${area.id}}" onclick="return confirmdel(this.href) "  data-method="offset" data-type="auto">删除</a>
             &nbsp;&nbsp;
-            <a  th:lay-href="'/sys/area/info?id='+${area.id}" lay-direction="2">修改区域</a> </td>
+            <a  th:lay-href="'/sys/area/form?id='+${area.id}" lay-direction="2">修改区域</a> </td>
         </tr>
 
         </tbody>
@@ -81,7 +81,7 @@
   </div>
 </div>
  <script src="../../../layuiadmin/layui/layui.js"></script>
-  <script>
+  <script th:inline="javascript">
       layui.config({
           base: '../../../layuiadmin/' //静态资源所在路径
       }).extend({
@@ -104,8 +104,17 @@
           });
           return false;
       }
+      var message = [[${message}]];
+
       window.onload=function(){
-          setTimeout("fadeOut(window.document.getElementById('loading'));",500);
+          setTimeout(function(){
+              fadeOut(window.document.getElementById('loading'));
+              if (message ===null||message ==='' ){
+                  //不执行任何操作
+              }else{
+                  layer.msg(message);
+              }
+          },500);
       }
   </script>
 </body>

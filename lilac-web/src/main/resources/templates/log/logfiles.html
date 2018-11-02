@@ -32,7 +32,7 @@
                 </td>
             <td th:text="${file.type}"></td>
             <td>
-                <a th:href="@{'download?path='+${file.path}+'&&name='+${file.name}+'&&dir='+${file.dir}}" th:text="${file.method}"></a>
+                <a th:href="@{'download?path='+${file.path}+'&&dir='+${file.dir}}" th:text="${file.method}"></a>
             </td>
         </tr>
     </tbody>

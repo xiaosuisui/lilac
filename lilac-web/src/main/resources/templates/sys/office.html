@@ -59,14 +59,12 @@
             <col width="150">
             <col width="150">
             <col width="150">
-            <col width="150">
           </colgroup>
           <thead>
           <tr>
             <th></th>
             <th>名称</th>
             <th>区域</th>
-            <th>类型</th>
             <th>负责人</th>
             <th>电话</th>
             <th>操作</th>
@@ -77,7 +75,6 @@
             <td><input type="checkbox" name="" lay-skin="primary"> </td>
             <td th:text="${office.name}"></td>
             <td th:text="${office.area.name}"></td>
-            <td th:text="${office.type}"></td>
             <td th:text="${office.master}"></td>
             <td th:text="${office.phone}"></td>
             <td><a th:href="@{'/sys/office/del?id='+${office.id}}" onclick="return confirmdel(this.href) "  data-method="offset" data-type="auto">删除</a>
@@ -93,7 +90,7 @@
   </div>
 
  <script src="../../../layuiadmin/layui/layui.js"></script>
-  <script>
+  <script th:inline="javascript">
       layui.config({
           base: '../../../layuiadmin/' //静态资源所在路径
       }).extend({
@@ -116,8 +113,17 @@
           });
           return false;
       }
+      var message = [[${message}]];
+
       window.onload=function(){
-          setTimeout("fadeOut(window.document.getElementById('loading'));",500);
+          setTimeout(function(){
+              fadeOut(window.document.getElementById('loading'));
+              if (message ===null||message ==='' ){
+                  //不执行任何操作
+              }else{
+                  layer.msg(message);
+              }
+          },500);
       }
   </script>
 </body>

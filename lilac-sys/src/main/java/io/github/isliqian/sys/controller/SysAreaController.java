@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -47,34 +48,41 @@ public class SysAreaController extends BaseController {
     }
 
     @MyLog("根据id查询区域详情")
-    @GetMapping("/info")
+    @GetMapping("/form")
     @ApiOperation(value="根据id查询区域详情")
     public String form(SysArea sysArea,Model model){
-        if (StringUtils.isNotBlank(sysArea.getId())) {
-            model.addAttribute("area",sysAreaService.get(sysArea.getId()));
-        }else {
-            model.addAttribute("area",new SysArea());
-
-        }
-       return "/sys/areaform.html";
+        model.addAttribute("area",sysArea);
+        return "/sys/areaform.html";
     }
 
 
 
 
-
+    @MyLog("保存区域")
+    @PostMapping(value = "save")//@Valid
+    @ApiOperation(value="保存区域")
+    public String save(SysArea area, Model model) {
+        if (!beanValidator(model, area)){
+            return form(area, model);
+        }
+        sysAreaService.save(area);
+        //同一页面跳转用model
+        addMessage(model, "保存区域'" + area.getName() + "'成功");
+        if (StringUtils.isNotBlank(area.getId())){
+            return form(area,model);
+        }
+        return form(new SysArea(),model);
+    }
 
 
 
     @MyLog("根据id删除区域")
     @GetMapping("/del")
     @ApiOperation(value="根据id删除区域")
-    public String delete(SysArea sysArea,Model model){
-        if (StringUtils.isNotBlank(sysArea.getId())) {
-            sysArea.setUpdateDate(new Date());
-            sysAreaService.delete(sysArea);
-        }
-        return "redirect:/sys/area/?repage";
+    public String delete(SysArea sysArea, RedirectAttributes redirectAttributes){
+        addMessage(redirectAttributes, "删除字典成功");
+        sysAreaService.delete(sysArea);
+        return "redirect:/sys/area/";
 
     }
 

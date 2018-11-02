@@ -81,6 +81,9 @@ public class SysRoleController  extends BaseController {
         sysRoleService.save(sysRole);
         //同一页面跳转用model
         addMessage(model, "保存角色'" + sysRole.getName() + "'成功");
+        if (StringUtils.isNotBlank(sysRole.getId())){
+            return form(sysRole,model);
+        }
         return form(new SysRole(),model);
     }
 

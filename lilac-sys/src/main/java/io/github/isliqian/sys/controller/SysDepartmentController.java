@@ -75,6 +75,9 @@ public class SysDepartmentController extends BaseController {
         sysDepartmentService.save(department);
         //同一页面跳转用model
         addMessage(model, "保存机构'" + department.getName() + "'成功");
+        if (StringUtils.isNotBlank(department.getId())){
+            return form(department,model);
+        }
         return form(new SysDepartment(),model);
     }
 

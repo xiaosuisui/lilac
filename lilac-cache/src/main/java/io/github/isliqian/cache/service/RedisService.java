@@ -31,7 +31,7 @@ public class RedisService {
         try {
             ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
             operations.set(key, value);
-            logger.info("写入缓存操作执行成功......key:"+key);
+            logger.info("写入缓存内容执行成功......key:"+key);
             result = true;
         } catch (Exception e) {
             logger.error("写入缓存失败",e);
@@ -85,7 +85,7 @@ public class RedisService {
 
     public void remove(final String key) {
         if (exists(key)) {
-            logger.info("删除缓存执行成功......key:"+key);
+            logger.info("删除缓存内容执行成功......key:"+key);
             redisTemplate.delete(key);
         }
     }

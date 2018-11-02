@@ -32,22 +32,26 @@
       <input type="text"  th:field="*{name}"  required   lay-verify="required" placeholder="请输入机构名称" autocomplete="off" class="layui-input">
     </div>
   </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">编码</label>
+      <div class="layui-input-inline">
+        <input type="text"  th:field="*{code}"  required   lay-verify="required" placeholder="请输入机构编码" autocomplete="off" class="layui-input">
+      </div>
+    </div>
   <div class="layui-form-item">
     <label class="layui-form-label">区域</label>
     <div class="layui-input-block">
-      <select name="city" lay-verify="required"  th:field="*{area}" th:value="*{area}">
-        <option value="">请选择</option>
+      <select name="city" lay-verify="required"  th:field="*{area.id}">
         <option th:each="area:${areaList}" th:value="${area.id}" th:text="${area.name}"></option>
       </select>
     </div>
   </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">类型</label>
-    <div class="layui-input-block">
-      <input type="radio" name="sex" value="可用" title="可用">
-      <input type="radio" name="sex" value="禁用" title="禁用" checked>
+    <div class="layui-form-item">
+      <label class="layui-form-label">排序</label>
+      <div class="layui-input-inline">
+        <input type="text"  th:field="*{sort}"  required   lay-verify="required" placeholder="请输入排列序号" autocomplete="off" class="layui-input">
+      </div>
     </div>
-  </div>
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">备注</label>
     <div class="layui-input-block">
@@ -65,7 +69,7 @@
 </div>
 </div>
   <script src="../../../layuiadmin/layui/layui.js"></script>  
-  <script>
+  <script th:inline="javascript">
   layui.config({
     base: '../../../layuiadmin/' //静态资源所在路径
   }).extend({
@@ -74,8 +78,17 @@
     var $ = layui.$
     ,form = layui.form ;
   })
+
+  var message = [[${message}]];
   window.onload=function(){
-      setTimeout("fadeOut(window.document.getElementById('loading'));",500);
+      setTimeout(function(){
+          fadeOut(window.document.getElementById('loading'));
+          if (message ===null||message ==='' ){
+              //不执行任何操作
+          }else{
+              layer.msg(message);
+          }
+      },500);
   }
   </script>
 </body>

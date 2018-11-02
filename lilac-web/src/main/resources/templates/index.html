@@ -70,11 +70,11 @@
           </li>
           <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;">
-              <cite>lilac</cite>
+              <cite><span th:text="${user.loginName}"></span></cite>
             </a>
             <dl class="layui-nav-child">
-              <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-              <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+              <dd><a lay-href="/sys/user/info">基本资料</a></dd>
+              <dd><a lay-href="/sys/user/password">修改密码</a></dd>
               <hr>
               <dd  style="text-align: center;"><a href="/logout">退出</a></dd>
             </dl>
@@ -93,7 +93,7 @@
       <div class="layui-side layui-side-menu">
         <div class="layui-side-scroll">
           <mylogo>
-            <span>lilac</span>
+            <span>LILAC</span>
           </mylogo>
           
           <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
@@ -109,9 +109,9 @@
                 <dd><a lay-href="/sys/user/password" >修改密码</a></dd>
               </dl>
             </li>
-            <li data-name="office" class="layui-nav-item">
+            <li data-name="sys" class="layui-nav-item">
               <a href="javascript:;" lay-tips="机构用户" lay-direction="2">
-                <i class="layui-icon layui-icon-read"></i>
+                <i class="layui-icon layui-icon-template-1"></i>
                 <cite>机构用户</cite>
               </a>
               <dl class="layui-nav-child">
@@ -131,7 +131,7 @@
             </li>
             <li data-name="sys" class="layui-nav-item">
               <a href="javascript:;" lay-tips="系统设置" lay-direction="2">
-                <i class="layui-icon  layui-icon-set-sm"></i>
+                <i class="layui-icon  layui-icon-set"></i>
                 <cite>系统设置</cite>
               </a>
                   <dl class="layui-nav-child">
@@ -162,18 +162,18 @@
             </li>
             <li data-name="log" class="layui-nav-item">
               <a href="javascript:;" lay-tips="日志管理" lay-direction="2">
-                <i class="layui-icon  layui-icon-list"></i>
+                <i class="layui-icon  layui-icon-survey"></i>
                 <cite>日志管理</cite>
               </a>
               <dl class="layui-nav-child">
                 <dd>
-                <a lay-href="sys/log/">操作日志</a>
+                <a lay-href="log/log/files">操作日志</a>
                 </dd>
+                <!--<dd>-->
+                  <!--<a lay-href="log/log/level">日志开关</a>-->
+                <!--</dd>-->
                 <dd>
-                  <a lay-href="as">日志开关</a>
-                </dd>
-                <dd>
-                  <a lay-href="/plug/log4j/">日志列表</a>
+                  <a lay-href="log/log/list">日志列表</a>
                 </dd>
               </dl>
             </li>
@@ -184,7 +184,7 @@
               </a>
               <dl class="layui-nav-child">
                 <dd>
-                  <a lay-href="sys/log/">任务调度</a>
+                  <a lay-href="s">任务调度</a>
                 </dd>
               </dl>
             </li>
@@ -270,24 +270,25 @@
           a.appendChild(r);
       })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
   </script>
-  <script>
+  <script th:inline="javascript">
   layui.config({
     base: '../layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
   }).use('index');
+
+  var message = [[${message}]];
+  window.onload=function(){
+
+      if (message ===null||message ==='' ){
+          //不执行任何操作
+      }else{
+          layer.msg(message);
+      }
+
+  }
   </script>
-  
-  <!-- 百度统计 -->
-  <script>
-  var _hmt = _hmt || [];
-  (function() {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
-    var s = document.getElementsByTagName("script")[0]; 
-    s.parentNode.insertBefore(hm, s);
-  })();
-  </script>
+
 </body>
 </html>
 
