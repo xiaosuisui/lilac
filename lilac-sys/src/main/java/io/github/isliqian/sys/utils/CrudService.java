@@ -3,10 +3,9 @@ package io.github.isliqian.sys.utils;
 import java.util.Date;
 import java.util.List;
 
-import io.github.isliqian.cache.bean.LilacUtil;
+
 import io.github.isliqian.cache.service.RedisService;
-import io.github.isliqian.sys.bean.SysArea;
-import io.github.isliqian.sys.bean.SysDict;
+import io.github.isliqian.sys.bean.*;
 import io.github.isliqian.utils.IDUtils;
 import io.github.isliqian.utils.base.BaseService;
 import io.github.isliqian.utils.base.CrudDao;
@@ -25,6 +24,15 @@ import javax.annotation.Resource;
 public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>> extends BaseService {
 
     public Logger logger = LoggerFactory.getLogger(getClass());
+
+    public static final String CACHE_DICT_LIST = "dictList";
+    public static final String CACHE_ROLE_LIST = "roleList";
+    public static final String CACHE_MENU_LIST = "menuList";
+    public static final String CACHE_AREA_LIST = "areaList";
+    public static final String CACHE_OFFICE_LIST = "officeList";
+    public static final String CACHE_DEPARTMENT_LIST = "departmentList";
+    public static final String CACHE_USER_LIST = "userList";
+
     @Autowired
     protected D dao;
 
@@ -44,27 +52,78 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>>
 
     public List<T> findList(T entity) {
         List<T> list = null;
-        //区域缓存
         if (entity.getClass().getName().equals( SysArea.class.getName())){
-        list = (List<T>) redisService.get(LilacUtil.CACHE_AREA_LIST);
+            //区域
+        list = (List<T>) redisService.get(CACHE_AREA_LIST);
             if (list!=null){
                 //不执行任何操作
                 return list;
             }else {
                 list = this.dao.findList(entity);
-                redisService.set(LilacUtil.CACHE_AREA_LIST,list);
+                redisService.set(CACHE_AREA_LIST,list);
             }
 
         }else if (entity.getClass().getName().equals( SysDict.class.getName())){
-            list = (List<T>) redisService.get(LilacUtil.CACHE_DICT_LIST);
+            //字典
+            list = (List<T>) redisService.get(CACHE_DICT_LIST);
             if (list!=null){
                 //不执行任何操作
                 return list;
             }else {
                 list = this.dao.findList(entity);
-                redisService.set(LilacUtil.CACHE_DICT_LIST,list);
+                redisService.set(CACHE_DICT_LIST,list);
             }
-        }else {
+        }else if (entity.getClass().getName().equals(SysMenu.class.getName())){
+            //菜单
+            list = (List<T>) redisService.get(CACHE_MENU_LIST);
+            if (list!=null){
+                //不执行任何操作
+                return list;
+            }else {
+                list = this.dao.findList(entity);
+                redisService.set(CACHE_MENU_LIST,list);
+            }
+        }else if(entity.getClass().getName().equals(SysOffice.class.getName())){
+            //机构
+            list = (List<T>) redisService.get(CACHE_OFFICE_LIST);
+            if (list!=null){
+                //不执行任何操作
+                return list;
+            }else {
+                list = this.dao.findList(entity);
+                redisService.set(CACHE_OFFICE_LIST,list);
+            }
+        }else if(entity.getClass().getName().equals(SysDepartment.class.getName())){
+            //部门
+            list = (List<T>) redisService.get(CACHE_DEPARTMENT_LIST);
+            if (list!=null){
+                //不执行任何操作
+                return list;
+            }else {
+                list = this.dao.findList(entity);
+                redisService.set(CACHE_DEPARTMENT_LIST,list);
+            }
+        }else if (entity.getClass().getName().equals(SysRole.class.getName())){
+            //角色
+            list = (List<T>) redisService.get(CACHE_ROLE_LIST);
+            if (list!=null){
+                //不执行任何操作
+                return list;
+            }else {
+                list = this.dao.findList(entity);
+                redisService.set(CACHE_ROLE_LIST,list);
+            }
+        }else if (entity.getClass().getName().equals(SysUser.class.getName())){
+            //用户
+            list = (List<T>) redisService.get(CACHE_USER_LIST);
+            if (list!=null){
+                //不执行任何操作
+                return list;
+            }else {
+                list = this.dao.findList(entity);
+                redisService.set(CACHE_USER_LIST,list);
+            }
+        }else{
             list = this.dao.findList(entity);
         }
         return list;
@@ -80,6 +139,9 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>>
             readOnly = false
     )
     public void save(T entity) {
+
+        common(entity);
+
         if (entity.getIsNewRecord()) {
             entity.setId(IDUtils.getId());
             entity.setCreateDate(new Date());
@@ -96,8 +158,28 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity<T>>
             readOnly = false
     )
     public void delete(T entity) {
+        common(entity);
         entity.setDelFlag("1");
         entity.setUpdateDate(new Date());
         this.dao.delete(entity);
+    }
+
+    public void common(T entity){
+        if (entity.getClass().getName().equals( SysArea.class.getName())){
+            redisService.remove(CACHE_AREA_LIST);
+        }else if (entity.getClass().getName().equals( SysDict.class.getName())){
+            redisService.remove(CACHE_DICT_LIST);
+        }else if (entity.getClass().getName().equals(SysMenu.class.getName())){
+            redisService.remove(CACHE_MENU_LIST);
+        }else if(entity.getClass().getName().equals(SysOffice.class.getName())){
+            redisService.remove(CACHE_OFFICE_LIST);
+        }else if(entity.getClass().getName().equals(SysDepartment.class.getName())){
+            redisService.remove(CACHE_DEPARTMENT_LIST);
+
+        }else if (entity.getClass().getName().equals(SysRole.class.getName())){
+            redisService.remove(CACHE_ROLE_LIST);
+        }else if (entity.getClass().getName().equals(SysUser.class.getName())){
+            redisService.remove(CACHE_USER_LIST);
+        }
     }
 }
