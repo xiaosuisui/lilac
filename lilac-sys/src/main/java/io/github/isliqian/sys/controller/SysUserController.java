@@ -1,6 +1,8 @@
 package io.github.isliqian.sys.controller;
 
+import io.github.isliqian.cache.service.RedisService;
 import io.github.isliqian.log.ann.MyLog;
+import io.github.isliqian.utils.base.BaseController;
 import io.github.isliqian.utils.base.Page;
 import io.github.isliqian.sys.bean.SysUser;
 import io.github.isliqian.sys.service.SysUserService;
@@ -19,12 +21,14 @@ import java.util.Date;
 @Controller
 @RequestMapping("/sys/user")
 @Api(value = "系统用户管理")
-public class SysUserController {
+public class SysUserController extends BaseController {
+
 
     @Resource
     private SysUserService sysUserService;
 
-
+    @Resource
+    private RedisService redisService;
 
 
     @MyLog("获取全部用户")
@@ -73,8 +77,8 @@ public class SysUserController {
     @GetMapping("/info")
     @ApiOperation(value="我的资料")
     public String info(SysUser sysUser, HttpServletRequest request, HttpServletResponse response, ModelAndView mav ){
-        SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
-        System.out.println(user.toString());
+        SysUser user = (SysUser) redisService.get("user");
+        logger.error("--------------------"+user.toString());
         return "/sys/admininfo.html";
     }
     @MyLog("修改密码")
