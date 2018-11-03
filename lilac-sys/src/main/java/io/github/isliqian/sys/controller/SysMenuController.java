@@ -1,8 +1,8 @@
 package io.github.isliqian.sys.controller;
 
 import io.github.isliqian.log.ann.MyLog;
-import io.github.isliqian.utils.base.BaseController;
-import io.github.isliqian.utils.base.Page;
+import io.github.isliqian.core.BaseController;
+import io.github.isliqian.core.Page;
 import io.github.isliqian.sys.bean.SysMenu;
 import io.github.isliqian.sys.service.SysMenuService;
 import io.github.isliqian.utils.StringUtils;

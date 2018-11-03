@@ -1,6 +1,6 @@
 package io.github.isliqian.sys.service;
 
-import io.github.isliqian.sys.utils.CrudService;
+import io.github.isliqian.core.CrudService;
 import io.github.isliqian.sys.bean.SysRole;
 import io.github.isliqian.sys.mapper.SysRoleMapper;
 import io.github.isliqian.utils.StringUtils;

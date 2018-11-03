@@ -2,26 +2,22 @@ package io.github.isliqian.sys.controller;
 
 import io.github.isliqian.cache.service.RedisService;
 import io.github.isliqian.log.ann.MyLog;
-import io.github.isliqian.sys.bean.SysDict;
-import io.github.isliqian.utils.PasswordUtils;
-import io.github.isliqian.utils.base.BaseController;
-import io.github.isliqian.utils.base.Page;
+import io.github.isliqian.core.BaseController;
+import io.github.isliqian.core.Page;
 import io.github.isliqian.sys.bean.SysUser;
 import io.github.isliqian.sys.service.SysUserService;
 import io.github.isliqian.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
+
 @Controller
 @RequestMapping("/sys/user")
 @Api(value = "系统用户管理")

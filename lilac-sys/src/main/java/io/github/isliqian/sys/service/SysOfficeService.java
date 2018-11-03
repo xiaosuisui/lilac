@@ -1,8 +1,8 @@
 package io.github.isliqian.sys.service;
 
-import io.github.isliqian.sys.utils.CrudService;
-import io.github.isliqian.utils.base.Page;
-import io.github.isliqian.utils.base.ServiceException;
+import io.github.isliqian.core.CrudService;
+import io.github.isliqian.core.Page;
+import io.github.isliqian.core.ServiceException;
 import io.github.isliqian.sys.bean.SysOffice;
 import io.github.isliqian.sys.mapper.SysOfficeMapper;
 import io.github.isliqian.utils.StringUtils;

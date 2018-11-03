@@ -1,8 +1,8 @@
 package io.github.isliqian.sys.controller;
 
 import io.github.isliqian.log.ann.MyLog;
-import io.github.isliqian.utils.base.BaseController;
-import io.github.isliqian.utils.base.Page;
+import io.github.isliqian.core.BaseController;
+import io.github.isliqian.core.Page;
 import io.github.isliqian.sys.bean.SysArea;
 import io.github.isliqian.sys.service.SysAreaService;
 import io.github.isliqian.utils.StringUtils;
@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 @Controller
 @RequestMapping("/sys/area")

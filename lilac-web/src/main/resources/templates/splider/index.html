@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>爬取数据控制台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/loading.css" media="all">
+</head>
+<body>
+<div id="loading" class="in-progress customloading" style="display: block">
+    <div class="text-wrap">
+        <i class="iconfont">&#xe627;</i>
+        <p>加载中...</p>
+    </div>
+</div>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <button class="layui-btn layui-btn-primary" onclick="openConsole()">打开实时日志</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+
+
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="150">
+                    <col width="150">
+                    <col width="150">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>描述</th>
+                    <th>执行类</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr >
+                    <td>高校信息</td>
+                    <td>主要爬取全国高校基本信息情况</td>
+                    <td>SliderController</td>
+                    <td>  <button class="layui-btn  layui-btn-warm layui-btn-sm" onclick="confirmdel()">开始爬取</button>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="../../../layuiadmin/layui/layui.js"></script>
+
+<script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="../../../layuiadmin/jquery/jquery.min.js"></script>
+<script src="../../../layuiadmin/base/base.js"></script>
+<script th:inline="javascript">
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'useradmin', 'table'], function() {
+        var $ = layui.$
+            , form = layui.form
+            , table = layui.table;
+    });
+    var stompClient = null;
+    function confirmdel() {
+        //询问框
+        layer.confirm('确定执行该操作么?', {
+            btn: ['确定', '取消'] //按钮
+        }, function (index) {
+           splider();
+           layer.close(index);
+        });
+        // return false;
+    }
+    function splider() {
+        $.micAjax({
+            url: config.api.splider.getCollegeInfo,
+            type: getType,
+            data: {
+            },
+            success: function (data) {
+                if (typeof data === 'string') {
+                    data = JSON.parse(data);
+                }
+                var code = parseInt(data.code);
+                if (code === 200) {
+                    openSocket();
+                    openModel();
+                    var laytit = window.document.getElementById("laytit");
+                    laytit.innerHTML= "实时日志-任务ID:"+data.data.taskId
+                    //iframe层
+                } else {
+                    layer.msg(data.msg);
+                }
+
+            },
+            fail: function () {
+                layer.msg('服务器繁忙，请稍后重试');
+            },
+            error: function () {
+                layer.msg('服务器繁忙，请稍后重试');
+            }
+        });
+
+    }
+
+    function openModel() {
+        layer.open({
+            type: 1,
+            title: '<span id="laytit" class="laytit">实时日志</span>',
+            shadeClose: false,
+            shade: 0.7,
+            maxmin: true,
+            area: ['80%', '70%'],
+            content: "<div id=\"log-container\" style=\"height: 550px; overflow-y: scroll; background: #333; color: #aaa; padding: 10px;\">\n" +
+                "    <div></div>\n" +
+                "</div>", //iframe的url
+            cancel: function(index){
+                closeSocket();
+            }
+        });
+    }
+    function openConsole() {
+        openSocket();
+        openModel();
+    }
+    var message = [[${message}]];
+
+    window.onload=function(){
+        setTimeout(function(){
+            fadeOut(window.document.getElementById('loading'));
+            if (message ===null||message ==='' ){
+                //不执行任何操作
+            }else{
+                layer.msg(message);
+            }
+        },500);
+    }
+    function openSocket() {
+        if(stompClient==null){
+            var socket = new SockJS('http://127.0.0.1:80/websocket?token=kl');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({token:"kl"}, function(frame) {
+                stompClient.subscribe('/topic/pullLogger', function(event) {
+                    var content=JSON.parse(event.body);
+                    $("#log-container div").append(content.timestamp +" "+ content.level+" --- ["+ content.threadName+"] "+ content.className+"   :"+content.body).append("<br/>");
+                    $("#log-container").scrollTop($("#log-container div").height() - $("#log-container").height());
+                },{
+                    token:"kltoen"
+                });
+            });
+        }
+    }
+    function closeSocket() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+            stompClient=null;
+        }
+    }
+</script>
+</body>
+</html>
+

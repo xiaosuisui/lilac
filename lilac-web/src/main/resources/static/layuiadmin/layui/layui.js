@@ -11,6 +11,8 @@
         }
     })();
 }
+
+
 // function fadeIn(el){
 //     el.style.opacity = 1;
 //     (function fade() {

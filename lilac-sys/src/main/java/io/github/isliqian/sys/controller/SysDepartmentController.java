@@ -2,15 +2,12 @@ package io.github.isliqian.sys.controller;
 
 import io.github.isliqian.log.ann.MyLog;
 import io.github.isliqian.sys.bean.SysDepartment;
-import io.github.isliqian.sys.bean.SysDict;
 import io.github.isliqian.sys.bean.SysOffice;
-import io.github.isliqian.sys.bean.SysRole;
 import io.github.isliqian.sys.service.SysDepartmentService;
 import io.github.isliqian.sys.service.SysOfficeService;
-import io.github.isliqian.sys.service.SysRoleService;
 import io.github.isliqian.utils.StringUtils;
-import io.github.isliqian.utils.base.BaseController;
-import io.github.isliqian.utils.base.Page;
+import io.github.isliqian.core.BaseController;
+import io.github.isliqian.core.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;

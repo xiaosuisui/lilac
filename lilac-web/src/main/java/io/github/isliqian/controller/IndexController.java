@@ -4,8 +4,7 @@ import io.github.isliqian.bean.Console;
 import io.github.isliqian.cache.service.RedisService;
 import io.github.isliqian.sys.bean.SysUser;
 import io.github.isliqian.sys.service.SysUserService;
-import io.github.isliqian.utils.CountUtils;
-import io.github.isliqian.utils.base.BaseController;
+import io.github.isliqian.core.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.io.*;
 
 @Controller
 @Api(value = "路由控制管理")

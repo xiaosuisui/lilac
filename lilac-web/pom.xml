@@ -26,11 +26,7 @@
     <dependencies>
 
 
-        <dependency>
-            <groupId>io.github.isliqian</groupId>
-            <artifactId>lilac-sys</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
         <dependency>
             <groupId>io.github.isliqian</groupId>
             <artifactId>lilac-mail</artifactId>
@@ -46,10 +42,11 @@
             <artifactId>lilac-mybatis-generator</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.flywaydb</groupId>-->
-            <!--<artifactId>flyway-core</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>io.github.isliqian</groupId>
+            <artifactId>lilac-splider</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

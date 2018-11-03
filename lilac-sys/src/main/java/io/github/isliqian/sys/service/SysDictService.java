@@ -2,7 +2,7 @@ package io.github.isliqian.sys.service;
 
 
 import io.github.isliqian.cache.service.RedisService;
-import io.github.isliqian.sys.utils.CrudService;
+import io.github.isliqian.core.CrudService;
 import io.github.isliqian.sys.bean.SysDict;
 import io.github.isliqian.sys.mapper.SysDictMapper;
 import org.springframework.stereotype.Service;

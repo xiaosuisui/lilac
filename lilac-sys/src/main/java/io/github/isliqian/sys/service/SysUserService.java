@@ -9,7 +9,7 @@ package io.github.isliqian.sys.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.github.isliqian.cache.service.RedisService;
-import io.github.isliqian.sys.utils.CrudService;
+import io.github.isliqian.core.CrudService;
 import io.github.isliqian.sys.bean.SysUser;
 import io.github.isliqian.sys.mapper.SysUserMapper;
 import io.github.isliqian.sys.mapper.SysUserRoleMapper;

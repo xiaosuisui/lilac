@@ -1,7 +1,7 @@
 package io.github.isliqian.mail.controller;
 import io.github.isliqian.mail.bean.MailTemple;
 import io.github.isliqian.mail.service.MailService;
-import io.github.isliqian.utils.base.BaseController;
+import io.github.isliqian.core.BaseController;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

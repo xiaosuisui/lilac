@@ -2,8 +2,7 @@
 package io.github.isliqian.sys.bean;
 
 
-import io.github.isliqian.utils.base.DataEntity;
-import io.github.isliqian.utils.base.TreeEntity;
+import io.github.isliqian.core.DataEntity;
 import lombok.Data;
 
 /**

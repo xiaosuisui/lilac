@@ -175,6 +175,9 @@
                 <dd>
                   <a lay-href="log/log/list">日志列表</a>
                 </dd>
+                <dd>
+                  <a lay-href="log/log/console">实时日志</a>
+                </dd>
               </dl>
             </li>
             <li data-name="job" class="layui-nav-item">
@@ -188,19 +191,23 @@
                 </dd>
               </dl>
             </li>
-            <!--<li data-name="user" class="layui-nav-item">-->
-              <!--<a href="javascript:;" lay-tips="用户管理" lay-direction="2">-->
-                <!--<i class="layui-icon layui-icon-user"></i>-->
-                <!--<cite>用户管理</cite>-->
-              <!--</a>-->
-              <!--<dl class="layui-nav-child">-->
-                <!--<dd>-->
-                  <!--<a lay-href="wx/user/">网站用户</a>-->
-                <!--</dd>-->
+            <li data-name="user" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="数据维护" lay-direction="2">
+                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                <cite>数据维护</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd>
+                  <a lay-href="/splider/index">数据爬取</a>
+                </dd>
+              </dl>
+              <dl class="layui-nav-child">
+                <dd>
+                  <a lay-href="wx/user/">全国高校</a>
+                </dd>
 
-
-              <!--</dl>-->
-            <!--</li>-->
+              </dl>
+            </li>
 
 
 

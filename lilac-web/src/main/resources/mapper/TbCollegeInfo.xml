@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.isliqian.splider.mapper.CollegeMapper">
+	<sql id="collegeInfoColumns">
+		a.id,
+		a.name,
+		a.location,
+		a.baikeUrl,
+		a.gaokaoUrl,
+		a.subject,
+		a.type,
+		a.level,
+		a.feature,
+		a.postgraduate,
+		a.satisfaction,
+		a.remarks,
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.ext1,
+		a.ext2,
+		a.ext3
+	</sql>
+	<sql id="collegeInfoJoins">
+
+	</sql>
+
+	<select id="get" resultType="io.github.isliqian.splider.bean.BasicCollege">
+		SELECT 
+			* 
+		FROM tb_basic_college
+		WHERE id = #{id}
+	</select>
+
+
+	<select id="findList" resultType="io.github.isliqian.splider.bean.BasicCollege">
+		SELECT 
+			* 
+		FROM tb_basic_college
+		WHERE del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+	
+	<select id="findAllList" resultType="io.github.isliqian.splider.bean.BasicCollege">
+		SELECT 
+			* 
+		FROM tb_basic_college
+		WHERE del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+	
+
+	<insert id="insert">
+		INSERT INTO tb_basic_college a(
+			a.id,
+		    a.name,
+		    a.location,
+		    a.baikeUrl,
+		    a.gaokaoUrl,
+		    a.subject,
+		    a.type,
+		    a.level,
+		    a.feature,
+		    a.postgraduate,
+		    a.satisfaction,
+		    a.remarks,
+		    a.create_date ,
+		    a.update_date,
+		    a.del_flag,
+		    a.ext1,
+			a.ext2,
+			a.ext3
+		) VALUES (
+			#{id}, 
+			#{name},
+			#{location},
+			#{baikeUrl},
+			#{gaokaoUrl},
+			#{subject},
+			#{type},
+			#{level},
+			#{feature},
+			#{postgraduate},
+			#{satisfaction},
+			#{remarks},
+			#{createDate},
+			#{updateDate},
+			#{delFlag},
+			#{ext1},
+		    #{ext2},
+		    #{ext3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tb_basic_college a SET
+			a.name = #{name},
+		    a.location = #{location},
+		    a.baikeUrl = #{baikeUrl},
+		    a.gaokaoUrl = #{gaokaoUrl},
+		    a.subject = #{subject},
+		    a.type = #{type},
+		    a.level = #{level},
+		    a.feature = #{feature},
+		    a.postgraduate = #{postgraduate},
+		    a.satisfaction = #{satisfaction},
+		    remarks = #{remarks},
+			a.update_date = #{updateDate},
+			a.ext1 = #{ext1},
+			a.ext2 = #{ext2},
+			a.ext3 = #{ext3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tb_basic_college SET
+			del_flag = #{DEL_FLAG_DELETE},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
