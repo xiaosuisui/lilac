@@ -1,4 +1,4 @@
-![主页](img/icon.png)
+![icon](img/icon.png)
 
 ### LiLac 丁香花 -V 1.0.0 
 
@@ -18,14 +18,17 @@
 * 丰富可立即采用的工具库，零依赖
 * 基于shiro开发实现权限控制
 * 系统日志，操作记录存储,日志可提供下载
-* ehcatch缓存
-
+* redis缓存
+* 定时任务执行
+* 扩展爬虫，动态展示页面
 #### 页面展示
-![主页](img/home.png)
-![手机端](img/phone.png)
+![主页](img/dashbord.png)
+![爬虫](img/splider.png)
+![代码生成](img/gen.png)
 ![登入](img/example3.png)
 ![列表](img/example1.png)
 ![404](img/example2.png)
+![手机端](img/phone.png)
 #### TODO
 * 后端基础管理页面
 * 功能完善
