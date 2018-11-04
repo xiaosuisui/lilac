@@ -82,7 +82,7 @@
 			del_flag
 		) VALUES (
 			#{id}, 
-			#{parent.id}, 
+			#{parent.id},
 			#{parentIds}, 
 			#{name}, 
 			#{href}, 
@@ -100,7 +100,7 @@
 	
 	<update id="update">
 		UPDATE sys_menu SET 
-			parent_id = #{parent.id}, 
+			parent_id = #{parent.id},
 			parent_ids = #{parentIds}, 
 			name = #{name}, 
 			href = #{href}, 
@@ -116,7 +116,7 @@
 	
 	<update id="updateParentIds">
 		UPDATE sys_menu SET 
-			parent_id = #{parent.id}, 
+			parent_id = #{parent.id},
 			parent_ids = #{parentIds}
 		WHERE id = #{id}
 	</update>

@@ -82,6 +82,11 @@ public class IndexController extends BaseController {
         return mav;
     }
 
+    @GetMapping("/job/index")
+    @ApiOperation(value = "定时任务")
+    public String job(Model model){
+        return "/job/JobManager.html";
+    }
 
 
 

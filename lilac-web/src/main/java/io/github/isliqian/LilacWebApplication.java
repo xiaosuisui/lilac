@@ -29,7 +29,8 @@ import java.util.concurrent.Executors;
         "io.github.isliqian.sys.*",
         "io.github.isliqian.mail.*",
         "io.github.isliqian.mybatisgenerator.*",
-        "io.github.isliqian.splider.*"})
+        "io.github.isliqian.splider.*",
+        "io.github.isliqian.scheduled.*"})
 @EnableScheduling
 @EnableCaching
 @EnableAsync
