@@ -49,7 +49,7 @@ public class GenService {
                 dirFile.mkdirs();
             }
 
-            File conf = new File(System.getProperty("user.dir") + "\\lilac-mybatisgenerator\\conf\\Configuration.xml");
+            File conf = new File(System.getProperty("user.dir") + "\\lilac-mybatis-generator\\conf\\Configuration.xml");
             ConfigurationParser parser = new ConfigurationParser(warnings);
             Configuration config = parser.parseConfiguration(conf);
             Context context = config.getContexts().get(0);
@@ -114,7 +114,7 @@ public class GenService {
     }
 
     public static void main(String[] args){
-        System.out.println(System.getProperty("user.dir") + "\\lilac-mybatisgenerator\\conf\\Configuration.xml");
+        System.out.println(System.getProperty("user.dir") + "\\lilac-mybatis-generator\\conf\\Configuration.xml");
     }
 
 }

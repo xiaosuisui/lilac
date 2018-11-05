@@ -54,6 +54,7 @@ public class SpliderUtils {
      * 获取WebDriver
      */
     public static WebDriver getDriver(){
+
         driver = new ChromeDriver();
         return driver;
     }
@@ -87,8 +88,8 @@ public class SpliderUtils {
      * @date 18-9-1 上午8:15
      * 打开Chrome浏览器
      */
-    public static void openChorme(String driverName,String driverDir){
-        System.setProperty(driverName, driverDir);
+    public static void openChorme(){
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\lee\\IntelliJIDEAProjects\\lilac\\chromedriver.exe");
     }
 
 
