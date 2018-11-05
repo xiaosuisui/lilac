@@ -14,10 +14,21 @@
     <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 <body>
-<button onclick="openSocket()">开启日志</button><button onclick="closeSocket()">关闭日志</button>
-<div id="log-container" style="height: 450px; overflow-y: scroll; background: #333; color: #aaa; padding: 10px;">
-    <div></div>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <button onclick="openSocket()" class="layui-btn layui-btn-normal">开启日志</button><button onclick="closeSocket()" class="layui-btn layui-btn-danger">关闭日志</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body" id="log-container" style="height: 450px; overflow-y: scroll;  color: #000000; ">
+            <div></div>
+        </div>
+    </div>
 </div>
+
 </body>
 <script>
     var stompClient = null;
