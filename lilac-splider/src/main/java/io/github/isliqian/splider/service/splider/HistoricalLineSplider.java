@@ -23,7 +23,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author wxt.liqian
@@ -57,7 +59,7 @@ public class HistoricalLineSplider {
 
         List<HistoricalLine> historicalLines = new ArrayList<>();
         //错误链接存储
-        List<String> errorLinks = new ArrayList<>();
+        Set<String> errorLinks = new HashSet<>();
         HistoricalLine historicalLine = null;
         WebElement sectionElementBtn = null;
         List<WebElement> sectionElements =null;
@@ -96,12 +98,10 @@ public class HistoricalLineSplider {
                     sectionElement.click();
                     Thread.sleep(3000);
                 } catch (Exception e) {
-                    logger.error("爬取高校历年分数线出现异常1"+e.toString());
+                    logger.error("找不到该科目"+e.toString());
 
                     redisService.remove("historicalLine");
                     errorLinks.add(list.get(i).getBaikeUrl());
-                    driver.quit();
-                    continue loop1;//跳出本次循环
                 }
 
 
@@ -116,8 +116,6 @@ public class HistoricalLineSplider {
                         logger.error("爬取高校历年分数线出现异常2"+e.toString());
                         redisService.remove("historicalLine");
                         errorLinks.add(list.get(i).getBaikeUrl());
-                        driver.quit();
-                        continue loop1;//跳出本次循环
                     }
 //                    String city = (String)((JavascriptExecutor)driver).executeScript("return arguments[0].innerHTML;", provinceElement);
                     //System.out.println(city);

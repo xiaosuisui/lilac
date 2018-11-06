@@ -46,7 +46,7 @@
 
 
     <insert id="insert">
-		INSERT INTO tb_college_professional_line a(
+		INSERT INTO tb_college_professional_line(
 			id,
 		    college_id,
 		    section,

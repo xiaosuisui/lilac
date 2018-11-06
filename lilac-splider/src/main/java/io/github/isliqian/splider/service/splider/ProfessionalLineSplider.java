@@ -22,7 +22,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author wxt.liqian
@@ -48,7 +50,6 @@ public class ProfessionalLineSplider {
 
 
     /**
-     * @param driver
      * @return void
      * @author wxt.liqian
      * @version 2018/8/11
@@ -58,7 +59,7 @@ public class ProfessionalLineSplider {
         List<BasicCollege> list = collegeService.findList(new BasicCollege());
         List<ProfessionalLine> professionalLines = new ArrayList<>();
         //错误链接存储
-        List<String> errorLinks = new ArrayList<>();
+        Set<String> errorLinks = new HashSet<>();
         ProfessionalLine professionalLine = null;
 
         List<WebElement> sectionElements = null;
@@ -105,8 +106,6 @@ public class ProfessionalLineSplider {
                 } catch (Exception e) {
                     logger.error("找不到该科目" + e.toString());
                     errorLinks.add(list.get(i).getBaikeUrl());
-                    driver.quit();
-                    continue loop1;//跳出本次循环
                 }
                 String section = (String) ((JavascriptExecutor) driver).executeScript("return arguments[0].innerHTML;", sectionElement);
 
@@ -133,9 +132,6 @@ public class ProfessionalLineSplider {
                         } catch (Exception e) {
                             logger.error("找不到该省份" + e.toString());
                             errorLinks.add(list.get(i).getBaikeUrl());
-
-                            driver.quit();
-                            continue loop1;//跳出本次循环
                         }
                         Document doc = Jsoup.parse(driver.getPageSource());
                         Elements trElements = doc.getElementById("majorScoresTable").select("tbody").select("tr");
