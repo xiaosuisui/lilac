@@ -35,9 +35,9 @@
 
 	<select id="findList" resultType="io.github.isliqian.splider.bean.BasicCollege">
 		SELECT 
-			* 
-		FROM tb_basic_college
-		WHERE del_flag = #{DEL_FLAG_NORMAL}
+			<include refid="collegeInfoColumns"/>
+		FROM tb_basic_college a
+		WHERE a.del_flag  = #{DEL_FLAG_NORMAL}
 	</select>
 	
 	<select id="findAllList" resultType="io.github.isliqian.splider.bean.BasicCollege">
@@ -48,26 +48,27 @@
 	</select>
 	
 
-	<insert id="insert">
-		INSERT INTO tb_basic_college a(
-			a.id,
-		    a.name,
-		    a.location,
-		    a.baikeUrl,
-		    a.gaokaoUrl,
-		    a.subject,
-		    a.type,
-		    a.level,
-		    a.feature,
-		    a.postgraduate,
-		    a.satisfaction,
-		    a.remarks,
-		    a.create_date ,
-		    a.update_date,
-		    a.del_flag,
-		    a.ext1,
-			a.ext2,
-			a.ext3
+	<insert id="insert" >
+
+		INSERT INTO tb_basic_college(
+			id,
+		    name,
+		    location,
+		    baikeUrl,
+		    gaokaoUrl,
+		    subject,
+		    type,
+		    level,
+		    feature,
+		    postgraduate,
+		    satisfaction,
+		    remarks,
+		    create_date ,
+		    update_date,
+		    del_flag,
+		    ext1,
+			ext2,
+			ext3
 		) VALUES (
 			#{id}, 
 			#{name},
@@ -91,22 +92,22 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE tb_basic_college a SET
-			a.name = #{name},
-		    a.location = #{location},
-		    a.baikeUrl = #{baikeUrl},
-		    a.gaokaoUrl = #{gaokaoUrl},
-		    a.subject = #{subject},
-		    a.type = #{type},
-		    a.level = #{level},
-		    a.feature = #{feature},
-		    a.postgraduate = #{postgraduate},
-		    a.satisfaction = #{satisfaction},
+		UPDATE tb_basic_college  SET
+			name = #{name},
+		    location = #{location},
+		    baikeUrl = #{baikeUrl},
+		    gaokaoUrl = #{gaokaoUrl},
+		    subject = #{subject},
+		    type = #{type},
+		    level = #{level},
+		    feature = #{feature},
+		    postgraduate = #{postgraduate},
+		    satisfaction = #{satisfaction},
 		    remarks = #{remarks},
-			a.update_date = #{updateDate},
-			a.ext1 = #{ext1},
-			a.ext2 = #{ext2},
-			a.ext3 = #{ext3}
+			update_date = #{updateDate},
+			ext1 = #{ext1},
+			ext2 = #{ext2},
+			ext3 = #{ext3}
 		WHERE id = #{id}
 	</update>
 	

@@ -89,8 +89,14 @@ public class SpliderUtils {
      * 打开Chrome浏览器
      */
     public static void openChorme(){
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\lee\\IntelliJIDEAProjects\\lilac\\chromedriver.exe");
+        String basicDir = System.getProperty("user.dir");
+        String needDir = basicDir+ "\\chromedriver.exe";
+        System.setProperty("webdriver.chrome.driver",needDir);
     }
 
+
+    public static void main(String[] args){
+        System.out.println(System.getProperty("user.dir"));
+    }
 
 }

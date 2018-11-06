@@ -4,7 +4,8 @@ import io.github.isliqian.async.bean.TaskInfo;
 import io.github.isliqian.async.manager.AsyncTaskManager;
 import io.github.isliqian.cache.service.RedisService;
 import io.github.isliqian.core.BaseController;
-import io.github.isliqian.splider.service.BasicInfoService;
+import io.github.isliqian.splider.service.splider.CollegeInfoSplider;
+import io.github.isliqian.splider.service.splider.HistoricalLineSplider;
 import io.github.isliqian.utils.ResultUtil;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -28,7 +29,10 @@ public class SpliderController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(SpliderController.class);
 
     @Resource
-    private BasicInfoService basicInfoService;
+    private CollegeInfoSplider collegeInfoSplider;
+
+    @Resource
+    private HistoricalLineSplider historicalLineSplider;
 
     @Resource
     private AsyncTaskManager asyncTaskManager;
@@ -50,7 +54,7 @@ public class SpliderController extends BaseController {
         if (info == null){
             //异步爬取信息
             TaskInfo taskInfo = asyncTaskManager.submit(() -> {
-                basicInfoService.start();
+                collegeInfoSplider.start();
             });
             redisService.set("collegeInfo",taskInfo);
             return ResultUtil.success(taskInfo);
@@ -66,7 +70,7 @@ public class SpliderController extends BaseController {
         if (info == null){
             //异步爬取信息
             TaskInfo taskInfo = asyncTaskManager.submit(() -> {
-//                historicalLine.start();
+            historicalLineSplider.start();
             });
             redisService.set("historicalLine",taskInfo);
             return ResultUtil.success(taskInfo);

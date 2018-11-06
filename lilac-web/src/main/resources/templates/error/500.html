@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>500</title>
+    <link rel="stylesheet" href="../../layuiadmin/nprogress/nprogress.css">
 </head>
 <style>
     body,
@@ -361,7 +362,16 @@
     </div>
 
 </div>
+<script src="../../layuiadmin/nprogress/nprogress.js"></script>
 <script>
+    NProgress.start()
+
+    window.onload=function(){
+        setTimeout(function() {
+            NProgress.done()
+        }, 600)
+
+    };
     const stackContainer = document.querySelector('.stack-container');
     const cardNodes = document.querySelectorAll('.card-container');
     const perspecNodes = document.querySelectorAll('.perspec');

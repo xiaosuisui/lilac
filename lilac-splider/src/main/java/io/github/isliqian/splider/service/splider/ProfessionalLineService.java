@@ -1,4 +1,4 @@
-package io.github.isliqian.splider.service;
+package io.github.isliqian.splider.service.splider;
 
 import io.github.isliqian.splider.bean.BasicCollege;
 import io.github.isliqian.splider.bean.ProfessionalLine;

@@ -14,7 +14,8 @@ config.debug = false;
 // 服务端API
 config.api = {
     splider: {
-        getCollegeInfo: config.domain + "splider/college"
+        getCollegeInfo: config.domain + "splider/college",
+        getHistoricalLine:config.domain+"splider/historicalLine"
     }
 };
 

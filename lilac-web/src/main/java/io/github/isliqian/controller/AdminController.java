@@ -18,7 +18,7 @@ import java.util.List;
  * admin角色权限controller
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/test")
 public class AdminController {
 
 

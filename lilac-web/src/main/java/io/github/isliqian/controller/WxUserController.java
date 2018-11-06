@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServletResponse;
  * @desc 微信用户
  */
 @Controller
-@RequestMapping("/wx/user")
+@RequestMapping("/wx")
 public class WxUserController {
 
     @Resource
     private SysRoleService sysRoleService;
 
-    @GetMapping("/")
+    @GetMapping("/jscode2session")
     @ApiOperation(value="网站用户管理")
     public ModelAndView list( HttpServletRequest request, HttpServletResponse response, ModelAndView mav ){
 

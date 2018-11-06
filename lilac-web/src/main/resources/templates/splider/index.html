@@ -10,15 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
-    <link rel="stylesheet" href="../../layuiadmin/style/loading.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/nprogress/nprogress.css">
 </head>
 <body>
-<div id="loading" class="in-progress customloading" style="display: block">
-    <div class="text-wrap">
-        <i class="iconfont">&#xe627;</i>
-        <p>加载中...</p>
-    </div>
-</div>
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
@@ -49,12 +43,16 @@
                 <tbody>
                 <tr >
                     <td>高校信息</td>
-                    <td>主要爬取全国高校基本信息情况</td>
-                    <td>SliderController</td>
-                    <td>  <button class="layui-btn  layui-btn-warm layui-btn-sm" onclick="confirmdel()">开始爬取</button>
-
+                    <td>主要爬取全国高校基本信息</td>
+                    <td>SpliderController</td>
+                    <td>  <button class="layui-btn  layui-btn-warm layui-btn-sm" onclick="confirmdel(spliderCollege)">开始爬取</button>
                 </tr>
-
+                <tr >
+                    <td>历年分数线</td>
+                    <td>主要爬取全国高校历年分数线</td>
+                    <td>SpliderController</td>
+                    <td>  <button class="layui-btn  layui-btn-warm layui-btn-sm" onclick="confirmdel(historicalLine)">开始爬取</button>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -66,8 +64,10 @@
 <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="../../../layuiadmin/jquery/jquery.min.js"></script>
+<script src="../../layuiadmin/nprogress/nprogress.js"></script>
 <script src="../../../layuiadmin/base/base.js"></script>
 <script th:inline="javascript">
+    NProgress.start();
     layui.config({
         base: '../../../layuiadmin/' //静态资源所在路径
     }).extend({
@@ -78,17 +78,17 @@
             , table = layui.table;
     });
     var stompClient = null;
-    function confirmdel() {
+    function confirmdel(method) {
         //询问框
         layer.confirm('确定执行该操作么?', {
             btn: ['确定', '取消'] //按钮
         }, function (index) {
-           splider();
+            method();
            layer.close(index);
         });
         // return false;
     }
-    function splider() {
+    function spliderCollege() {
         $.micAjax({
             url: config.api.splider.getCollegeInfo,
             type: getType,
@@ -119,6 +119,36 @@
         });
 
     }
+    function historicalLine() {
+        $.micAjax({
+            url: config.api.splider.getHistoricalLine,
+            type: getType,
+            data: {
+            },
+            success: function (data) {
+                if (typeof data === 'string') {
+                    data = JSON.parse(data);
+                }
+                var code = parseInt(data.code);
+                if (code === 200) {
+                    openSocket();
+                    openModel();
+                    var laytit = window.document.getElementById("laytit");
+                    laytit.innerHTML= "实时日志-任务ID:"+data.data.taskId
+                    //iframe层
+                } else {
+                    layer.msg(data.msg);
+                }
+
+            },
+            fail: function () {
+                layer.msg('服务器繁忙，请稍后重试');
+            },
+            error: function () {
+                layer.msg('服务器繁忙，请稍后重试');
+            }
+        });
+    }
 
     function openModel() {
         layer.open({
@@ -144,7 +174,7 @@
 
     window.onload=function(){
         setTimeout(function(){
-            fadeOut(window.document.getElementById('loading'));
+            NProgress.done();
             if (message ===null||message ==='' ){
                 //不执行任何操作
             }else{

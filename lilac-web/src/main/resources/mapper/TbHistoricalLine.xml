@@ -10,16 +10,16 @@
 		a.lowest,
 		a.average,
 		a.batch,
-		a.remarks,
 		a.create_date AS "createDate",
 		a.update_date AS "updateDate",
 		a.del_flag AS "delFlag",
 		a.ext1,
 		a.ext2,
-		a.ext3
+		a.ext3,
+		c.name AS "college.name"
 	</sql>
     <sql id="historicalLineJoins">
-
+		LEFT JOIN tb_basic_college c ON a.college_id = c.id
     </sql>
 
     <select id="get" resultType="io.github.isliqian.splider.bean.HistoricalLine">
@@ -46,31 +46,34 @@
 
 
     <insert id="insert">
-		INSERT INTO tb_college_historical_line a(
-			a.id,
-		    a.college_id AS "college.id",
-		    a.section,
-		    a.year,
-            a.highest,
-		    a.lowest,
-		    a.average,
-		    a.batch,
-		    a.remarks,
-		    a.create_date AS "createDate",
-		    a.update_date AS "updateDate",
-		    a.del_flag AS "delFlag",
-		    a.ext1,
-		    a.ext2,
-		    a.ext3
+		INSERT INTO tb_college_historical_line(
+			id,
+		    college_id,
+		    profession,
+		    type,
+		    section,
+		    year,
+            highest,
+		    lowest,
+		    average,
+		    batch,
+		    create_date,
+		    update_date,
+		    del_flag,
+		    ext1,
+		    ext2,
+		    ext3
 		) VALUES (
 			#{id},
 			#{college.id},
+			#{profession},
+			#{type},
+			#{section},
 			#{year},
 			#{highest},
 			#{lowest},
 			#{average},
 			#{batch},
-			#{remarks},
 			#{createDate},
 			#{updateDate},
 			#{delFlag},
@@ -81,19 +84,18 @@
 	</insert>
 
     <update id="update">
-		UPDATE tb_college_historical_line a SET
-			 a.college_id = #{college.id},
-		     a.section = #{section},
-		     a.year = #{year},
-             a.highest = #{highest},
-		     a.lowest = #{lowest},
-		     a.average = #{average},
-		     a.batch = #{batch},
-		     a.remarks = #{remarks},
-		     a.update_date = #{updateDate},
-		     a.ext1,
-		     a.ext2,
-		     a.ext3
+		UPDATE tb_college_historical_line  SET
+			 college_id = #{college.id},
+		     section = #{section},
+		     year = #{year},
+             highest = #{highest},
+		     lowest = #{lowest},
+		     average = #{average},
+		     batch = #{batch},
+		     update_date = #{updateDate},
+		     ext1,
+		     ext2,
+		     ext3
 		WHERE id = #{id}
 	</update>
 

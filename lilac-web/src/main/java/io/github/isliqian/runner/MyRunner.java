@@ -26,7 +26,8 @@ public class MyRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         logger.info("**************开始执行清理不必要缓存*************");
         //清理执行异步任务的缓存
-        redisService.remove("college");
+        redisService.remove("collegeInfo");
+        redisService.remove("historicalLine");
         logger.info("**************执行清理不必要缓存结束*************");
     }
 }

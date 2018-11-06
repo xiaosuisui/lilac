@@ -1,6 +1,8 @@
-package io.github.isliqian.splider.service;
+package io.github.isliqian.splider.service.splider;
 
+import io.github.isliqian.cache.service.RedisService;
 import io.github.isliqian.splider.bean.BasicCollege;
+import io.github.isliqian.splider.service.CollegeService;
 import io.github.isliqian.splider.util.SpliderUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -10,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -22,15 +23,17 @@ import java.util.List;
  * @desc 爬取高校基本信息
  */
 @Component
-public class BasicInfoService {
+public class CollegeInfoSplider {
 
-
-
-    private static final Logger logger = LoggerFactory.getLogger(BasicInfoService.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(CollegeInfoSplider.class);
 
     @Resource
-    private HistoricalLineService historicalLineService ;
+    private RedisService redisService;
+    @Resource
+    private CollegeService collegeService;
+
+    @Resource
+    private HistoricalLineSplider historicalLineSplider;
 
     @Resource
     private ProfessionalLineService professionalLineService;
@@ -91,28 +94,34 @@ public class BasicInfoService {
 
                     basicCollege.setSatisfaction(tds.get(7).text());
                     basicCollege.setBaikeUrl("https://baike.baidu.com/item/"+ basicCollege.getName());
-                    //获取到百度百科高校链接进行爬取
-
+                    collegeService.save(basicCollege);
+                    /*//获取到百度百科高校链接进行爬取
                     try{
+
                         historicalLineService.start(basicCollege.getBaikeUrl());
+
                     }catch (Exception e){
                         errorLinks.add(basicCollege.getBaikeUrl());
                         logger.error("爬取高校历年分数线出现异常"+e.toString());
                     }
                     try{
+
                         professionalLineService.start(basicCollege.getBaikeUrl());
                     }catch (Exception e){
                         errorLinks.add(basicCollege.getBaikeUrl());
                         logger.error("爬取高校专业分数线出现异常"+e.toString());
-                    }
+                    }*/
+
                     basicCollegeList.add(basicCollege);
                 }
                 if (j>pageMaxNum)break;
             }
             logger.info("爬取高校基本信息结束,一共爬取到"+basicCollegeList.size()+"条数据......");
+            redisService.remove("collegeInfo");
             //TODO 执行批量存储操作
         } catch (Exception e) {
             logger.error("爬取高校信息出现异常",e.toString());
+            redisService.remove("collegeInfo");
         }
     }
 }

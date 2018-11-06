@@ -10,15 +10,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
-  <link rel="stylesheet" href="../../layuiadmin/style/loading.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/nprogress/nprogress.css">
 </head>
 <body>
-<div id="loading" class="in-progress customloading" style="display: block">
-  <div class="text-wrap">
-    <i class="iconfont">&#xe627;</i>
-    <p>加载中...</p>
-  </div>
-</div>
+
   <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
       <div class="layui-col-md12">
@@ -111,8 +106,10 @@
     </div>
   </div>
 
-  <script src="../../../layuiadmin/layui/layui.js"></script>  
+  <script src="../../../layuiadmin/layui/layui.js"></script>
+  <script src="../../layuiadmin/nprogress/nprogress.js"></script>
   <script th:inline="javascript">
+    NProgress.start();
   layui.config({
     base: '../../../layuiadmin/' //静态资源所在路径
   }).extend({
@@ -122,7 +119,7 @@
   var message = [[${message}]];
   window.onload=function(){
       setTimeout(function(){
-          fadeOut(window.document.getElementById('loading'));
+         NProgress.done();
           if (message ===null||message ==='' ){
               //不执行任何操作
           }else{
