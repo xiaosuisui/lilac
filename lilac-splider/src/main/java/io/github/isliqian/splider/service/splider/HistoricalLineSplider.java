@@ -56,6 +56,12 @@ public class HistoricalLineSplider {
         List<BasicCollege> list = collegeService.findList(new BasicCollege());
 
         List<HistoricalLine> historicalLines = new ArrayList<>();
+        //错误链接存储
+        List<String> errorLinks = new ArrayList<>();
+        HistoricalLine historicalLine = null;
+        WebElement sectionElementBtn = null;
+        List<WebElement> sectionElements =null;
+
         loop1:for (int i =0;i<list.size();i++){
             WebDriver driver = SpliderUtils.getDriver();
             WebDriverWait wait = SpliderUtils.getWait(10);
@@ -63,20 +69,16 @@ public class HistoricalLineSplider {
             SpliderUtils.openChorme();
             driver.get(list.get(i).getBaikeUrl());
             logger.info("开始爬取爬取高校历年分数线,url:"+list.get(i).getBaikeUrl() );
-            // 点击历年分数线
 
-            driver.findElement(By.xpath("//*[@id=\"pageTabs\"]/a[2]/i/span")).click();
-            //错误链接存储
-            List<String> errorLinks = new ArrayList<>();
-           HistoricalLine historicalLine = null;
-            WebElement sectionElementBtn = null;
-            List<WebElement> sectionElements =null;
+
            try{
+               // 点击历年分数线
+               driver.findElement(By.xpath("//*[@id=\"pageTabs\"]/a[2]/i/span")).click();
                //根据理科文科
                sectionElementBtn = driver.findElement(By.xpath("//*[@id=\"totalScoresFilter\"]/div[1]/a"));
                sectionElements = driver.findElements(By.xpath("//dt[@id='totalScoresFilter']//div[@id='totalFilter_course']/a"));
            }catch (Exception e){
-               logger.error("找不到该分数线"+e.toString());
+               logger.error("没有该分数线或xpath路径错误"+e.toString());
                errorLinks.add(list.get(i).getBaikeUrl());
                driver.quit();
                continue loop1;//跳出本次循环

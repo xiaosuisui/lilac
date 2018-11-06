@@ -15,7 +15,8 @@ config.debug = false;
 config.api = {
     splider: {
         getCollegeInfo: config.domain + "splider/college",
-        getHistoricalLine:config.domain+"splider/historicalLine"
+        getHistoricalLine:config.domain+"splider/historicalLine",
+        getProfessionalLine:config.domain+"splider/professionalLine"
     }
 };
 

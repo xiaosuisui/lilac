@@ -51,7 +51,19 @@
                     <td>历年分数线</td>
                     <td>主要爬取全国高校历年分数线</td>
                     <td>SpliderController</td>
+                    <td>  <button class="layui-btn  layui-btn-warm layui-btn-sm" onclick="confirmdel(spliderCollege)">开始爬取</button>
+                </tr>
+                <tr >
+                    <td>历年分数线</td>
+                    <td>主要爬取全国高校历年分数线</td>
+                    <td>SpliderController</td>
                     <td>  <button class="layui-btn  layui-btn-warm layui-btn-sm" onclick="confirmdel(historicalLine)">开始爬取</button>
+                </tr>
+                <tr >
+                    <td>专业分数线</td>
+                    <td>主要爬取全国高校各个专业分数线</td>
+                    <td>SpliderController</td>
+                    <td>  <button class="layui-btn  layui-btn-warm layui-btn-sm" onclick="confirmdel(professionalLine)">开始爬取</button>
                 </tr>
                 </tbody>
             </table>
@@ -122,6 +134,36 @@
     function historicalLine() {
         $.micAjax({
             url: config.api.splider.getHistoricalLine,
+            type: getType,
+            data: {
+            },
+            success: function (data) {
+                if (typeof data === 'string') {
+                    data = JSON.parse(data);
+                }
+                var code = parseInt(data.code);
+                if (code === 200) {
+                    openSocket();
+                    openModel();
+                    var laytit = window.document.getElementById("laytit");
+                    laytit.innerHTML= "实时日志-任务ID:"+data.data.taskId
+                    //iframe层
+                } else {
+                    layer.msg(data.msg);
+                }
+
+            },
+            fail: function () {
+                layer.msg('服务器繁忙，请稍后重试');
+            },
+            error: function () {
+                layer.msg('服务器繁忙，请稍后重试');
+            }
+        });
+    }
+    function professionalLine() {
+        $.micAjax({
+            url: config.api.splider.getProfessionalLine,
             type: getType,
             data: {
             },

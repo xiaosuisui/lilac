@@ -4,8 +4,10 @@ import io.github.isliqian.async.bean.TaskInfo;
 import io.github.isliqian.async.manager.AsyncTaskManager;
 import io.github.isliqian.cache.service.RedisService;
 import io.github.isliqian.core.BaseController;
+import io.github.isliqian.splider.service.ProfessionalLineService;
 import io.github.isliqian.splider.service.splider.CollegeInfoSplider;
 import io.github.isliqian.splider.service.splider.HistoricalLineSplider;
+import io.github.isliqian.splider.service.splider.ProfessionalLineSplider;
 import io.github.isliqian.utils.ResultUtil;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -34,6 +36,8 @@ public class SpliderController extends BaseController {
     @Resource
     private HistoricalLineSplider historicalLineSplider;
 
+    @Resource
+    private ProfessionalLineSplider professionalLineSplider;
     @Resource
     private AsyncTaskManager asyncTaskManager;
 
@@ -75,8 +79,25 @@ public class SpliderController extends BaseController {
             redisService.set("historicalLine",taskInfo);
             return ResultUtil.success(taskInfo);
         }else {
-            return ResultUtil.error(-1,"正在执行爬取高校基本信息操作,请勿重复执行");
+            return ResultUtil.error(-1,"正在执行爬取高校历年分数线操作,请勿重复执行");
         }
 
     }
+    @GetMapping("/professionalLine")
+    @ResponseBody
+    public ResultUtil professionalLine(){
+        TaskInfo info = (TaskInfo) redisService.get("professionalLine");
+        if (info == null){
+            //异步爬取信息
+            TaskInfo taskInfo = asyncTaskManager.submit(() -> {
+                professionalLineSplider.start();
+            });
+            redisService.set("professionalLine",taskInfo);
+            return ResultUtil.success(taskInfo);
+        }else {
+            return ResultUtil.error(-1,"正在执行爬取高校专业分数线操作,请勿重复执行");
+        }
+
+    }
+    //redisService.remove("professionalLine");
 }

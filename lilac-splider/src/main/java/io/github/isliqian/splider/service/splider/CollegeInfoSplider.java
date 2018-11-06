@@ -36,7 +36,7 @@ public class CollegeInfoSplider {
     private HistoricalLineSplider historicalLineSplider;
 
     @Resource
-    private ProfessionalLineService professionalLineService;
+    private ProfessionalLineSplider professionalLineSplider;
     /**
      * @param pageNum
      * @return java.lang.String

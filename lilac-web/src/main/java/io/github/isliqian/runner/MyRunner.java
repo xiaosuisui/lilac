@@ -28,6 +28,7 @@ public class MyRunner implements CommandLineRunner {
         //清理执行异步任务的缓存
         redisService.remove("collegeInfo");
         redisService.remove("historicalLine");
+        redisService.remove("professionalLine");
         logger.info("**************执行清理不必要缓存结束*************");
     }
 }

@@ -4,12 +4,13 @@
     <sql id="professionalLineColumns">
 		a.id,
 		a.college_id AS "college.id",
+		a.profession,
+		a.type,
 		a.section,
 		a.year,
 		a.highest,
 		a.average,
 		a.batch,
-		a.remarks,
 		a.create_date AS "createDate",
 		a.update_date AS "updateDate",
 		a.del_flag AS "delFlag",
@@ -46,28 +47,27 @@
 
     <insert id="insert">
 		INSERT INTO tb_college_professional_line a(
-			a.id,
-		    a.college_id AS "college.id",
-		    a.section,
-		    a.year,
-            a.highest,
-		    a.average,
-		    a.batch,
-		    a.remarks,
-		    a.create_date AS "createDate",
-		    a.update_date AS "updateDate",
-		    a.del_flag AS "delFlag",
-		    a.ext1,
-		    a.ext2,
-		    a.ext3
+			id,
+		    college_id,
+		    section,
+		    year,
+            highest,
+		    average,
+		    batch,
+		    create_date ,
+		    update_date,
+		    del_flag,
+		    ext1,
+		    ext2,
+		    ext3
 		) VALUES (
 			#{id},
 			#{college.id},
+			#{section},
 			#{year},
 			#{highest},
 			#{average},
 			#{batch},
-			#{remarks},
 			#{createDate},
 			#{updateDate},
 			#{delFlag},
@@ -79,17 +79,17 @@
 
     <update id="update">
 		UPDATE tb_college_professional_line a SET
-			 a.college_id = #{college.id},
-		     a.section = #{section},
-		     a.year = #{year},
-             a.highest = #{highest},
-		     a.average = #{average},
-		     a.batch = #{batch},
-		     a.remarks = #{remarks},
-		     a.update_date = #{updateDate},
-		     a.ext1,
-		     a.ext2,
-		     a.ext3
+		    college_id = #{college.id},
+		    section = #{section},
+		    year = #{year},
+            highest = #{highest},
+		    average = #{average},
+		    batch = #{batch},
+		    update_date = #{updateDate},
+		    del_flag = #{delFlag},
+		    ext1 = #{ext1},
+		    ext2 = #{ext2},
+		    ext3 = #{ext3}
 		WHERE id = #{id}
 	</update>
 
