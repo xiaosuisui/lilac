@@ -11,7 +11,7 @@ import lombok.Data;
  * 学校类
  */
 @Data
-public class BasicCollege extends DataEntity<BasicCollege> {
+public class College extends DataEntity<College> {
 
 
     private String  name; //名称

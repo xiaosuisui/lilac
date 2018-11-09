@@ -1,7 +1,7 @@
 package io.github.isliqian.splider.service.splider;
 
 import io.github.isliqian.cache.service.RedisService;
-import io.github.isliqian.splider.bean.BasicCollege;
+import io.github.isliqian.splider.bean.College;
 import io.github.isliqian.splider.bean.HistoricalLine;
 import io.github.isliqian.splider.service.CollegeService;
 import io.github.isliqian.splider.service.HistoricalLineService;
@@ -10,10 +10,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -55,7 +52,7 @@ public class HistoricalLineSplider {
      */
     @Async
     public synchronized void start() {
-        List<BasicCollege> list = collegeService.findList(new BasicCollege());
+        List<College> list = collegeService.findList(new College());
 
         List<HistoricalLine> historicalLines = new ArrayList<>();
         //错误链接存储
@@ -69,7 +66,12 @@ public class HistoricalLineSplider {
             WebDriverWait wait = SpliderUtils.getWait(10);
             Actions actions = SpliderUtils.getActions();
             SpliderUtils.openChorme();
-            driver.get(list.get(i).getBaikeUrl());
+            try{
+                driver.get(list.get(i).getBaikeUrl());
+            }catch (TimeoutException e){
+                logger.error("超时错误"+e.toString());
+                continue loop1;
+            }
             logger.info("开始爬取爬取高校历年分数线,url:"+list.get(i).getBaikeUrl() );
 
 
@@ -90,8 +92,8 @@ public class HistoricalLineSplider {
             //根据省份
             WebElement provinceElementBtn = driver.findElement(By.xpath("//*[@id=\"totalScoresFilter\"]/div[2]/a"));
             List<WebElement> provinceElements = driver.findElements(By.xpath("//div[@id='totalFilter_province']//a[@class='filterItem']"));
-            WebElement collegeElement = driver.findElement(By.xpath("/html/body/div[4]/div[2]/div/div[1]/div[1]/dl/dd[1]/h1"));
-            String college = (String) ((JavascriptExecutor) driver).executeScript("return arguments[0].innerHTML;", collegeElement);
+//            WebElement collegeElement = driver.findElement(By.xpath("/html/body/div[4]/div[2]/div/div[1]/div[1]/dl/dd[1]/h1"));
+//            String college = (String) ((JavascriptExecutor) driver).executeScript("return arguments[0].innerHTML;", collegeElement);
             for (WebElement sectionElement : sectionElements) {
                 try {
                     actions.moveToElement(sectionElementBtn).build().perform();
@@ -117,7 +119,7 @@ public class HistoricalLineSplider {
                         redisService.remove("historicalLine");
                         errorLinks.add(list.get(i).getBaikeUrl());
                     }
-//                    String city = (String)((JavascriptExecutor)driver).executeScript("return arguments[0].innerHTML;", provinceElement);
+                    String city = (String)((JavascriptExecutor)driver).executeScript("return arguments[0].innerHTML;", provinceElement);
                     //System.out.println(city);
 
                     Document doc = Jsoup.parse(driver.getPageSource());
@@ -125,6 +127,7 @@ public class HistoricalLineSplider {
                     for (Element tr : trElements) {
                         historicalLine = new HistoricalLine();
                         historicalLine.setCollege(list.get(i));
+                        historicalLine.setCity(city);
 
                         Elements tdElements = tr.getElementsByTag("td");
 
@@ -148,6 +151,7 @@ public class HistoricalLineSplider {
         }
         logger.info("爬取高校历年分数线结束,一共爬取到"+historicalLines.size()+"条数据......");
         redisService.remove("historicalLine");
+        redisService.set("errorLinks",errorLinks);
         //TODO 执行批量存储操作
     }
 }

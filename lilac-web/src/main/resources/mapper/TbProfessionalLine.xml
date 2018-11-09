@@ -5,7 +5,6 @@
 		a.id,
 		a.college_id AS "college.id",
 		a.profession,
-		a.type,
 		a.section,
 		a.year,
 		a.highest,
@@ -49,6 +48,7 @@
 		INSERT INTO tb_college_professional_line(
 			id,
 		    college_id,
+		    profession,
 		    section,
 		    year,
             highest,
@@ -63,6 +63,7 @@
 		) VALUES (
 			#{id},
 			#{college.id},
+			#{profession},
 			#{section},
 			#{year},
 			#{highest},

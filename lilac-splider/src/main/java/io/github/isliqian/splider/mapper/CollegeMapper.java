@@ -1,7 +1,7 @@
 package io.github.isliqian.splider.mapper;
 
 import io.github.isliqian.core.CrudDao;
-import io.github.isliqian.splider.bean.BasicCollege;
+import io.github.isliqian.splider.bean.College;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
  */
 @Mapper
 @Component
-public interface CollegeMapper  extends CrudDao<BasicCollege> {
+public interface CollegeMapper  extends CrudDao<College> {
 
 }

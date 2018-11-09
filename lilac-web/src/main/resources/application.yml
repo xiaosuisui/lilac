@@ -1,5 +1,10 @@
 server:
   port: 80
+#  ssl:
+#    key-store: classpath:ssl.jks
+#    enabled: true
+#    key-store-password: qian0711
+#    key-store-type: JKS
 # actuator监控
 management:
   server:

@@ -25,7 +25,7 @@
 
 	</sql>
 
-	<select id="get" resultType="io.github.isliqian.splider.bean.BasicCollege">
+	<select id="get" resultType="io.github.isliqian.splider.bean.College">
 		SELECT 
 			* 
 		FROM tb_basic_college
@@ -33,14 +33,14 @@
 	</select>
 
 
-	<select id="findList" resultType="io.github.isliqian.splider.bean.BasicCollege">
+	<select id="findList" resultType="io.github.isliqian.splider.bean.College">
 		SELECT 
 			<include refid="collegeInfoColumns"/>
 		FROM tb_basic_college a
 		WHERE a.del_flag  = #{DEL_FLAG_NORMAL}
 	</select>
 	
-	<select id="findAllList" resultType="io.github.isliqian.splider.bean.BasicCollege">
+	<select id="findAllList" resultType="io.github.isliqian.splider.bean.College">
 		SELECT 
 			* 
 		FROM tb_basic_college

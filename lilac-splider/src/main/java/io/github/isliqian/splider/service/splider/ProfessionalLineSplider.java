@@ -1,7 +1,7 @@
 package io.github.isliqian.splider.service.splider;
 
 import io.github.isliqian.cache.service.RedisService;
-import io.github.isliqian.splider.bean.BasicCollege;
+import io.github.isliqian.splider.bean.College;
 import io.github.isliqian.splider.bean.ProfessionalLine;
 import io.github.isliqian.splider.service.CollegeService;
 import io.github.isliqian.splider.service.ProfessionalLineService;
@@ -56,7 +56,7 @@ public class ProfessionalLineSplider {
      * 百度百科各专业录取分数线
      */
     public synchronized void start() {
-        List<BasicCollege> list = collegeService.findList(new BasicCollege());
+        List<College> list = collegeService.findList(new College());
         List<ProfessionalLine> professionalLines = new ArrayList<>();
         //错误链接存储
         Set<String> errorLinks = new HashSet<>();

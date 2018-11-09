@@ -3,8 +3,6 @@ package io.github.isliqian.splider.bean;
 import io.github.isliqian.core.DataEntity;
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * 高考历年分数线
  */
@@ -13,10 +11,11 @@ public class HistoricalLine extends DataEntity<HistoricalLine> {
 
 
 
-    private BasicCollege college;//学校
+    private College college;//学校
 
     private String section;//科目
 
+    private String city;
     private String year;//年份
 
     private String highest;//最高

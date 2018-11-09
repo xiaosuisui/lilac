@@ -13,7 +13,7 @@ public class ProfessionalLine extends DataEntity<ProfessionalLine> {
 
 
 
-    private BasicCollege college;//学校
+    private College college;//学校
 
     private String section;//科目
 

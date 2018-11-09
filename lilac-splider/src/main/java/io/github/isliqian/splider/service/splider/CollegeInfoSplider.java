@@ -1,7 +1,7 @@
 package io.github.isliqian.splider.service.splider;
 
 import io.github.isliqian.cache.service.RedisService;
-import io.github.isliqian.splider.bean.BasicCollege;
+import io.github.isliqian.splider.bean.College;
 import io.github.isliqian.splider.service.CollegeService;
 import io.github.isliqian.splider.util.SpliderUtils;
 import org.jsoup.Connection;
@@ -60,7 +60,7 @@ public class CollegeInfoSplider {
 
     @Async
     public  void start() {
-        List<BasicCollege> basicCollegeList = new ArrayList<>();
+        List<College> collegeList = new ArrayList<>();
         //错误链接存储
         List<String> errorLinks = new ArrayList<>();
         try {
@@ -76,25 +76,25 @@ public class CollegeInfoSplider {
                 //获取高校基本信息
                 Elements elements = doc.select("table.ch-table").select("tr");
                 for (int i = 1;i < elements.size(); i++) {
-                    BasicCollege basicCollege =new BasicCollege();
+                    College college =new College();
                     //获取每一行的列
                     Elements tds = elements.get(i).select("td");
-                    basicCollege.setName(tds.get(0).text());
-                    basicCollege.setGaokaoUrl(SpliderUtils.gaokao+tds.get(0).select("a").attr("href"));
-                    basicCollege.setLocation(tds.get(1).text());
-                    basicCollege.setSubject(tds.get(2).text());
-                    basicCollege.setType(tds.get(3).text());
-                    basicCollege.setLevel(tds.get(4).text());
-                    basicCollege.setFeature(tds.get(5).text());
+                    college.setName(tds.get(0).text());
+                    college.setGaokaoUrl(SpliderUtils.gaokao+tds.get(0).select("a").attr("href"));
+                    college.setLocation(tds.get(1).text());
+                    college.setSubject(tds.get(2).text());
+                    college.setType(tds.get(3).text());
+                    college.setLevel(tds.get(4).text());
+                    college.setFeature(tds.get(5).text());
                     if ("\uE664".equals(tds.get(6).text())){
-                        basicCollege.setPostgraduate("1");
+                        college.setPostgraduate("1");
                     }else {
-                        basicCollege.setPostgraduate("0");
+                        college.setPostgraduate("0");
                     }
 
-                    basicCollege.setSatisfaction(tds.get(7).text());
-                    basicCollege.setBaikeUrl("https://baike.baidu.com/item/"+ basicCollege.getName());
-                    collegeService.save(basicCollege);
+                    college.setSatisfaction(tds.get(7).text());
+                    college.setBaikeUrl("https://baike.baidu.com/item/"+ college.getName());
+                    collegeService.save(college);
                     /*//获取到百度百科高校链接进行爬取
                     try{
 
@@ -112,11 +112,11 @@ public class CollegeInfoSplider {
                         logger.error("爬取高校专业分数线出现异常"+e.toString());
                     }*/
 
-                    basicCollegeList.add(basicCollege);
+                    collegeList.add(college);
                 }
                 if (j>pageMaxNum)break;
             }
-            logger.info("爬取高校基本信息结束,一共爬取到"+basicCollegeList.size()+"条数据......");
+            logger.info("爬取高校基本信息结束,一共爬取到"+ collegeList.size()+"条数据......");
             redisService.remove("collegeInfo");
             //TODO 执行批量存储操作
         } catch (Exception e) {

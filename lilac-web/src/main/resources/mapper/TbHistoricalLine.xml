@@ -5,6 +5,7 @@
 		a.id,
 		a.college_id AS "college.id",
 		a.section,
+		a.city,
 		a.year,
 		a.highest,
 		a.lowest,
@@ -49,9 +50,8 @@
 		INSERT INTO tb_college_historical_line(
 			id,
 		    college_id,
-		    profession,
-		    type,
 		    section,
+		    city,
 		    year,
             highest,
 		    lowest,
@@ -66,9 +66,8 @@
 		) VALUES (
 			#{id},
 			#{college.id},
-			#{profession},
-			#{type},
 			#{section},
+			#{city},
 			#{year},
 			#{highest},
 			#{lowest},
@@ -87,6 +86,7 @@
 		UPDATE tb_college_historical_line  SET
 			 college_id = #{college.id},
 		     section = #{section},
+		     city = #{city},
 		     year = #{year},
              highest = #{highest},
 		     lowest = #{lowest},

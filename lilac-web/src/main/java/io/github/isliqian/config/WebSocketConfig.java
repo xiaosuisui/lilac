@@ -17,7 +17,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/websocket")
-                .setAllowedOrigins("http://127.0.0.1:80")
+                .setAllowedOrigins("https://127.0.0.1:80")
                 .withSockJS();
     }
 }
