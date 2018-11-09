@@ -37,7 +37,7 @@
     $(document).ready(function() {openSocket();});
     function openSocket() {
         if(stompClient==null){
-            var socket = new SockJS('http://127.0.0.1:80/websocket?token=kl');
+            var socket = new SockJS('https://ohmylady.club/websocket?token=kl');
             stompClient = Stomp.over(socket);
             stompClient.connect({token:"kl"}, function(frame) {
                 stompClient.subscribe('/topic/pullLogger', function(event) {

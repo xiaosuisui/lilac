@@ -1,4 +1,3 @@
-/*
 package io.github.isliqian.config;
 import java.io.IOException;
 import java.util.Properties;
@@ -34,24 +33,20 @@ public class SchedulerConfig {
         return propertiesFactoryBean.getObject();
     }
 
-    */
-/*
-     * quartz初始化监听器
-     *//*
+     /* quartz初始化监听器*/
+
 
     @Bean
     public QuartzInitializerListener executorListener() {
         return new QuartzInitializerListener();
     }
 
-    */
-/*
-     * 通过SchedulerFactoryBean获取Scheduler的实例
-     *//*
+     /* 通过SchedulerFactoryBean获取Scheduler的实例*/
+
 
     @Bean(name="Scheduler")
     public Scheduler scheduler() throws IOException {
         return schedulerFactoryBean().getScheduler();
     }
 
-}*/
+}

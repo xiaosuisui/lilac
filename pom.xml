@@ -75,10 +75,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!--quartz 定时任务-->
-       <!-- <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
-        </dependency>-->
+        </dependency>
         <!-- redis 缓存 -->
         <dependency>
             <groupId>org.springframework.session</groupId>
